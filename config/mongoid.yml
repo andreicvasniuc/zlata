@@ -142,5 +142,7 @@ production:
       uri: <%= ENV['MONGODB_URI'] %>
     options:
       database: ishop_production
+      hosts:
+        - localhost:27017
       skip_version_check: true
     safe: true
