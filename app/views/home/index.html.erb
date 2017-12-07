@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html ng-app="app">
-<head lang="en">
-  <meta charset="UTF-8">
-  <title>IshopWeb</title>
-  <script type="text/javascript" src="javascripts/app.js"></script>
-</head>
-<body>
+<html ng-app="app" ng-class="{'fh5co-overflow': $root.isMobileWindowSize}">
+    <head>
+        <base href="/">
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta http-equiv="cache-control" content="max-age=0"/>
+        <meta http-equiv="cache-control" content="no-cache"/>
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT"/>
+        <meta http-equiv="pragma" content="no-cache"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Zlata</title>
+    <link href="/assets/app/vendor.css" rel="stylesheet"><link href="/assets/app/vendor.4a6f08a1bf50b4750895.css" rel="stylesheet"></head>
+    <body ng-class="{'fh5co-overflow': $root.isMobileWindowSize, 'fh5co-mobile-menu-visible': $root.isMobileMenuVisible}">
 
-<h1>app</h1>
+        <div ng-view></div>
 
-<div ng-view></div>
-
-</body>
+    <script type="text/javascript" src="/assets/app/vendor.4a6f08a1bf50b4750895.js"></script><script type="text/javascript" src="/assets/app/app.4a6f08a1bf50b4750895.js"></script></body>
 </html>
