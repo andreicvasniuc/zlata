@@ -1,0 +1,23 @@
+<mobile-menu ng-if="$root.isMobileWindowSize"></mobile-menu>
+
+<header ng-if="!$root.isMobileWindowSize" id="fh5co-header-section" role="header" ng-class="{'fh5co-scrolled': $ctrl.isWindowScrolled}">
+    <div class="container">
+        <h1 id="fh5co-logo" class="pull-left"><a href="/" translate="SHORT_SITE_NAME">Zlata</a></h1>
+        <main-menu></main-menu>
+    </div>
+</header>
+
+<aside id="fh5co-hero" ng-style="{'background-image': 'url({{$ctrl.headerBackgroundIcon}})'}">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="fh5co-hero-wrap">
+                    <div class="fh5co-hero-intro" ng-style="{'opacity': $ctrl.headingOpacity}">
+                        <h2>{{ 'HEADER'| translate }}<span></span></h2>
+                        <h1 translate="LONG_SITE_NAME"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>

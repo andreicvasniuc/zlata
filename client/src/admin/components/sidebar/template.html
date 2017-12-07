@@ -1,0 +1,26 @@
+<div class="navbar-default sidebar">
+    <div class="sidebar-nav navbar-collapse">
+        <ul id="side-menu" class="nav in">
+
+            <li class="sidebar-search">
+                <div class="input-group custom-search-form">
+                    <input type="text" translate-attr="{ placeholder: 'SEARCH' }" class="form-control">
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="$ctrl.alert()">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+                </div>
+                <!-- /input-group -->
+            </li>
+
+            <li ng-repeat="item in $ctrl.navigationItems">
+                <a ng-click="$ctrl.goTo(item.url)" class="clickable" ng-class="{'active': $ctrl.isActive(item.url)}">
+                    <i class="fa fa-fw fa-{{item.cssClass}}"></i>
+                    <span translate="{{item.title}}"></span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

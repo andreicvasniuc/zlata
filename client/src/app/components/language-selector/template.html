@@ -1,0 +1,13 @@
+<div class="language-selector">
+    <a href="javascript:void(0)" class="fh5co-sub-ddown">
+        <img ng-src="{{$ctrl.selectedLanguage.icon}}" alt="selected language" /> 
+    </a>
+    <ul class="fh5co-sub-menu">
+        <li ng-repeat="language in $ctrl.languageList">
+            <a href="javascript:void(0)" ng-click="$ctrl.selectLanguage(language)" title="{{language.title}}">
+                <img ng-src="{{language.icon}}" alt="{{language.key}}" />
+                {{language.key}}
+            </a>
+        </li>
+    </ul>
+</div>

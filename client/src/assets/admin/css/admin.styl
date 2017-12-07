@@ -1,0 +1,83 @@
+.clickable {
+    cursor: pointer;
+    
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.modal-header {
+    img.clickable {
+        &:hover {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            position: relative;
+            top: -1px;
+            right: -1px;
+        }
+    }
+}
+
+.modal-body {
+    .form-control {
+        display: inline;
+        width: auto;
+    }
+}
+
+.btn {
+    border: 1px solid #ccc;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.rightm10 {
+    margin-right: 10px;
+}
+
+.width250 {
+    width: 250px;
+}
+
+.width50 {
+    width: 50px;
+}
+
+.width100 {
+    width: 100px;
+}
+
+.pad15 {
+    padding: 15px;
+}
+
+.clear-search {
+    position: absolute;
+    
+    i {
+        position: relative;
+        top: 6px;
+        left: -24px;
+        z-index: 3;
+    }
+}
+
+.relative {
+    position: relative;
+}
+
+.mb0 {
+    margin-bottom: 0px;
+}
+
+@media (min-width: 768px) {
+  .modal-dialog {
+    width: 615px;
+  }
+}

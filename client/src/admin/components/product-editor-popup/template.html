@@ -1,0 +1,176 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span ng-if="!$ctrl.isEdit" translate="CREATE"></span> 
+        <span ng-if="$ctrl.isEdit" translate="EDIT"></span> 
+        <span translate="PRODUCT"></span>
+
+        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.cancel()" class="clickable pull-right">
+        <div class="clearfix"></div>
+    </h4>
+</div>
+
+<div class="modal-body role-modal-body product">
+    <form name="$ctrl.form" novalidate>
+
+        <uib-tabset active="$ctrl.activeTab" justified="true">
+            <uib-tab index="$ctrl.tabs.basicInformation" heading="{{'BASIC' | translate}}" select="$ctrl.selectTab($ctrl.tabs.basicInformation)">
+
+                <div class="pad15">
+                    <div class="form-group">
+                        <labeled-input label="{{'NAME' | translate}}" 
+                                       field-id="name"
+                                       value="$ctrl.product.name"
+                                       is-required="true"
+                                       placeholder="{{'ENTER_PRODUCT_NAME' | translate}}"
+                                       focus="true"
+                                       css-class="input">
+                        </labeled-input>
+                    </div>
+
+                    <div class="form-group">
+                        <labeled-textarea label="{{'DESCRIPTION' | translate}}" 
+                                          field-id="description"
+                                          value="$ctrl.product.description"
+                                          placeholder="{{'ENTER_DESCRIPTION' | translate}}"
+                                          css-class="textarea">
+                        </labeled-textarea>
+                    </div>
+
+                    <div class="form-group relative">
+                        <labeled-dropdown label="{{'SIZE' | translate}}" 
+                                          field-id="size"
+                                          items="$ctrl.sizes"
+                                          value="$ctrl.product.size_id"
+                                          text-property="name"
+                                          value-property="id"
+                                          css-class="dropdown">
+                        </labeled-dropdown>
+
+                        <button-default label="{{'ADD_SIZE' | translate}}" class="add-item-btn" uib-popover-template="$ctrl.sizeTemplate" popover-placement="right-top"></button-default>
+                    </div>
+
+                    <div class="form-group relative">
+                        <labeled-dropdown label="{{'COLOR' | translate}}" 
+                                          field-id="color"
+                                          items="$ctrl.colors"
+                                          value="$ctrl.product.color_id"
+                                          text-property="name"
+                                          value-property="id"
+                                          css-class="dropdown">
+                        </labeled-dropdown>
+
+                        <button-default label="{{'ADD_COLOR' | translate}}" class="add-item-btn" uib-popover-template="$ctrl.colorTemplate" popover-placement="right-top"></button-default>
+                    </div>
+
+                    <div class="form-group mb0">
+                        <labeled-input label="{{'PUBLISHED' | translate}}" 
+                                       field-id="is-published"
+                                       value="$ctrl.product.published"
+                                       type="checkbox"
+                                       css-class="checkbox"
+                                       display-after="true">
+                        </labeled-input>
+                    </div>
+
+                    <div class="form-group mb0">
+                        <labeled-input label="{{'TOP_PRODUCT' | translate}}" 
+                                       field-id="is-top"
+                                       value="$ctrl.product.is_top"
+                                       type="checkbox"
+                                       css-class="checkbox"
+                                       display-after="true">
+                        </labeled-input>
+                    </div>
+                </div>
+
+            </uib-tab>
+
+            <uib-tab index="$ctrl.tabs.imageUploading" heading="{{'IMAGE_UPLOADING' | translate}}" disable="!$ctrl.isEdit" select="$ctrl.selectTab($ctrl.tabs.imageUploading)">
+              <div class="pad15">
+                
+                <div class="form-group">
+                    <div class="textarea">
+                      <textarea id="image-url" 
+                          class="rightm10 form-control" 
+                          ng-model="$ctrl.image.url" 
+                          placeholder="{{'DRAG_IMAGE_HERE' | translate}}"
+                          ng-change="$ctrl.uploadImage()">
+                      </textarea>
+                    </div>
+                </div>
+
+                <div class="gallery-box" ng-repeat="image in $ctrl.product.images">
+                    <span class="title">
+                        <input id="image-{{$index}}" type="radio" name="cover" ng-model="$ctrl.coverImageId" ng-value="image._id.$oid" ng-click="$ctrl.makeCover(image)"/>
+                        <label for="image-{{$index}}" ng-if="!image.is_cover" translate="MAKE_COVER"></label>
+                        <label for="image-{{$index}}" ng-if="image.is_cover" translate="COVER"></label>
+                    </span>
+                    <div class="thumbnail" ng-click="$ctrl.makeCover(image)">
+                        <img ng-src="{{image.url}}" />
+                    </div>
+
+                    <div class="btn-group">
+                        <a ng-click="$ctrl.delete(image)" class="btn btn-xs btn-danger" translate="DELETE"></a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <!-- <div flow-init="{ testChunks: false }" 
+                     flow-file-success="$ctrl.flowFileSuccess($file, $message)" 
+                     flow-complete="$ctrl.flowComplete($flow)" 
+                     flow-error="$ctrl.flowError($file, $message, $flow.files)" 
+                     flow-file-added="$ctrl.flowFileAdded($flow, $file, $event)">
+                        
+                    <div class="clear pad15" flow-drop flow-drag-enter="style={border:'2px dashed green'}" flow-drag-leave="style={}" ng-style="style">
+                        <span flow-btn class="btn btn-default" translate="UPLOAD_IMAGES"></span>
+                        <span>
+                            <b translate="OR"></b>
+                            <span translate="DRAG_AND_DROP_YOUR_IMAGES_HERE"></span>
+                        </span>
+                    </div>
+
+                    <div class="gallery-box" ng-repeat="image in $ctrl.product.images">
+                        <span class="title">
+                            <input id="image-{{$index}}" type="radio" name="cover" ng-model="$ctrl.coverImageId" ng-value="image._id.$oid" ng-click="$ctrl.makeCover(image)"/>
+                            <label for="image-{{$index}}" ng-if="!image.is_cover" translate="MAKE_COVER"></label>
+                            <label for="image-{{$index}}" ng-if="image.is_cover" translate="COVER"></label>
+                        </span>
+                        <div class="thumbnail" ng-click="$ctrl.makeCover(image)">
+                            <img ng-src="{{image.small_image_url}}" />
+                        </div>
+
+                        <div class="btn-group">
+                            <a ng-click="$ctrl.delete(image)" class="btn btn-xs btn-danger" translate="DELETE"></a>
+                        </div>
+                    </div>
+
+                    <div class="gallery-box" ng-repeat="file in $flow.files" title="{{file.name}}">
+                        <span class="title">{{file.name}}</span>
+                        <div ng-show="$flow.files.length" class="thumbnail">
+                            <img flow-img="file" />
+                        </div>
+
+                        <uib-progressbar class="progress-striped" value="$ctrl.uploadedFileSize(file)" type="info">
+                            {{$ctrl.uploadedFileSize(file)}}%
+                        </uib-progressbar>
+                    </div>
+                    <div class="clearfix"></div>
+
+                </div> -->
+
+              </div>
+            </uib-tab>
+        </uib-tabset>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button-default label="{{'CANCEL' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
+
+    <span ng-show="$ctrl.isCurrentTab($ctrl.tabs.basicInformation)">
+        <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
+
+        <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
+    </span>
+</div>
