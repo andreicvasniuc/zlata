@@ -139,7 +139,6 @@ test:
 production:
   clients:
     default:
-      database: ishop_production
       uri: <%= ENV['MONGODB_URI'] %>
     options:
       skip_version_check: true
