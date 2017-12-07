@@ -141,7 +141,6 @@ production:
     default:
       uri: <%= ENV['MONGODB_URI'] %>
     options:
-      uri: <%= ENV['MONGODB_URI'] %>
       hosts:
         - localhost:27017
       skip_version_check: true
