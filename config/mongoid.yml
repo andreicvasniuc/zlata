@@ -141,5 +141,6 @@ production:
     default:
       uri: <%= ENV['MONGODB_URI'] %>
     options:
+      database: ishop_production
       skip_version_check: true
     safe: true
