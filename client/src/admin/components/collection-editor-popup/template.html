@@ -123,7 +123,7 @@
 </div>
 
 <div class="modal-footer">
-    <button-default label="{{'CANCEL' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
+    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
 
     <span ng-show="$ctrl.isCurrentTab($ctrl.tabs.basicInformation)">
         <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
