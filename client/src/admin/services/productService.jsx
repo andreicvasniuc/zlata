@@ -13,7 +13,7 @@ class ProductService {
   // }
 
   get(product, successCallback, errorCallback) {
-    this.productResource.get({ id: product._id.$oid, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
+    this.productResource.get({ id: product.slug, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
   }
 
   add(product, successCallback, errorCallback){
@@ -21,11 +21,11 @@ class ProductService {
   }
 
   edit(product, successCallback, errorCallback){
-    this.productResource.update({ id: product._id.$oid, product: product, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
+    this.productResource.update({ id: product.slug, product: product, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
   }
 
   delete(product, successCallback, errorCallback){
-    this.productResource.remove({ id: product._id.$oid, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
+    this.productResource.remove({ id: product.slug, collectionId: this.productRouter.getCollectionId(), locale: this.localeService.get() }, successCallback, errorCallback);
   }
 }
 

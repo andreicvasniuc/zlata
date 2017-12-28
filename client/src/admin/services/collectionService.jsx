@@ -22,15 +22,15 @@ class CollectionService {
   }
 
   edit(collection, successCallback, errorCallback) {
-    this.collectionResource.update({ id: collection._id.$oid, collection: collection, locale: this.localeService.get() }, successCallback, errorCallback);
+    this.collectionResource.update({ id: collection.slug, collection: collection, locale: this.localeService.get() }, successCallback, errorCallback);
   }
 
   delete(collection, successCallback, errorCallback){
-    this.collectionResource.remove({ id: collection._id.$oid, locale: this.localeService.get() }, successCallback, errorCallback);
+    this.collectionResource.remove({ id: collection.slug, locale: this.localeService.get() }, successCallback, errorCallback);
   }
 
   uploadImage(collection, successCallback, errorCallback){
-    this.collectionResource.uploadImage({ id: collection._id.$oid, image: collection.image, locale: this.localeService.get() }, successCallback, errorCallback);
+    this.collectionResource.uploadImage({ id: collection.slug, image: collection.image, locale: this.localeService.get() }, successCallback, errorCallback);
   }
 }
 

@@ -9,7 +9,7 @@ class Admin::Collection
 
   after_create :create_for_all_locales
 
-  scope :names, -> { only(:name) }
+  scope :names, -> { only(:name, :_slugs) }
 
   def self.search(search, pagination, sorting)
     ### this query does NOT provide a way to get products_count
@@ -36,6 +36,7 @@ class Admin::Collection
       { '$project' => {
           "name.#{I18n.locale}" => 1, 
           "description.#{I18n.locale}" => 1, 
+          :_slugs => 1,
           :published => 1, 
           :updated_at => 1,
           :image => 1,

@@ -31,7 +31,7 @@ class CollectionSelectorPopupController {
 
   select(collection, event) {
     event.preventDefault();
-    this.productRouter.goTo(this.routeUrls.collection_products, collection._id.$oid);
+    this.productRouter.goTo(this.routeUrls.collection_products, collection.slug);
   }
 
   cancel() {

@@ -66,7 +66,7 @@ class ProductEditorPopupController {
   }
 
   // setUploadUrl() {
-  //   this.uploadUrl = `${this.env.getApiUrl()}/admin/collections/${this.productRouter.getCollectionId()}/products/${this.product._id.$oid}/images/upload/`;
+  //   this.uploadUrl = `${this.env.getApiUrl()}/admin/collections/${this.productRouter.getCollectionId()}/products/${this.product.slug}/images/upload/`;
   // }
 
   startSavingSpinner() { this.isSavingSpinner = true; }
@@ -146,7 +146,7 @@ class ProductEditorPopupController {
   }
 
   makeCover(image) {
-    this.imageService.makeCover(this.product._id.$oid, image, (response) => {
+    this.imageService.makeCover(this.product.slug, image, (response) => {
       this.product = response;
       this.setCoverImageId();
       this.imageNotifier.showSuccessMakeCoverMessage();
@@ -154,7 +154,7 @@ class ProductEditorPopupController {
   }
 
   deleteImage(image) {
-    this.imageService.delete(this.product._id.$oid, image, (response) => {
+    this.imageService.delete(this.product.slug, image, (response) => {
       this.product = response;
       this.imageNotifier.showSuccessDeleteMessage();
     });
@@ -174,7 +174,7 @@ class ProductEditorPopupController {
   }
 
   uploadImage() {
-    this.imageService.upload(this.product._id.$oid, this.image, (response) => {
+    this.imageService.upload(this.product.slug, this.image, (response) => {
       this.product.images = response.images;
       this.image.url = '';
       this.imageNotifier.showSuccessUploadMessage();

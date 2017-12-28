@@ -93,7 +93,7 @@ class CollectionGridController {
   }
 
   editCollection(entity, openImageUploadingTab) {
-    self.collectionService.get(entity._id.$oid, (response) => {
+    self.collectionService.get(entity.slug, (response) => {
       self.$rootScope.$broadcast('openCollectionEditorPopup', response, openImageUploadingTab);
     });
   }
@@ -140,7 +140,7 @@ class CollectionGridController {
   }
 
   goToProducts(entity) {
-    self.productRouter.goTo(self.routeUrls.collection_products, entity._id.$oid);
+    self.productRouter.goTo(self.routeUrls.collection_products, entity.slug);
   }
 
   setGridHeight() {
