@@ -52,11 +52,15 @@ Rails.application.routes.draw do
       resources :colors, only: [:create, :update, :destroy] do
         get :list, on: :collection
       end
+
+      get '*path', to: '/home#admin'
     end
 
   end
 
   post 'user_token' => 'user_token#create'
+
+  get '*path', to: 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
