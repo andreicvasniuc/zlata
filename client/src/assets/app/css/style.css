@@ -1172,9 +1172,10 @@ Components
 }
 @media screen and (max-width: 768px) {
   #fh5co-newsletter {
-    padding: 2em 0;
+    padding: 4em 0;
   }
 }
+
 #fh5co-newsletter .fh5co-uppercase-heading-sm {
   color: rgba(0, 0, 0, 0.4);
 }
