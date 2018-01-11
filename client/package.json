@@ -38,6 +38,7 @@
     "angular": "1.5.9",
     "angular-cookies": "1.5.9",
     "angular-jwt": "^0.1.7",
+    "angular-lightgallery": "^1.0.8",
     "angular-resource": "1.5.9",
     "angular-route": "1.5.9",
     "angular-toastr": "^1.7.0",

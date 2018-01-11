@@ -7,6 +7,7 @@ import ngCookies from 'angular-cookies';
 import pascalprechtTranslate from 'angular-translate';
 import 'angular-translate-storage-cookie';
 import 'angular-translate-loader-static-files';
+import 'angular-lightgallery';
 
 import config from './config';
 import run from './run';

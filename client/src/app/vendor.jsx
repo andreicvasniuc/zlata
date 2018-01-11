@@ -2,6 +2,7 @@ import 'css/themify-icons.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'owl.carousel/dist/assets/owl.carousel.min.css';
 import 'owl.carousel/dist/assets/owl.theme.default.min.css';
+import 'angular-lightgallery/dist/css/lightgallery.css';
 import 'css/magnific-popup.css';
 import 'css/superfish.css';
 import 'css/easy-responsive-tabs.css';
