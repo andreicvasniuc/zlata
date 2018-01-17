@@ -1,11 +1,11 @@
 class CollectionListController {
-  constructor($timeout, $translate, collectionResolver, collectionRouter, titleTranslateId) {
+  constructor($timeout, $translate, collectionResolver, collectionRouter, titleTranslateId, breadcrumbService) {
     this.$timeout = $timeout;
     this.collectionResolver = collectionResolver;
     this.collectionRouter = collectionRouter;
+    this.breadcrumbService = breadcrumbService;
 
-    $translate(titleTranslateId).then((translation) => this.title = translation);
-
+    this.getTranslation($translate, titleTranslateId);
     this.loadCollections();
   }
 
@@ -16,6 +16,13 @@ class CollectionListController {
       this.collections = response.collections || [];
       if(this.collections.length == 1) this.goToCollection(this.collections[0]);
       this.$timeout(() => this.isLoadingSpinner = false, 50);
+    });
+  }
+
+  getTranslation($translate, titleTranslateId) {
+    $translate(titleTranslateId).then((translation) => {
+      this.title = translation;
+      this.breadcrumb = this.breadcrumbService.createBreadcrumb(this.title);
     });
   }
 

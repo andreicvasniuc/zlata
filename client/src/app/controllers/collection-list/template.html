@@ -1,8 +1,6 @@
-<main-container>
+<main-container breadcrumb="$ctrl.breadcrumb">
 
     <loading-icon ng-show="$ctrl.isLoadingSpinner" />
-
-    <breadcrumb ng-hide="$ctrl.isLoadingSpinner" current-page="$ctrl.title"></breadcrumb>
 
     <div class="col-md-10 col-md-offset-1 clearfix fh5co-header" ng-hide="$ctrl.isLoadingSpinner">
         <h1 class="h1 fh5co-heading fh5co-no-margin-bottom">{{ $ctrl.title }}</h1>

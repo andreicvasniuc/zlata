@@ -5,7 +5,9 @@ class MainContainerController {
 }
 
 let mainContainer = {
-  bindings: {},
+  bindings: {
+    breadcrumb: '<'
+  },
   controller: MainContainerController,
   templateUrl: template,
   transclude: true

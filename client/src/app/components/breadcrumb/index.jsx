@@ -7,7 +7,7 @@ class BreadcrumbController {
 
 let breadcrumb = {
   bindings: {
-    currentPage: '<'
+    data: '<'
   },
   controller: BreadcrumbController,
   templateUrl: template

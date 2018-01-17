@@ -1,8 +1,9 @@
 class CollectionController {
-  constructor($timeout, collectionService, collectionRouter) {
+  constructor($timeout, collectionService, collectionRouter, breadcrumbService) {
     this.$timeout = $timeout;
     this.collectionService = collectionService;
     this.collectionRouter = collectionRouter;
+    this.breadcrumbService = breadcrumbService;
 
     this.loadCollection();
   }
@@ -13,7 +14,14 @@ class CollectionController {
     this.collectionService.get(this.collectionRouter.getId(), (response) => {
       this.collection = response.collection;
       this.products = response.collection.products.filter((product) => product.published);
+      this.createBreadcrumb(this.collection);
       this.$timeout(() => this.isLoadingSpinner = false, 50);
+    });
+  }
+
+  createBreadcrumb(collection) {
+    this.breadcrumbService.createBreadcrumbForCollection(collection, (breadcrumb) => {
+      this.breadcrumb = breadcrumb;
     });
   }
 

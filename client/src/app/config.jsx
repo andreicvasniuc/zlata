@@ -23,7 +23,7 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
               return response.collections;
             });
           },
-          titleTranslateId: () => "ALL_COLLECTIONS"
+          titleTranslateId: () => 'ALL_COLLECTIONS'
       }
     },
     accessories: {
@@ -36,7 +36,7 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
               return response.collections;
             });
           },
-          titleTranslateId: () => "ALL_ACCESSORIES"
+          titleTranslateId: () => 'ALL_ACCESSORIES'
       }
     },
     collection: {

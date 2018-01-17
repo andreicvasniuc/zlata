@@ -15,6 +15,7 @@ import CollectionService from './collectionService';
 import LocaleService from './localeService';
 import SizeService from './sizeService';
 import ColorService from './colorService';
+import BreadcrumbService from './breadcrumbService';
 
 export default angular
     .module('app.services', [ resources ])
@@ -31,4 +32,5 @@ export default angular
     .service('localeService', LocaleService)
     .service('sizeService', SizeService)
     .service('colorService', ColorService)
+    .service('breadcrumbService', BreadcrumbService)
     .name;
