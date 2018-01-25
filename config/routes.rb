@@ -27,6 +27,10 @@ Rails.application.routes.draw do
       resources :colors, only: [] do
         get :list, on: :collection
       end
+
+      resources :social_networkings, only: [] do
+        get :list, on: :collection
+      end
     end
 
     namespace :admin do
@@ -51,6 +55,11 @@ Rails.application.routes.draw do
 
       resources :colors, only: [:create, :update, :destroy] do
         get :list, on: :collection
+      end
+
+      resources :social_networkings, except: [:index, :new, :edit] do
+        post :search, on: :collection
+        post :upload_image, on: :member
       end
 
       get '*path', to: '/home#admin'

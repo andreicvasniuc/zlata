@@ -82,5 +82,12 @@
   "TOP_PRODUCT": "top product",
   "ACCESSORY": "accessory",
   "ACCESSORIES": "accessories",
-  "DRAG_IMAGE_HERE": "Drag image here"
+  "DRAG_IMAGE_HERE": "Drag image here",
+  "SOCIAL_NETWORKINGS": "Social networkings",
+  "ADD_SOCIAL_NETWORKING": "Add social networking",
+  "ICON": "Icon",
+  "DELETE_SOCIAL_NETWORKING_MESSAGE": "Are you sure you want to delete this social networking?",
+  "SOCIAL_NETWORKING_": "Social networking",
+  "SOCIAL_NETWORKING": "Social networking",
+  "ENTER_SOCIAL_NETWORKING_NAME": "Enter social networking name..."
 }

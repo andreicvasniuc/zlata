@@ -7,9 +7,10 @@ class Navigator {
 
   getNavigationItems() {
     return [
-      {title: 'DASHBOARD', url: this.routeUrls.dashboard, cssClass: 'dashboard' },
-      {title: 'COLLECTIONS', url: this.routeUrls.collections, cssClass: 'table' },
-      {title: 'PRODUCTS', url: this.routeUrls.products, cssClass: 'table' }
+      { title: 'DASHBOARD', url: this.routeUrls.dashboard, cssClass: 'dashboard' },
+      { title: 'COLLECTIONS', url: this.routeUrls.collections, cssClass: 'table' },
+      { title: 'PRODUCTS', url: this.routeUrls.products, cssClass: 'table' },
+      { title: 'SOCIAL_NETWORKINGS', url: this.routeUrls.social_networkings, cssClass: 'table' }
     ];
   }
 

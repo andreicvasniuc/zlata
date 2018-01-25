@@ -26,6 +26,8 @@ import collectionEditorPopup from './collection-editor-popup';
 import collectionSelectorPopup from './collection-selector-popup';
 import languageSelector from './language-selector';
 import itemEditorPopover from './item-editor-popover';
+import socialNetworkingGrid from './social-networking-grid';
+import socialNetworkingEditorPopup from './social-networking-editor-popup';
 
 export default angular
     .module('admin.components', [])
@@ -55,4 +57,6 @@ export default angular
     .component('collectionSelectorPopup', collectionSelectorPopup)
     .component('languageSelector', languageSelector)
     .component('itemEditorPopover', itemEditorPopover)
+    .component('socialNetworkingGrid', socialNetworkingGrid)
+    .component('socialNetworkingEditorPopup', socialNetworkingEditorPopup)
     .name;

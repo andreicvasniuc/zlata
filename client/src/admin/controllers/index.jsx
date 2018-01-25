@@ -5,6 +5,7 @@ import CollectionController from './collection';
 import CollectionProductController from './collection-product';
 import ProductController from './product';
 import LoginController from './login';
+import SocialNetworkingController from './social-networking';
 
 export default angular
     .module('admin.controllers', [])
@@ -13,4 +14,5 @@ export default angular
     .controller('CollectionController', CollectionController)
     .controller('CollectionProductController', CollectionProductController)
     .controller('ProductController', ProductController)
+    .controller('SocialNetworkingController', SocialNetworkingController)
     .name;

@@ -58,7 +58,7 @@
   "DELETED_": "видалена",
   "UPLOADED_": "завантажена",
   "ENTER_PRODUCT_NAME": "Введіть назву продукту...",
-  "ENTER_COLLECTION_NAME": "Введіть ім'я колекції ...",
+  "ENTER_COLLECTION_NAME": "Введіть назву колекції...",
   "ENTER_DESCRIPTION": "Введіть опис...",
   "DELETE_IMAGE_MESSAGE": "Ви впевнені, що хочете видалити цей малюнок?",
   "DELETE_PRODUCT_MESSAGE": "При видаленні цього продукту будуть видалені всі завантажені зображення для цього продукту. Ви впевнені, що хочете видалити цей продукт?",
@@ -82,5 +82,12 @@
   "TOP_PRODUCT": "топовий продукт",
   "ACCESSORY": "аксесуар",
   "ACCESSORIES": "аксесуари",
-  "DRAG_IMAGE_HERE": "Перетягніть зображення сюди"
+  "DRAG_IMAGE_HERE": "Перетягніть зображення сюди",
+  "SOCIAL_NETWORKINGS": "Соціальні мережі",
+  "ADD_SOCIAL_NETWORKING": "Додати соціальну мережу",
+  "ICON": "Іконка",
+  "DELETE_SOCIAL_NETWORKING_MESSAGE": "Ви впевнені, що хочете видалити цю соціальну мережу?",
+  "SOCIAL_NETWORKING_": "Соціальну мережу",
+  "SOCIAL_NETWORKING": "Соціальна мережа",
+  "ENTER_SOCIAL_NETWORKING_NAME": "Введіть назву соціальної мережі..."
 }

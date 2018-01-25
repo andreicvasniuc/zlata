@@ -3,6 +3,7 @@ import dashboardTemplate from './controllers/dashboard/template.html';
 import collectionTemplate from './controllers/collection/template.html';
 import collectionProductTemplate from './controllers/collection-product/template.html';
 import productTemplate from './controllers/product/template.html';
+import socialNetworkingTemplate from './controllers/social-networking/template.html';
 
 export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $translateProvider, languages, envProvider, $locationProvider) => {
   /* Routing */
@@ -36,12 +37,19 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
       controller: 'ProductController',
       controllerAs: '$ctrl',
       requiresLogin: true
+    },
+    social_networkings: {
+      templateUrl: socialNetworkingTemplate,
+      controller: 'SocialNetworkingController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
     }
   };
 
   let searchPath = '/sort/:sortBy/:sortByDirection/search/:searchText?';
   routeUrls.collections_search = routeUrls.collections + searchPath;
   routeUrls.collection_products_search = routeUrls.collection_products + searchPath;
+  routeUrls.social_networkings_search = routeUrls.social_networkings + searchPath;
 
   $routeProvider
     .when(
@@ -68,6 +76,12 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
     .when(
         routeUrls.collection_products_search,
         routes.collection_products)
+    .when(
+        routeUrls.social_networkings,
+        routes.social_networkings)
+    .when(
+        routeUrls.social_networkings_search,
+        routes.social_networkings)
     .otherwise(
         { redirectTo: routeUrls.collections });
 

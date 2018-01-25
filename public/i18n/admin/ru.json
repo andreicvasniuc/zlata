@@ -58,7 +58,7 @@
   "DELETED_": "удалена",
   "UPLOADED_": "загружена",
   "ENTER_PRODUCT_NAME": "Введите название продукта...",
-  "ENTER_COLLECTION_NAME": "Введите имя коллекции...",
+  "ENTER_COLLECTION_NAME": "Введите название коллекции...",
   "ENTER_DESCRIPTION": "Введите описание...",
   "DELETE_IMAGE_MESSAGE": "Вы уверены в том, что хотите удалить данный рисунок?",
   "DELETE_PRODUCT_MESSAGE": "При удалении этого продукта будут удалены все загруженные изображения для этого продукта. Вы уверены, что хотите удалить этот продукт?",
@@ -82,5 +82,12 @@
   "TOP_PRODUCT": "топовый продукт",
   "ACCESSORY": "аксессуар",
   "ACCESSORIES": "аксессуары",
-  "DRAG_IMAGE_HERE": "Перетащите изображение сюда"
+  "DRAG_IMAGE_HERE": "Перетащите изображение сюда",
+  "SOCIAL_NETWORKINGS": "Социальные сети",
+  "ADD_SOCIAL_NETWORKING": "Добавить социальную сеть",
+  "ICON": "Иконка",
+  "DELETE_SOCIAL_NETWORKING_MESSAGE": "Вы уверены в том, что хотите удалить данную социальную сеть?",
+  "SOCIAL_NETWORKING_": "Социальную сеть",
+  "SOCIAL_NETWORKING": "Социальная сеть",
+  "ENTER_SOCIAL_NETWORKING_NAME": "Введите название социальной сети..."
 }
