@@ -4,37 +4,33 @@ import template from './template.html';
 import closeIcon from 'images/close.png';
 
 class SocialNetworkingEditorPopupController {
-  constructor($scope, $timeout, $uibModal, $translate, socialNetworkingService, socialNetworkingNotifier, imageNotifier) {
+  constructor($scope, $timeout, $uibModal, socialNetworkingService, socialNetworkingNotifier) {
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.$uibModal = $uibModal;
-    this.$translate = $translate;
     this.socialNetworkingService = socialNetworkingService;
     this.socialNetworkingNotifier = socialNetworkingNotifier;
-    this.imageNotifier = imageNotifier;
     this.closeIcon = closeIcon;
 
-    this.tabs = {
-      basicInformation: 0,
-      imageUploading: 1
-    };
-
     this.createOpenPopupEvent();
+    this.createSocialNetworkingCssClasses();
+  }
+
+  createSocialNetworkingCssClasses() {
+    this.socialNetworkingCssClasses = this.socialNetworkingService.getCssClasses();
   }
 
   createOpenPopupEvent() {
-    this.$scope.$on('openSocialNetworkingEditorPopup', (event, socialNetworking, openImageUploadingTab) => {
-      let activeTab = openImageUploadingTab ? this.tabs.imageUploading : this.tabs.basicInformation;
-      this.initialize(socialNetworking, activeTab);
+    this.$scope.$on('openSocialNetworkingEditorPopup', (event, socialNetworking) => {
+      this.initialize(socialNetworking);
       this.stopSavingSpinner();
       this.openSocialNetworkingEditorPopup(); 
     });
   }
 
-  initialize(socialNetworking, activeTab) {
+  initialize(socialNetworking) {
     this.socialNetworking = socialNetworking;
     this.isEdit = !!socialNetworking;
-    this.selectTab(activeTab);
   }
 
   openSocialNetworkingEditorPopup() {
@@ -52,10 +48,9 @@ class SocialNetworkingEditorPopupController {
   add() {
     this.startSavingSpinner();
     this.socialNetworkingService.add(this.socialNetworking, (response) => {
-      this.initialize(response, this.activeTab);
+      this.initialize(response);
       this.socialNetworkingNotifier.showSuccessCreateMessage();
       this.stopSavingSpinner();
-      this.selectTab(this.tabs.imageUploading);
     });
   }
 
@@ -74,24 +69,6 @@ class SocialNetworkingEditorPopupController {
   cancel() {
     this.reloadGrid();
     this.modal.dismiss('cancel');
-  }
-
-  selectTab(tab) {
-    this.activeTab = tab;
-  }
-
-  isCurrentTab(tab) {
-    return this.activeTab == tab;
-  }
-
-  uploadImage() {
-    this.socialNetworkingService.uploadImage(this.socialNetworking, (response) => {
-      this.imageNotifier.showSuccessUploadMessage();
-    });
-  }
-
-  deleteImage() {
-    delete this.socialNetworking.image;
   }
 }
 

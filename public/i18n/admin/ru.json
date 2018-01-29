@@ -89,5 +89,7 @@
   "DELETE_SOCIAL_NETWORKING_MESSAGE": "Вы уверены в том, что хотите удалить данную социальную сеть?",
   "SOCIAL_NETWORKING_": "Социальную сеть",
   "SOCIAL_NETWORKING": "Социальная сеть",
-  "ENTER_SOCIAL_NETWORKING_NAME": "Введите название социальной сети..."
+  "ENTER_SOCIAL_NETWORKING_NAME": "Введите название социальной сети...",
+  "ENTER_SOCIAL_NETWORKING_URL": "Введите ссылку социальной сети...",
+  "URL": "Ссылка"
 }

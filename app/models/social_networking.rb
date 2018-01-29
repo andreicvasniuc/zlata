@@ -4,11 +4,9 @@ class SocialNetworking
   include Mongoid::Slug
   include SocialNetworkingConcern
 
-  embeds_one :image, class_name: "SocialNetworkingImage"
-
   scope :published, -> { where( published: true ) }
   scope :latest, -> { order( created_at: :desc ) }
-  scope :base_info, -> { only( :name, :image, :_slugs ) }
+  scope :base_info, -> { only( :name, :url, :css_class, :_slugs ) }
 
   def self.published_social_networkings
     self.published.latest.base_info

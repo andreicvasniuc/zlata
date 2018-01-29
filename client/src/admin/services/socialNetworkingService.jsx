@@ -25,8 +25,13 @@ class SocialNetworkingService {
     this.socialNetworkingResource.remove({ id: socialNetworking.slug, locale: this.localeService.get() }, successCallback, errorCallback);
   }
 
-  uploadImage(socialNetworking, successCallback, errorCallback){
-    this.socialNetworkingResource.uploadImage({ id: socialNetworking.slug, image: socialNetworking.image, locale: this.localeService.get() }, successCallback, errorCallback);
+  getCssClasses() {
+    return [
+      { name: 'Vkontakte', id: 'ti-vimeo-alt' },
+      { name: 'Facebook', id: 'ti-facebook' },
+      { name: 'Instagram', id: 'ti-instagram' },
+      { name: 'Skype', id: 'ti-skype' }
+    ];
   }
 }
 

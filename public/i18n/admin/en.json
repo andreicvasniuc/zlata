@@ -89,5 +89,7 @@
   "DELETE_SOCIAL_NETWORKING_MESSAGE": "Are you sure you want to delete this social networking?",
   "SOCIAL_NETWORKING_": "Social networking",
   "SOCIAL_NETWORKING": "Social networking",
-  "ENTER_SOCIAL_NETWORKING_NAME": "Enter social networking name..."
+  "ENTER_SOCIAL_NETWORKING_NAME": "Enter social networking name...",
+  "ENTER_SOCIAL_NETWORKING_URL": "Enter social networking url...",
+  "URL": "Url"
 }

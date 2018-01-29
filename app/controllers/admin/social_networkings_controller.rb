@@ -1,5 +1,5 @@
 class Admin::SocialNetworkingsController < SecuredController
-  before_action :set_social_networking, only: [:show, :update, :destroy, :upload_image]
+  before_action :set_social_networking, only: [:show, :update, :destroy]
 
   # POST /admin/social_networkings/search
   # POST /admin/social_networkings/search.json
@@ -44,26 +44,8 @@ class Admin::SocialNetworkingsController < SecuredController
 
     render json: @social_networking, status: :ok
   end
-
-  # POST /admin/social_networkings/1/upload_image
-  # POST /admin/social_networkings1/upload_image.json
-  def upload_image
-    delete_image() unless @social_networking.image.nil?
-
-    @image = @social_networking.build_image(social_networking_image_params)
-
-    if @image.save
-      render json: @social_networking, status: :ok
-    else
-      render json: image_processor.errors, status: :unprocessable_entity
-    end
-  end
   
   private
-
-    def delete_image
-      @social_networking.image.destroy
-    end
 
     def set_social_networking
       @social_networking = Admin::SocialNetworking.find(social_networking_id)
@@ -74,10 +56,6 @@ class Admin::SocialNetworkingsController < SecuredController
     end
 
     def social_networking_params
-      params.require(:social_networking).permit(:name, :published)
-    end
-
-    def social_networking_image_params
-      params.require(:image).permit(:url)
+      params.require(:social_networking).permit(:name, :url, :css_class, :published)
     end
 end

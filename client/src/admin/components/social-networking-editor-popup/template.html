@@ -12,60 +12,49 @@
 <div class="modal-body role-modal-body social-networking">
     <form name="$ctrl.form" novalidate>
 
-        <uib-tabset active="$ctrl.activeTab" justified="true">
-            <uib-tab index="$ctrl.tabs.basicInformation" heading="{{'BASIC' | translate}}" select="$ctrl.selectTab($ctrl.tabs.basicInformation)">
+        <div class="pad15">
+            <div class="form-group">
+                <labeled-input label="{{'NAME' | translate}}" 
+                               field-id="name"
+                               value="$ctrl.socialNetworking.name"
+                               is-required="true"
+                               placeholder="{{'ENTER_SOCIAL_NETWORKING_NAME' | translate}}"
+                               focus="true"
+                               css-class="input">
+                </labeled-input>
+            </div>
 
-                <div class="pad15">
-                    <div class="form-group">
-                        <labeled-input label="{{'NAME' | translate}}" 
-                                       field-id="name"
-                                       value="$ctrl.socialNetworking.name"
-                                       is-required="true"
-                                       placeholder="{{'ENTER_SOCIAL_NETWORKING_NAME' | translate}}"
-                                       focus="true"
-                                       css-class="input">
-                        </labeled-input>
-                    </div>
+            <div class="form-group">
+                <labeled-input label="{{'URL' | translate}}" 
+                               field-id="url"
+                               value="$ctrl.socialNetworking.url"
+                               is-required="true"
+                               placeholder="{{'ENTER_SOCIAL_NETWORKING_URL' | translate}}"
+                               css-class="input">
+                </labeled-input>
+            </div>
 
-                    <div class="form-group">
-                        <labeled-input label="{{'PUBLISHED' | translate}}" 
-                                       field-id="is-published"
-                                       value="$ctrl.socialNetworking.published"
-                                       type="checkbox"
-                                       css-class="checkbox"
-                                       display-after="true">
-                        </labeled-input>
-                    </div>
-                </div>
+            <div class="form-group">
+                <labeled-dropdown label="{{'ICON' | translate}}" 
+                                  field-id="css_class"
+                                  items="$ctrl.socialNetworkingCssClasses"
+                                  value="$ctrl.socialNetworking.css_class"
+                                  text-property="name"
+                                  value-property="id"
+                                  css-class="dropdown">
+                </labeled-dropdown>
+            </div>
 
-            </uib-tab>
-
-            <uib-tab index="$ctrl.tabs.imageUploading" heading="{{'IMAGE_UPLOADING' | translate}}" disable="!$ctrl.isEdit" select="$ctrl.selectTab($ctrl.tabs.imageUploading)">
-              <div class="pad15">
-                
-                <div class="form-group" ng-if="!$ctrl.socialNetworking.image">
-                    <div class="textarea">
-                      <textarea id="image-url" 
-                          class="rightm10 form-control" 
-                          ng-model="$ctrl.socialNetworking.image.url" 
-                          placeholder="{{'DRAG_IMAGE_HERE' | translate}}"
-                          ng-change="$ctrl.uploadImage()">
-                      </textarea>
-                    </div>
-                </div>
-
-                <div class="gallery-box" ng-if="$ctrl.socialNetworking.image">
-                    <div class="thumbnail">
-                        <img ng-src="{{$ctrl.socialNetworking.image.url}}" />
-                    </div>
-
-                    <div class="btn-group">
-                        <a ng-click="$ctrl.deleteImage()" class="btn btn-xs btn-danger" translate="DELETE"></a>
-                    </div>
-                </div>
-              </div>
-            </uib-tab>
-        </uib-tabset>
+            <div class="form-group">
+                <labeled-input label="{{'PUBLISHED' | translate}}" 
+                               field-id="is-published"
+                               value="$ctrl.socialNetworking.published"
+                               type="checkbox"
+                               css-class="checkbox"
+                               display-after="true">
+                </labeled-input>
+            </div>
+        </div>
 
     </form>
 </div>
@@ -73,9 +62,7 @@
 <div class="modal-footer">
     <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
 
-    <span ng-show="$ctrl.isCurrentTab($ctrl.tabs.basicInformation)">
-        <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
+    <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
 
-        <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
-    </span>
+    <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
 </div>

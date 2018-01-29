@@ -89,5 +89,7 @@
   "DELETE_SOCIAL_NETWORKING_MESSAGE": "Sunteți sigur că doriți să ștergeți această rețea socială?",
   "SOCIAL_NETWORKING_": "Rețea socială",
   "SOCIAL_NETWORKING": "Rețeaua socială",
-  "ENTER_SOCIAL_NETWORKING_NAME": "Introduceți nume de rețea socială..."
+  "ENTER_SOCIAL_NETWORKING_NAME": "Introduceți nume de rețea socială...",
+  "ENTER_SOCIAL_NETWORKING_URL": "Introduceți url de rețea socială...",
+  "URL": "Url"
 }

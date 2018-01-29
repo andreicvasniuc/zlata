@@ -7,6 +7,8 @@ module SocialNetworkingConcern
     store_in collection: 'social_networkings'
 
     field :name, type: String, localize: true
+    field :url, type: String
+    field :css_class, type: String
     field :published, type: Boolean
 
     index name: 1

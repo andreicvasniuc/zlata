@@ -4,15 +4,13 @@ class Admin::SocialNetworking
   include Mongoid::Slug
   include SocialNetworkingConcern
 
-  embeds_one :image, class_name: "Admin::SocialNetworkingImage"
-
   after_create :create_for_all_locales
 
   scope :names, -> { only(:name, :_slugs) }
 
   def self.search(search, pagination, sorting)
     query = self.or({name: {'$regex' => search}})
-                .only(:name, :_slugs, :published, :created_at, :updated_at)
+                .only(:name, :url, :css_class, :_slugs, :published, :created_at, :updated_at)
                 .order_by(sorting[:field]=> sorting[:direction])
                 .skip(pagination[:skip])
                 .limit(pagination[:take])
