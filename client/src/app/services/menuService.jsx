@@ -22,7 +22,7 @@ class MenuService {
               { name: 'ACCESSORIES', url: this.routeUrls.accessories }
             ]
           },
-          { name: 'CONTACT', url: this.routeUrls.contact }
+          { name: 'CONTACTS', url: this.routeUrls.contacts }
       ]
     };
   }

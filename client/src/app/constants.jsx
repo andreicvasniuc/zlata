@@ -8,7 +8,7 @@ export default angular
         collection: '/:collection',
         product: '/:collection/:product', 
         accessories: '/accessories', 
-        contact: '/contact' 
+        contacts: '/contacts' 
       })
     .constant('languages', { en: 'en', ru: 'ru', ua: 'ua', ro: 'ro' })
     .name;
