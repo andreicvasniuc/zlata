@@ -2,6 +2,7 @@ import template from './template.html';
 
 class MainFooterController {
   constructor() {
+    this.currentYear = new Date().getFullYear();
   }
 }
 
