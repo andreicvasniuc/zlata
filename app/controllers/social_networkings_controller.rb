@@ -4,9 +4,4 @@ class SocialNetworkingsController < ApplicationController
   def list
     render json: { social_networkings: SocialNetworking.published_social_networkings }
   end
-
-  private
-    def social_networking_id
-      params[:id]
-    end
 end

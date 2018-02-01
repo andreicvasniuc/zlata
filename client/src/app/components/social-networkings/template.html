@@ -1,0 +1,9 @@
+<loading-icon ng-show="$ctrl.isLoadingSpinner" />
+
+<ul class="fh5co-social-icons" ng-hide="$ctrl.isLoadingSpinner">
+    <li ng-repeat="socialNetworking in $ctrl.socialNetworkings">
+      <a ng-href="{{socialNetworking.url}}">
+        <i class="{{socialNetworking.css_class}}"></i>
+      </a>
+    </li>
+</ul>

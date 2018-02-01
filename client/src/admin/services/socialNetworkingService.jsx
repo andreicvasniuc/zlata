@@ -27,10 +27,10 @@ class SocialNetworkingService {
 
   getCssClasses() {
     return [
-      { name: 'Vkontakte', id: 'ti-vimeo-alt' },
+      { name: 'Vkontakte', id: 'ti-vk' },
       { name: 'Facebook', id: 'ti-facebook' },
       { name: 'Instagram', id: 'ti-instagram' },
-      { name: 'Skype', id: 'ti-skype' }
+      { name: 'Pinterest', id: 'ti-pinterest-alt' }
     ];
   }
 }

@@ -13,6 +13,7 @@ import loadingIcon from './loading-icon';
 import items from './items';
 import itemDetails from './item-details';
 import breadcrumb from './breadcrumb';
+import socialNetworkings from './social-networkings';
 
 export default angular
     .module('app.components', [])
@@ -29,4 +30,5 @@ export default angular
     .component('items', items)
     .component('itemDetails', itemDetails)
     .component('breadcrumb', breadcrumb)
+    .component('socialNetworkings', socialNetworkings)
     .name;
