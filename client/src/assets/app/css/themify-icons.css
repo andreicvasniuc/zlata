@@ -1080,10 +1080,14 @@
 	content: "\e75f";
 }
 .ti-vk {
-	background: #000 url(../images/vk.png) no-repeat center center;
+	background: #fff url(../images/vk.png) no-repeat center center;
 	width: 40px;
 	height: 48px;
 	display: inline-block;
 	position: relative;
 	top: 10px;
+}
+
+.ti-vk:hover {
+	background-image: url(../images/vk-hover.png);
 }
