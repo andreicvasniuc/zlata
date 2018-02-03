@@ -3,7 +3,7 @@
     <loading-icon ng-show="$ctrl.isLoadingSpinner" />
 
     <item-details item="$ctrl.product" ng-if="!$ctrl.isLoadingSpinner">
-      <navigation collection="$ctrl.collection" index="$ctrl.index" />
+      <navigation collection="$ctrl.collection" index="$ctrl.index" ng-if="$ctrl.collection.products.length > 1" />
     </item-details>
 
 </main-container>
