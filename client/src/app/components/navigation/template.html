@@ -1,0 +1,9 @@
+<div class="navigation">
+  <a ng-href="{{$ctrl.getPrevLinkUrl()}}" ng-class="{'invisible': !$ctrl.isPrevLinkVisible()}">
+    <i class="glyphicon glyphicon-triangle-left" />
+  </a>
+  <span>{{$ctrl.index + 1}} / {{$ctrl.collection.products.length}}</span>
+  <a ng-href="{{$ctrl.getNextLinkUrl()}}" ng-class="{'invisible': !$ctrl.isNextLinkVisible()}">
+    <i class="glyphicon glyphicon-triangle-right" />
+  </a>
+</div>

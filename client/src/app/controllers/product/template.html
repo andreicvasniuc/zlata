@@ -2,6 +2,8 @@
 
     <loading-icon ng-show="$ctrl.isLoadingSpinner" />
 
-    <item-details item="$ctrl.product" ng-if="!$ctrl.isLoadingSpinner" />
+    <item-details item="$ctrl.product" ng-if="!$ctrl.isLoadingSpinner">
+      <navigation collection="$ctrl.collection" index="$ctrl.index" />
+    </item-details>
 
 </main-container>

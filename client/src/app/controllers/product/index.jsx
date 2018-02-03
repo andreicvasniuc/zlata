@@ -16,6 +16,7 @@ class ProductController {
     this.collectionService.get(this.collectionRouter.getId(), (collectionResponse) => {
       this.colorService.list((colorResponse) => {
         this.sizeService.list((sizeResponse) => {
+          this.collection = collectionResponse.collection;
           this.getProduct(collectionResponse.collection);
           this.setColor(colorResponse.colors);
           this.setSize(sizeResponse.sizes);
@@ -26,13 +27,18 @@ class ProductController {
   }
 
   getProduct(collection) {
-    this.product = collection.products.find((product) => product.slug == this.collectionRouter.getProductId());
+    this.product = collection.products.find((product) => this.findProduct(product));
+    this.index = collection.products.findIndex((product) => this.findProduct(product));
     if(this.product) {
       this.createBreadcrumb(collection, this.product);
     } else {
       // go to 404
       console.log('go to 404');
     }
+  }
+
+  findProduct(product) {
+    return product.slug == this.collectionRouter.getProductId();
   }
 
   createBreadcrumb(collection, product) {

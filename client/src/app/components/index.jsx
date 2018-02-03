@@ -14,6 +14,7 @@ import items from './items';
 import itemDetails from './item-details';
 import breadcrumb from './breadcrumb';
 import socialNetworkings from './social-networkings';
+import navigation from './navigation';
 
 export default angular
     .module('app.components', [])
@@ -31,4 +32,5 @@ export default angular
     .component('itemDetails', itemDetails)
     .component('breadcrumb', breadcrumb)
     .component('socialNetworkings', socialNetworkings)
+    .component('navigation', navigation)
     .name;

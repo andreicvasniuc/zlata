@@ -12,7 +12,8 @@ let itemDetails = {
     item: '<'
   },
   controller: ItemDetailsController,
-  templateUrl: template
+  templateUrl: template,
+  transclude: true
 };
 
 export default itemDetails

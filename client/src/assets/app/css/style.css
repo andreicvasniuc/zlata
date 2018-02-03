@@ -1581,4 +1581,8 @@ a > img.fh5co-align-center {
   }
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 /*# sourceMappingURL=style.css.map */
