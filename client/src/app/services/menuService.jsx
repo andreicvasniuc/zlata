@@ -14,11 +14,10 @@ class MenuService {
   createMenu() {
     return {
       list: [
-          { name: 'HOME', url: this.routeUrls.home, isActive: true },
+          { name: 'HOME', url: this.routeUrls.home },
           { name: 'CATALOG', url: this.routeUrls.collections, list: 
             [
               { name: 'COLLECTIONS', url: this.routeUrls.collections },
-              // { name: 'DRESSES', url: this.routeUrls.dresses },
               { name: 'ACCESSORIES', url: this.routeUrls.accessories }
             ]
           },

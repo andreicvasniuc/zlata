@@ -5,10 +5,10 @@ export default angular
     .constant('routeUrls', { 
         home: '/', 
         collections: '/collections', 
-        collection: '/:collection',
+        collection: '/:collection', 
         product: '/:collection/:product', 
         accessories: '/accessories', 
-        contacts: '/contacts' 
+        contacts: '/contacts'
       })
     .constant('languages', { en: 'en', ru: 'ru', ua: 'ua', ro: 'ro' })
     .name;

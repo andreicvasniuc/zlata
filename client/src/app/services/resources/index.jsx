@@ -5,6 +5,7 @@ import ProductResource from './productResource';
 import SizeResource from './sizeResource';
 import ColorResource from './colorResource';
 import SocialNetworkingResource from './socialNetworkingResource';
+import ContactResource from './contactResource';
 
 export default angular
     .module('app.services.resources', [])
@@ -13,4 +14,5 @@ export default angular
     .service('sizeResource', SizeResource)
     .service('colorResource', ColorResource)
     .service('socialNetworkingResource', SocialNetworkingResource)
+    .service('contactResource', ContactResource)
     .name;

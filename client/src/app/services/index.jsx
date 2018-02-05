@@ -17,6 +17,7 @@ import SizeService from './sizeService';
 import ColorService from './colorService';
 import BreadcrumbService from './breadcrumbService';
 import SocialNetworkingService from './socialNetworkingService';
+import ContactService from './contactService';
 
 export default angular
     .module('app.services', [ resources ])
@@ -35,4 +36,5 @@ export default angular
     .service('colorService', ColorService)
     .service('breadcrumbService', BreadcrumbService)
     .service('socialNetworkingService', SocialNetworkingService)
+    .service('contactService', ContactService)
     .name;

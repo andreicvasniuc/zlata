@@ -1,8 +1,8 @@
 import homeTemplate from './controllers/home/template.html';
 import collectionListTemplate from './controllers/collection-list/template.html';
 import collectionTemplate from './controllers/collection/template.html';
-import productListTemplate from './controllers/product-list/template.html';
 import productTemplate from './controllers/product/template.html';
+import contactTemplate from './controllers/contact/template.html';
 
 export default ($routeProvider, routeUrls, $translateProvider, languages, envProvider, $locationProvider) => {
   /* Routing */
@@ -44,23 +44,23 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
       controller: 'CollectionController',
       controllerAs: '$ctrl'
     },
-    // dresses: {
-    //   templateUrl: productListTemplate,
-    //   controller: 'ProductListController',
-    //   controllerAs: '$ctrl',
-    //   resolve: {
-    //       productResolver: (productService) => {
-    //         return productService.dresses((response) => {
-    //           return response.products;
-    //         });
-    //       },
-    //       titleTranslateId: () => "ALL_DRESSES"
-    //   }
-    // },
     product: {
       templateUrl: productTemplate,
       controller: 'ProductController',
       controllerAs: '$ctrl'
+    },
+    contacts: {
+      templateUrl: contactTemplate,
+      controller: 'ContactController',
+      controllerAs: '$ctrl',
+      resolve: {
+          contactResolver: (contactService) => {
+            return contactService.list((response) => {
+              return response.contacts;
+            });
+          },
+          titleTranslateId: () => 'CONTACTS'
+      }
     }
   };
 
@@ -68,6 +68,9 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
     .when(
         routeUrls.home,
         routes.home)
+    .when(
+        routeUrls.contacts,
+        routes.contacts)
     .when(
         routeUrls.collections,
         routes.collections)
@@ -80,15 +83,6 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
     .when(
         routeUrls.product,
         routes.product)
-    // .when(
-    //     routeUrls.dresses,
-    //     routes.dresses)
-    // .when(
-    //     routeUrls.dress,
-    //     routes.product)
-    // .when(
-    //     routeUrls.accessory,
-    //     routes.product)
     .otherwise(
         { redirectTo: routeUrls.home });
 

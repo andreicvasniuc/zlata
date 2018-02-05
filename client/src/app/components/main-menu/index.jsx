@@ -1,7 +1,8 @@
 import template from './template.html';
 
 class MenuController {
-  constructor($rootScope, menuService) {
+  constructor($rootScope, menuService, router) {
+    this.router = router;
     this.menu = menuService.getMenu();
 
     this.superfishMainMenu();
@@ -13,6 +14,9 @@ class MenuController {
     // $('#fh5co-primary-menu').unbind('superfish').superfish({ delay: 0, animation: { opacity: 'show' }, speed: 'fast', cssArrows: true, disableHI: true });
   }
 
+  isActive(menuItem) {
+    return menuItem.url == this.router.getCurrentUrl();
+  }
 }
 
 let menu = {

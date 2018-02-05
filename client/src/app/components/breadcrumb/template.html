@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="/" translate="HOME"></a></li>
+  <li class="breadcrumb-item"><a href="/" translate="HOME" title="{{'HOME' | translate}}"></a></li>
   <li class="breadcrumb-item" ng-repeat="item in $ctrl.data" ng-class="{'active' : !item.url}">
-    <a ng-if="item.url" ng-href="{{item.url}}">{{item.name}}</a>
+    <a ng-if="item.url" ng-href="{{item.url}}" title="{{item.name}}">{{item.name}}</a>
     <span ng-if="!item.url">{{item.name}}</span>
   </li>
 </ol>
