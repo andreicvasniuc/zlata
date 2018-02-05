@@ -1090,4 +1090,5 @@
 
 .ti-vk:hover {
 	background-image: url(../images/vk-hover.png);
+	top: 11px;
 }
