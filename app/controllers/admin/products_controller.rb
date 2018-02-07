@@ -10,14 +10,14 @@ class Admin::ProductsController < SecuredController
   #   render json: { products: @products, totalCount: @total_count }
   # end
 
-  # GET /admin/products/1
-  # GET /admin/products/1.json
+  # GET /admin/collections/:collection_id/products/1
+  # GET /admin/collections/:collection_id/products/1.json
   def show
     render json: @product
   end
 
-  # POST /admin/products
-  # POST /admin/products.json
+  # POST /admin/collections/:collection_id/products
+  # POST /admin/collections/:collection_id/products.json
   def create
     @product = @collection.products.build(product_params)
 
@@ -28,8 +28,8 @@ class Admin::ProductsController < SecuredController
     end
   end
 
-  # PATCH/PUT /admin/products/1
-  # PATCH/PUT /admin/products/1.json
+  # PATCH/PUT /admin/collections/:collection_id/products/1
+  # PATCH/PUT /admin/collections/:collection_id/products/1.json
   def update
     if @product.update(product_params)
       render json: @product, status: :ok#, location: @collection
@@ -38,8 +38,8 @@ class Admin::ProductsController < SecuredController
     end
   end
 
-  # DELETE /admin/products/1
-  # DELETE /admin/products/1.json
+  # DELETE /admin/collections/:collection_id/products/1
+  # DELETE /admin/collections/:collection_id/products/1.json
   def destroy
     @product.destroy
 
