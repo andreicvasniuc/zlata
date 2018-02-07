@@ -16,8 +16,6 @@ Rails.application.routes.draw do
 
       resources :products, only: [] do
         get :top_list, on: :collection
-        # get :dresses, on: :collection
-        # get :accessories, on: :collection
       end
 
       resources :sizes, only: [] do
@@ -29,6 +27,10 @@ Rails.application.routes.draw do
       end
 
       resources :social_networkings, only: [] do
+        get :list, on: :collection
+      end
+
+      resources :contact_groups, only: [] do
         get :list, on: :collection
       end
     end
@@ -60,6 +62,14 @@ Rails.application.routes.draw do
       resources :social_networkings, except: [:index, :new, :edit] do
         post :search, on: :collection
         post :upload_image, on: :member
+      end
+
+      resources :contact_groups, except: [:index, :new, :edit] do
+        post :search, on: :collection
+        get :list, on: :collection
+          
+        resources :contacts, except: [:index, :new, :edit] do
+        end
       end
 
       get '*path', to: '/home#admin'
