@@ -4,6 +4,9 @@ import collectionTemplate from './controllers/collection/template.html';
 import collectionProductTemplate from './controllers/collection-product/template.html';
 import productTemplate from './controllers/product/template.html';
 import socialNetworkingTemplate from './controllers/social-networking/template.html';
+import contactGroupTemplate from './controllers/contact-group/template.html';
+// import contactGroupContactTemplate from './controllers/contact-group-contact/template.html';
+// import contactTemplate from './controllers/contact/template.html';
 
 export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $translateProvider, languages, envProvider, $locationProvider) => {
   /* Routing */
@@ -43,13 +46,33 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
       controller: 'SocialNetworkingController',
       controllerAs: '$ctrl',
       requiresLogin: true
-    }
+    },
+    contact_groups: {
+      templateUrl: contactGroupTemplate,
+      controller: 'ContactGroupController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
+    }//,
+    // contact_group_contacts: {
+    //   templateUrl: contactGroupContactTemplate,
+    //   controller: 'ContactGroupContactController',
+    //   controllerAs: '$ctrl',
+    //   requiresLogin: true
+    // },
+    // contacts: {
+    //   templateUrl: contactTemplate,
+    //   controller: 'ContactController',
+    //   controllerAs: '$ctrl',
+    //   requiresLogin: true
+    // }
   };
 
   let searchPath = '/sort/:sortBy/:sortByDirection/search/:searchText?';
   routeUrls.collections_search = routeUrls.collections + searchPath;
   routeUrls.collection_products_search = routeUrls.collection_products + searchPath;
   routeUrls.social_networkings_search = routeUrls.social_networkings + searchPath;
+  routeUrls.contact_groups_search = routeUrls.contact_groups + searchPath;
+  // routeUrls.contact_group_contacts_search = routeUrls.contact_group_contacts + searchPath;
 
   $routeProvider
     .when(
@@ -82,6 +105,21 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
     .when(
         routeUrls.social_networkings_search,
         routes.social_networkings)
+    .when(
+        routeUrls.contact_groups,
+        routes.contact_groups)
+    .when(
+        routeUrls.contact_groups_search,
+        routes.contact_groups)
+    // .when(
+    //     routeUrls.contacts,
+    //     routes.contacts)
+    // .when(
+    //     routeUrls.contact_group_contacts,
+    //     routes.contact_group_contacts)
+    // .when(
+    //     routeUrls.contact_group_contacts_search,
+    //     routes.contact_group_contacts)
     .otherwise(
         { redirectTo: routeUrls.collections });
 

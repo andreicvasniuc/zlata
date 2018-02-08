@@ -4,7 +4,7 @@ module ContactGroupConcern
   extend ActiveSupport::Concern
 
   included do
-    store_in contact_group: 'contact_groups'
+    store_in collection: 'contact_groups'
 
     field :name, type: String
     field :published, type: Boolean

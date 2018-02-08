@@ -91,5 +91,12 @@
   "SOCIAL_NETWORKING": "Rețeaua socială",
   "ENTER_SOCIAL_NETWORKING_NAME": "Introduceți nume de rețea socială...",
   "ENTER_SOCIAL_NETWORKING_URL": "Introduceți url de rețea socială...",
-  "URL": "Url"
+  "URL": "Url",
+  "CONTACT_GROUPS": "Grupurile de contact",
+  "CONTACT_GROUP": "Grupa de contact",
+  "CONTACTS": "Contacte",
+  "ADD_CONTACT_GROUP": "Adaugă grupă de contact",
+  "CONTACTS_COUNT": "Număr de contacte",
+  "DELETE_CONTACT_GROUP_MESSAGE": "Dacă ștergeți această grupă de contacte vă va șterge toate contactele legate de grupă. Sunteți sigur că doriți să ștergeți această grupă de contacte?",
+  "GO_TO_CONTACTS": "Merge la contacte"
 }

@@ -21,7 +21,8 @@ let gridActionCell = {
     entity: '=',
     editCallback: '&',
     uploadCallback: '&',
-    deleteCallback: '&'
+    deleteCallback: '&',
+    isUploadHidden: '<'
   },
   controller: GridActionCellController,
   templateUrl: template

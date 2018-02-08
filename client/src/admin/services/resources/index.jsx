@@ -6,6 +6,7 @@ import ImageResource from './imageResource';
 import SizeResource from './sizeResource';
 import ColorResource from './colorResource';
 import SocialNetworkingResource from './socialNetworkingResource';
+import ContactGroupResource from './contactGroupResource';
 
 export default angular
     .module('admin.services.resources', [])
@@ -15,4 +16,5 @@ export default angular
     .service('sizeResource', SizeResource)
     .service('colorResource', ColorResource)
     .service('socialNetworkingResource', SocialNetworkingResource)
+    .service('contactGroupResource', ContactGroupResource)
     .name;

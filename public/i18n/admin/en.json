@@ -91,5 +91,12 @@
   "SOCIAL_NETWORKING": "Social networking",
   "ENTER_SOCIAL_NETWORKING_NAME": "Enter social networking name...",
   "ENTER_SOCIAL_NETWORKING_URL": "Enter social networking url...",
-  "URL": "Url"
+  "URL": "Url",
+  "CONTACT_GROUPS": "Contact groups",
+  "CONTACT_GROUP": "Contact group",
+  "CONTACTS": "Contacts",
+  "ADD_CONTACT_GROUP": "Add contact group",
+  "CONTACTS_COUNT": "Contacts count",
+  "DELETE_CONTACT_GROUP_MESSAGE": "Deleting this contact group you will delete all related contacts. Are you sure you want to delete this contact group?",
+  "GO_TO_CONTACTS": "Go to contacts"
 }

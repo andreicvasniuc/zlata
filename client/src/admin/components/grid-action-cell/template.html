@@ -3,7 +3,7 @@
   <img alt="Edit" ng-src="{{$ctrl.editIconHover}}" />
 </a>
 
-<a class="clickable btn-icon rightm10" translate-attr="{ title: 'UPLOAD' }" ng-click="$ctrl.uploadCallback({entity: $ctrl.entity, event: $event})">
+<a class="clickable btn-icon rightm10" translate-attr="{ title: 'UPLOAD' }" ng-click="$ctrl.uploadCallback({entity: $ctrl.entity, event: $event})" ng-if="!$ctrl.isUploadHidden">
   <img alt="Upload" ng-src="{{$ctrl.uploadIcon}}" />
   <img alt="Upload" ng-src="{{$ctrl.uploadIcon}}" />
 </a>

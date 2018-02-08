@@ -54,11 +54,6 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
       controller: 'ContactController',
       controllerAs: '$ctrl',
       resolve: {
-          contactResolver: (contactService) => {
-            return contactService.list((response) => {
-              return response.contacts;
-            });
-          },
           titleTranslateId: () => 'CONTACTS'
       }
     }

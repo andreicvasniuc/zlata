@@ -6,7 +6,7 @@ class Admin::ContactGroupsController < SecuredController
   def search
     @contact_groups, @total_count = Admin::ContactGroup.search(params[:search], params[:pagination], params[:sorting])
 
-    render json: { contact_groups: @contact_groups, totalCount: @total_count }
+    render json: { contactGroups: @contact_groups, totalCount: @total_count }
   end
 
   # GET /admin/contact_groups/list
@@ -14,7 +14,7 @@ class Admin::ContactGroupsController < SecuredController
   def list
     @contact_groups = Admin::ContactGroup.names
 
-    render json: { contact_groups: @contact_groups }
+    render json: { contactGroups: @contact_groups }
   end
 
   # GET /admin/contact_groups/1
