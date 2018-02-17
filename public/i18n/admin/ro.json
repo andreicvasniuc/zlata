@@ -70,7 +70,7 @@
   "AS_COVER": "ca copertă",
   "PRODUCTS_COUNT": "Număr de produse",
   "GO_TO_PRODUCTS": "Merge la produse",
-  "GO_AND_ADD_COLLECTIONS": "Du-te și se adaugă colecții",
+  "GO_AND_ADD_COLLECTIONS": "Du-te și adaugă colecții",
   "INCORRECT_EMAIL_OR_PASSWORD": "Adresa de e-mail sau parola este incorectă",
   "ENTER": "Introduce...",
   "SIZE": "Dimensiunea",
@@ -94,6 +94,7 @@
   "URL": "Url",
   "CONTACT_GROUPS": "Grupurile de contact",
   "CONTACT_GROUP": "Grupa de contact",
+  "CONTACT_GROUP_": "Grupa de contact",
   "CONTACTS": "Contacte",
   "CONTACT": "Contactul",
   "ADD_CONTACT_GROUP": "Adaugă grupă de contact",
@@ -103,5 +104,6 @@
   "GO_TO_CONTACTS": "Merge la contacte",
   "DELETE_CONTACT_MESSAGE": "Sunteți sigur că doriți să ștergeți acest contact?",
   "ENTER_CONTACT_GROUP_NAME": "Introduceți nume de grupă de contact...",
-  "ENTER_CONTACT_NAME": "Introduceți nume de contact..."
+  "ENTER_CONTACT_NAME": "Introduceți nume de contact...",
+  "GO_AND_ADD_CONTACT_GROUPS": "Du-te și adaugă grupe de contacte"
 }

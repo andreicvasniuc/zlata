@@ -94,6 +94,7 @@
   "URL": "Ссылка",
   "CONTACT_GROUPS": "Группы контактов",
   "CONTACT_GROUP": "Группа контактов",
+  "CONTACT_GROUP_": "Группу контактов",
   "CONTACTS": "Контакты",
   "CONTACT": "Контакт",
   "ADD_CONTACT_GROUP": "Добавить группу контактов",
@@ -103,5 +104,6 @@
   "GO_TO_CONTACTS": "Перейти к контактам",
   "DELETE_CONTACT_MESSAGE": "Вы уверены, что хотите удалить этот контакт?",
   "ENTER_CONTACT_GROUP_NAME": "Введите название группы контактов...",
-  "ENTER_CONTACT_NAME": "Введите название контакта..."
+  "ENTER_CONTACT_NAME": "Введите название контакта...",
+  "GO_AND_ADD_CONTACT_GROUPS": "Перейти и добавить группы контактов"
 }

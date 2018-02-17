@@ -6,7 +6,7 @@ import productTemplate from './controllers/product/template.html';
 import socialNetworkingTemplate from './controllers/social-networking/template.html';
 import contactGroupTemplate from './controllers/contact-group/template.html';
 import contactGroupContactTemplate from './controllers/contact-group-contact/template.html';
-// import contactTemplate from './controllers/contact/template.html';
+import contactTemplate from './controllers/contact/template.html';
 
 export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $translateProvider, languages, envProvider, $locationProvider) => {
   /* Routing */
@@ -58,13 +58,13 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
       controller: 'ContactGroupContactController',
       controllerAs: '$ctrl',
       requiresLogin: true
-    }//,
-    // contacts: {
-    //   templateUrl: contactTemplate,
-    //   controller: 'ContactController',
-    //   controllerAs: '$ctrl',
-    //   requiresLogin: true
-    // }
+    },
+    contacts: {
+      templateUrl: contactTemplate,
+      controller: 'ContactController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
+    }
   };
 
   let searchPath = '/sort/:sortBy/:sortByDirection/search/:searchText?';
@@ -111,9 +111,9 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
     .when(
         routeUrls.contact_groups_search,
         routes.contact_groups)
-    // .when(
-    //     routeUrls.contacts,
-    //     routes.contacts)
+    .when(
+        routeUrls.contacts,
+        routes.contacts)
     .when(
         routeUrls.contact_group_contacts,
         routes.contact_group_contacts)

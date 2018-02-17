@@ -1,0 +1,42 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span translate="SELECT"></span> 
+        <span translate="CONTACT_GROUP_"></span>
+
+        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.close()" class="clickable pull-right">
+        <div class="clearfix"></div>
+    </h4>
+</div>
+
+<div class="modal-body role-modal-body">
+    <form class="text-center">
+
+      <div ng-show="$ctrl.isLoadingSpinner">
+        <loading-icon />
+      </div>
+      <div ng-hide="$ctrl.isLoadingSpinner">
+        <div ng-hide="$ctrl.contactGroups.length == 0">
+          <div class="btn-group" uib-dropdown>
+            <button type="button" class="btn btn-default" uib-dropdown-toggle>
+              {{'SELECT' | translate}} 
+              {{'CONTACT_GROUP_' | translate}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li ng-repeat="contactGroup in $ctrl.contactGroups">
+                <a href="/" ng-click="$ctrl.select(contactGroup, $event)">{{contactGroup.name}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div ng-show="$ctrl.contactGroups.length == 0">
+          <button-default label="{{'GO_AND_ADD_CONTACT_GROUPS' | translate}}" click-callback="$ctrl.goToContactGroups()"></button-default>
+        </div>
+      </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.close()" class="rightm10"></button-default>
+</div>

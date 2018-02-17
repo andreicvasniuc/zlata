@@ -31,7 +31,7 @@ import socialNetworkingGrid from './social-networking-grid';
 import socialNetworkingEditorPopup from './social-networking-editor-popup';
 import contactGroupEditorPopup from './contact-group-editor-popup';
 import contactEditorPopup from './contact-editor-popup';
-// import contactGroupSelectorPopup from './contact-group-selector-popup';
+import contactGroupSelectorPopup from './contact-group-selector-popup';
 
 export default angular
     .module('admin.components', [])
@@ -66,5 +66,5 @@ export default angular
     .component('socialNetworkingEditorPopup', socialNetworkingEditorPopup)
     .component('contactGroupEditorPopup', contactGroupEditorPopup)
     .component('contactEditorPopup', contactEditorPopup)
-    // .component('collectionSelectorPopup', collectionSelectorPopup)
+    .component('contactGroupSelectorPopup', contactGroupSelectorPopup)
     .name;
