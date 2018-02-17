@@ -55,6 +55,7 @@ class ContactEditorPopupController {
     this.contactService.edit(this.contact, (response) => {
       this.contactNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
+      this.close();
     });
   }
 
@@ -62,7 +63,7 @@ class ContactEditorPopupController {
     this.$scope.$emit('reloadGrid');
   }
 
-  cancel() {
+  close() {
     this.reloadGrid();
     this.modal.dismiss('cancel');
   }

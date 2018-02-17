@@ -116,7 +116,7 @@ class ProductEditorPopupController {
       // this.reloadGrid();
       this.productNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
-      // this.close();
+      this.close();
     });
     //, (error) => {});
   }

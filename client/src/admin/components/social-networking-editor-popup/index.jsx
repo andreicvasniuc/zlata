@@ -59,6 +59,7 @@ class SocialNetworkingEditorPopupController {
     this.socialNetworkingService.edit(this.socialNetworking, (response) => {
       this.socialNetworkingNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
+      this.close();
     });
   }
 

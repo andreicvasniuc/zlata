@@ -55,6 +55,7 @@ class ContactGroupEditorPopupController {
     this.contactGroupService.edit(this.contactGroup, (response) => {
       this.contactGroupNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
+      this.close();
     });
   }
 

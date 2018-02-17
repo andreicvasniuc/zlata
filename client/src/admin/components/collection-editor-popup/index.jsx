@@ -64,6 +64,7 @@ class CollectionEditorPopupController {
     this.collectionService.edit(this.collection, (response) => {
       this.collectionNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
+      this.close();
     });
   }
 
