@@ -6,6 +6,7 @@ import ImageNotifier from './imageNotifier';
 import LoginNotifier from './loginNotifier';
 import SocialNetworkingNotifier from './socialNetworkingNotifier';
 import ContactGroupNotifier from './contactGroupNotifier';
+import ContactNotifier from './contactNotifier';
 
 export default angular
     .module('admin.services.notifiers', [])
@@ -15,4 +16,5 @@ export default angular
     .service('loginNotifier', LoginNotifier)
     .service('socialNetworkingNotifier', SocialNetworkingNotifier)
     .service('contactGroupNotifier', ContactGroupNotifier)
+    .service('contactNotifier', ContactNotifier)
     .name;

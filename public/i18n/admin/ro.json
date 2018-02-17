@@ -95,8 +95,13 @@
   "CONTACT_GROUPS": "Grupurile de contact",
   "CONTACT_GROUP": "Grupa de contact",
   "CONTACTS": "Contacte",
+  "CONTACT": "Contactul",
   "ADD_CONTACT_GROUP": "Adaugă grupă de contact",
+  "ADD_CONTACT": "Adaugă contact",
   "CONTACTS_COUNT": "Număr de contacte",
   "DELETE_CONTACT_GROUP_MESSAGE": "Dacă ștergeți această grupă de contacte vă va șterge toate contactele legate de grupă. Sunteți sigur că doriți să ștergeți această grupă de contacte?",
-  "GO_TO_CONTACTS": "Merge la contacte"
+  "GO_TO_CONTACTS": "Merge la contacte",
+  "DELETE_CONTACT_MESSAGE": "Sunteți sigur că doriți să ștergeți acest contact?",
+  "ENTER_CONTACT_GROUP_NAME": "Introduceți nume de grupă de contact...",
+  "ENTER_CONTACT_NAME": "Introduceți nume de contact..."
 }

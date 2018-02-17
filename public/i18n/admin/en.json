@@ -95,8 +95,13 @@
   "CONTACT_GROUPS": "Contact groups",
   "CONTACT_GROUP": "Contact group",
   "CONTACTS": "Contacts",
+  "CONTACT": "Contact",
   "ADD_CONTACT_GROUP": "Add contact group",
+  "ADD_CONTACT": "Add contact",
   "CONTACTS_COUNT": "Contacts count",
   "DELETE_CONTACT_GROUP_MESSAGE": "Deleting this contact group you will delete all related contacts. Are you sure you want to delete this contact group?",
-  "GO_TO_CONTACTS": "Go to contacts"
+  "GO_TO_CONTACTS": "Go to contacts",
+  "DELETE_CONTACT_MESSAGE": "Are you sure you want to delete this contact?",
+  "ENTER_CONTACT_GROUP_NAME": "Enter contact group name...",
+  "ENTER_CONTACT_NAME": "Enter contact name..."
 }

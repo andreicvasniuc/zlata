@@ -3,6 +3,7 @@ import angular from 'angular';
 import productGrid from './product-grid';
 import collectionGrid from './collection-grid';
 import contactGroupGrid from './contact-group-grid';
+import contactGrid from './contact-grid';
 import gridActionCell from './grid-action-cell';
 import gridPublishedCell from './grid-published-cell';
 import mainLayout from './main-layout';
@@ -29,6 +30,7 @@ import itemEditorPopover from './item-editor-popover';
 import socialNetworkingGrid from './social-networking-grid';
 import socialNetworkingEditorPopup from './social-networking-editor-popup';
 import contactGroupEditorPopup from './contact-group-editor-popup';
+import contactEditorPopup from './contact-editor-popup';
 // import contactGroupSelectorPopup from './contact-group-selector-popup';
 
 export default angular
@@ -36,6 +38,7 @@ export default angular
     .component('productGrid', productGrid)
     .component('collectionGrid', collectionGrid)
     .component('contactGroupGrid', contactGroupGrid)
+    .component('contactGrid', contactGrid)
     .component('mainLayout', mainLayout)
     .component('mainHeader', mainHeader)
     .component('sidebar', sidebar)
@@ -62,5 +65,6 @@ export default angular
     .component('socialNetworkingGrid', socialNetworkingGrid)
     .component('socialNetworkingEditorPopup', socialNetworkingEditorPopup)
     .component('contactGroupEditorPopup', contactGroupEditorPopup)
+    .component('contactEditorPopup', contactEditorPopup)
     // .component('collectionSelectorPopup', collectionSelectorPopup)
     .name;

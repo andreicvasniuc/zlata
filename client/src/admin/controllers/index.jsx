@@ -7,6 +7,7 @@ import ProductController from './product';
 import LoginController from './login';
 import SocialNetworkingController from './social-networking';
 import ContactGroupController from './contact-group';
+import ContactGroupContactController from './contact-group-contact';
 
 export default angular
     .module('admin.controllers', [])
@@ -17,4 +18,5 @@ export default angular
     .controller('ProductController', ProductController)
     .controller('SocialNetworkingController', SocialNetworkingController)
     .controller('ContactGroupController', ContactGroupController)
+    .controller('ContactGroupContactController', ContactGroupContactController)
     .name;

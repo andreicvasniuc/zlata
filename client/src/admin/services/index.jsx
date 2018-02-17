@@ -19,6 +19,7 @@ import ColorService from './colorService';
 import SocialNetworkingService from './socialNetworkingService';
 import ContactGroupService from './contactGroupService';
 import ContactRouterService from './contactRouter';
+import ContactService from './contactService';
 
 export default angular
     .module('admin.services', [ resources, notifiers ])
@@ -38,4 +39,5 @@ export default angular
     .service('socialNetworkingService', SocialNetworkingService)
     .service('contactGroupService', ContactGroupService)
     .service('contactRouter', ContactRouterService)
+    .service('contactService', ContactService)
     .name;
