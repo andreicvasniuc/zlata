@@ -116,7 +116,7 @@ class ProductEditorPopupController {
       // this.reloadGrid();
       this.productNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
-      // this.cancel();
+      // this.close();
     });
     //, (error) => {});
   }
@@ -125,7 +125,7 @@ class ProductEditorPopupController {
     this.$scope.$emit('reloadGrid');
   }
 
-  cancel() {
+  close() {
     this.reloadGrid();
     this.modal.dismiss('cancel');
   }

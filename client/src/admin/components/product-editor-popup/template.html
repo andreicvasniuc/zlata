@@ -4,7 +4,7 @@
         <span ng-if="$ctrl.isEdit" translate="EDIT"></span> 
         <span translate="PRODUCT"></span>
 
-        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.cancel()" class="clickable pull-right">
+        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.close()" class="clickable pull-right">
         <div class="clearfix"></div>
     </h4>
 </div>
@@ -166,7 +166,7 @@
 </div>
 
 <div class="modal-footer">
-    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
+    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.close()" class="rightm10"></button-default>
 
     <span ng-show="$ctrl.isCurrentTab($ctrl.tabs.basicInformation)">
         <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>

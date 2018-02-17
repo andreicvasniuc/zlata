@@ -3,7 +3,7 @@
         <span translate="SELECT"></span> 
         <span translate="COLLECTION_"></span>
 
-        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.cancel()" class="clickable pull-right">
+        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.close()" class="clickable pull-right">
         <div class="clearfix"></div>
     </h4>
 </div>
@@ -38,5 +38,5 @@
 </div>
 
 <div class="modal-footer">
-    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.cancel()" class="rightm10"></button-default>
+    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.close()" class="rightm10"></button-default>
 </div>

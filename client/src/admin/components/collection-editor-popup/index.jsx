@@ -71,7 +71,7 @@ class CollectionEditorPopupController {
     this.$scope.$emit('reloadGrid');
   }
 
-  cancel() {
+  close() {
     this.reloadGrid();
     this.modal.dismiss('cancel');
   }

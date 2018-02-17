@@ -34,7 +34,7 @@ class CollectionSelectorPopupController {
     this.productRouter.goTo(this.routeUrls.collection_products, collection.slug);
   }
 
-  cancel() {
+  close() {
     this.modal.dismiss('cancel');
   }
 
@@ -50,7 +50,7 @@ class CollectionSelectorPopupController {
   }
 
   goToCollections() {
-    this.cancel();
+    this.close();
     this.router.goTo(this.routeUrls.collections);
   }
 }
