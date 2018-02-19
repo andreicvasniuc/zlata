@@ -1,0 +1,34 @@
+<div class="fh5co-feature-1">
+  <div class="fh5co-feature-blurb">
+    <ul>
+      <li ng-repeat="contactGroup in $ctrl.list">
+        <span class="fh5co-feature-blurb-icon"><i class="ti-ruler-pencil"></i></span>
+
+        <div class="fh5co-feature-blurb-text">
+          <h2 class="fh5co-feature-blurb-title h4 text-uppercase">
+            {{contactGroup.name}}
+          </h2>
+          <p class="fh5co-feature-blurb-description" ng-repeat="contact in contactGroup.contacts">
+            {{contact.name}}
+          </p>
+        </div>
+      </li>
+      <!-- <li>
+        <span class="fh5co-feature-blurb-icon"><i class="ti-mobile"></i></span>
+
+        <div class="fh5co-feature-blurb-text">
+          <h2 class="fh5co-feature-blurb-title h4 text-uppercase">Responsive</h2>
+          <p class="fh5co-feature-blurb-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi explicabo nihil doloribus consectetur cum quam.</p>
+        </div>
+      </li>
+      <li>
+        <span class="fh5co-feature-blurb-icon"><i class="ti-blackboard"></i></span>
+
+        <div class="fh5co-feature-blurb-text">
+          <h2 class="fh5co-feature-blurb-title h4 text-uppercase">Clean Design</h2>
+          <p class="fh5co-feature-blurb-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi explicabo nihil doloribus consectetur cum quam.</p>
+        </div>
+      </li> -->
+    </ul>
+  </div>
+</div>

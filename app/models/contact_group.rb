@@ -8,9 +8,9 @@ class ContactGroup
 
   scope :published, -> { where( published: true ) }
   scope :latest, -> { order( created_at: :desc ) }
-  scope :base_info, -> { only( :name, :_slugs ) }
+  scope :main_info, -> { only( :name, :_slugs, :contacts ) }
 
   def self.published_contact_groups
-    self.published.latest.base_info
+    self.published.latest.main_info
   end
 end

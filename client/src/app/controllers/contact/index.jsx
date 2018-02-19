@@ -1,7 +1,7 @@
 class ContactController {
-  constructor($timeout, $translate, titleTranslateId, contactService, breadcrumbService) {
+  constructor($timeout, $translate, titleTranslateId, contactGroupService, breadcrumbService) {
     this.$timeout = $timeout;
-    this.contactService = contactService;
+    this.contactGroupService = contactGroupService;
     this.breadcrumbService = breadcrumbService;
     
     this.getTranslation($translate, titleTranslateId);
@@ -11,8 +11,8 @@ class ContactController {
   loadContacts() {
     this.isLoadingSpinner = true;
 
-    this.contactService.list((response) => {
-      this.contacts = response.contacts || [];
+    this.contactGroupService.list((response) => {
+      this.contactGroups = response.contact_groups || [];
       this.$timeout(() => this.isLoadingSpinner = false, 50);
     });
   }

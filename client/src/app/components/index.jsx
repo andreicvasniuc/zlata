@@ -15,6 +15,8 @@ import itemDetails from './item-details';
 import breadcrumb from './breadcrumb';
 import socialNetworkings from './social-networkings';
 import navigation from './navigation';
+import contactForm from './contact-form';
+import contactGroups from './contact-groups';
 
 export default angular
     .module('app.components', [])
@@ -32,5 +34,6 @@ export default angular
     .component('itemDetails', itemDetails)
     .component('breadcrumb', breadcrumb)
     .component('socialNetworkings', socialNetworkings)
-    .component('navigation', navigation)
+    .component('contactForm', contactForm)
+    .component('contactGroups', contactGroups)
     .name;
