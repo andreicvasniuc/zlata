@@ -38,7 +38,9 @@ class MainHeaderController {
 }
 
 let mainHeader = {
-  bindings: {},
+  bindings: {
+    heading: '<'
+  },
   controller: MainHeaderController,
   templateUrl: template
 };

@@ -2,7 +2,9 @@
 
     <breadcrumb ng-if="$ctrl.breadcrumb" data="$ctrl.breadcrumb"></breadcrumb>
 
-    <div ng-transclude></div>
+    <loading-icon ng-show="$ctrl.isLoadingSpinner" />
+
+    <div ng-transclude ng-hide="$ctrl.isLoadingSpinner"></div>
 
     <section id="fh5co-newsletter">
         <div class="container">

@@ -11,7 +11,10 @@ export default ($routeProvider, routeUrls, $translateProvider, languages, envPro
     home: {
       templateUrl: homeTemplate,
       controller: 'HomeController',
-      controllerAs: '$ctrl'
+      controllerAs: '$ctrl',
+      resolve: {
+          titleTranslateId: () => 'LONG_SITE_NAME'
+      }
     },
     collections: {
       templateUrl: collectionListTemplate,

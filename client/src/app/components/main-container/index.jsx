@@ -6,7 +6,8 @@ class MainContainerController {
 
 let mainContainer = {
   bindings: {
-    breadcrumb: '<'
+    breadcrumb: '<',
+    isLoadingSpinner: '<'
   },
   controller: MainContainerController,
   templateUrl: template,

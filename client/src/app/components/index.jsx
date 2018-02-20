@@ -3,7 +3,7 @@ import angular from 'angular';
 import mainLayout from './main-layout';
 import mainHeader from './main-header';
 import mainFooter from './main-footer';
-import mainContainer from './main-container';
+// import mainContainer from './main-container';
 import languageSelector from './language-selector';
 import mainMenu from './main-menu';
 import mobileMenu from './mobile-menu';
@@ -23,7 +23,7 @@ export default angular
     .component('mainLayout', mainLayout)
     .component('mainHeader', mainHeader)
     .component('mainFooter', mainFooter)
-    .component('mainContainer', mainContainer)
+    // .component('mainContainer', mainContainer)
     .component('languageSelector', languageSelector)
     .component('mainMenu', mainMenu)
     .component('mobileMenu', mobileMenu)
@@ -34,6 +34,7 @@ export default angular
     .component('itemDetails', itemDetails)
     .component('breadcrumb', breadcrumb)
     .component('socialNetworkings', socialNetworkings)
+    .component('navigation', navigation)
     .component('contactForm', contactForm)
     .component('contactGroups', contactGroups)
     .name;

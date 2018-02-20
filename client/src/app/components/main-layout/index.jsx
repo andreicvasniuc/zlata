@@ -5,7 +5,12 @@ class MainLayoutController {
 }
 
 let mainLayout = {
-  bindings: {},
+  bindings: {
+    breadcrumb: '<',
+    isLoadingSpinner: '<',
+    heading: '<',
+    centered: '<'
+  },
   controller: MainLayoutController,
   templateUrl: template,
   transclude: true

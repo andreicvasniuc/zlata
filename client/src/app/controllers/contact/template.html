@@ -1,8 +1,6 @@
-<main-container breadcrumb="$ctrl.breadcrumb">
+<main-layout heading="$ctrl.title" breadcrumb="$ctrl.breadcrumb" is-loading-spinner="$ctrl.isLoadingSpinner" centered="true">
 
-    <loading-icon ng-show="$ctrl.isLoadingSpinner" />
-
-    <div class="col-md-10 col-md-offset-1 clearfix fh5co-header" ng-hide="$ctrl.isLoadingSpinner">
+    <!-- <div class="col-md-10 col-md-offset-1 clearfix fh5co-header">
         <h1 class="h1 fh5co-heading fh5co-no-margin-bottom">{{ $ctrl.title }}</h1>
         <div class="fh5co-spacer fh5co-spacer-xs"></div>
 
@@ -12,15 +10,16 @@
 
           <div class="col-md-6">
             <contact-groups list="$ctrl.contactGroups" />
-
-            <!-- <h3>Need Help?</h3>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non, harum autem quaerat vitae cupiditate, aspernatur est fugit, commodi optio itaque voluptatum! Beatae quae delectus deserunt est ab in sequi blanditiis!</p>
-            <p>
-              <a href="#">me@info.com</a>
-            </p> -->
-
           </div>
 
+    </div> -->
+
+    <div class="col-md-6">
+      <contact-form />
     </div>
 
-</main-container>
+    <div class="col-md-6">
+      <contact-groups list="$ctrl.contactGroups" />
+    </div>
+
+</main-layout>

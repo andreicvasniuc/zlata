@@ -1,9 +1,7 @@
-<main-container breadcrumb="$ctrl.breadcrumb">
-
-    <loading-icon ng-show="$ctrl.isLoadingSpinner" />
+<main-layout heading="$ctrl.product.name" breadcrumb="$ctrl.breadcrumb" is-loading-spinner="$ctrl.isLoadingSpinner">
 
     <item-details item="$ctrl.product" ng-if="!$ctrl.isLoadingSpinner">
       <navigation collection="$ctrl.collection" index="$ctrl.index" ng-if="$ctrl.collection.products.length > 1" />
     </item-details>
 
-</main-container>
+</main-layout>

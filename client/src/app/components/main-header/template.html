@@ -14,7 +14,7 @@
                 <div class="fh5co-hero-wrap">
                     <div class="fh5co-hero-intro" ng-style="{'opacity': $ctrl.headingOpacity}">
                         <h2>{{ 'HEADER'| translate }}<span></span></h2>
-                        <h1 translate="LONG_SITE_NAME"></h1>
+                        <h1>{{ $ctrl.heading || '&nbsp;' }}</h1>
                     </div>
                 </div>
             </div>
