@@ -1,12 +1,5 @@
 <main-layout heading="$ctrl.collection.name" breadcrumb="$ctrl.breadcrumb" is-loading-spinner="$ctrl.isLoadingSpinner" centered="true">
 
-    <!-- <div class="col-md-10 col-md-offset-1 clearfix fh5co-header">
-        <h1 class="h1 fh5co-heading fh5co-no-margin-bottom">{{ $ctrl.collection.name }}</h1>
-        <div class="fh5co-spacer fh5co-spacer-xs"></div>
-
-        <items list="$ctrl.products" get-url-callback="$ctrl.getProductUrl(item)" get-image-source-callback="$ctrl.getCoverProductImageSource(item)"></items>
-    </div> -->
-
     <items list="$ctrl.products" get-url-callback="$ctrl.getProductUrl(item)" get-image-source-callback="$ctrl.getCoverProductImageSource(item)"></items>
 
 </main-layout>
