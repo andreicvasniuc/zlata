@@ -1092,3 +1092,13 @@
 	background-image: url(../images/vk-hover.png);
 	top: 11px;
 }
+
+.ti-viber {
+	background: #fff url(../images/viber.png) no-repeat center center;
+	width: 70px;
+	height: 72px;
+	display: inline-block;
+	position: absolute;
+	top: -10px;
+	left: -15px;
+}

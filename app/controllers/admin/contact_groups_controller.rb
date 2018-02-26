@@ -64,6 +64,6 @@ class Admin::ContactGroupsController < SecuredController
     end
 
     def contact_group_params
-      params.require(:contact_group).permit(:name, :published)
+      params.require(:contact_group).permit(:name, :css_class, :published)
     end
 end

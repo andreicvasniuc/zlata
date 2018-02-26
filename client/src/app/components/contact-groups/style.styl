@@ -2,6 +2,57 @@
   .fh5co-feature-blurb {
     ul {
       margin: 0px;
+      
+      li {
+        .fh5co-feature-blurb-text {
+          width: 85%;
+          
+          .fh5co-feature-blurb-description {
+            margin-bottom: 0px;
+          }
+        }
+      }
+      
+      .fh5co-feature-blurb-icon {
+        padding-top: 7px;
+        position: relative;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .fh5co-feature-1 {
+    .fh5co-feature-blurb {
+      ul {
+        li {
+          width: 50%;
+          
+          .fh5co-feature-blurb-text {
+            width: 75%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .fh5co-feature-1 {
+    .fh5co-feature-blurb {
+      ul {
+        li {
+          width: 51%;
+          
+          .fh5co-feature-blurb-text {
+            width: 65%;
+          }
+        }
+        .ti-viber-box ~ .fh5co-feature-blurb-text {
+          position: relative;
+          left: 1%;
+        }
+      }
     }
   }
 }

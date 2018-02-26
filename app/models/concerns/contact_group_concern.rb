@@ -7,6 +7,7 @@ module ContactGroupConcern
     store_in collection: 'contact_groups'
 
     field :name, type: String
+    field :css_class, type: String
     field :published, type: Boolean
 
     index name: 1

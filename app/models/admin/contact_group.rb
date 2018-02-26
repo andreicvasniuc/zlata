@@ -20,8 +20,9 @@ class Admin::ContactGroup
         }
       },
       { '$project' => {
-          "name" => 1, 
+          :name => 1, 
           :_slugs => 1,
+          :css_class => 1, 
           :published => 1, 
           :updated_at => 1,
           :contacts_count => { '$size' => { '$ifNull' => ['$contacts', []] } }

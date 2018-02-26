@@ -28,6 +28,15 @@ class ContactGroupService {
   delete(contactGroup, successCallback, errorCallback){
     this.contactGroupResource.remove({ id: contactGroup.slug, locale: this.localeService.get() }, successCallback, errorCallback);
   }
+
+  getCssClasses() {
+    return [
+      { name: 'Mobile', id: 'ti-mobile' },
+      { name: 'Viber', id: 'ti-viber' },
+      { name: 'Email', id: 'ti-email' },
+      { name: 'Skype', id: 'ti-skype' }
+    ];
+  }
 }
 
 export default ContactGroupService

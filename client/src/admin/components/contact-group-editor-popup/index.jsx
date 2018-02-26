@@ -14,6 +14,11 @@ class ContactGroupEditorPopupController {
     this.closeIcon = closeIcon;
 
     this.createOpenPopupEvent();
+    this.createContactGroupCssClasses();
+  }
+
+  createContactGroupCssClasses() {
+    this.contactGroupCssClasses = this.contactGroupService.getCssClasses();
   }
 
   createOpenPopupEvent() {
