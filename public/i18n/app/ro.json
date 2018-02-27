@@ -14,5 +14,12 @@
   "ALL_DRESSES": "Toate Rochiile",
   "ALL_ACCESSORIES": "Toate Accesoriile",
   "COLOR": "Culoarea",
-  "SIZE": "Mărimea"
+  "SIZE": "Mărimea",
+  "NAME": "Nume*",
+  "EMAIL": "E-mail*",
+  "PHONE": "Telefon",
+  "MESSAGE": "Mesaj*",
+  "SEND": "Trimite",
+  "RESET": "Restabili",
+  "MESSAGE_SENT": "Mulțumesc pentru mesaj. Vă vom contacta cât mai curând posibil."
 }

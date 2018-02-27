@@ -1,0 +1,18 @@
+.contact-form {
+  .ng-invalid-required.ng-touched {
+    border-color: #ff0000;
+    
+    &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: #ff4d4d;
+        opacity: 1; /* Firefox */
+    }
+
+    &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: #ff4d4d;
+    }
+
+    &::-ms-input-placeholder { /* Microsoft Edge */
+        color: #ff4d4d;
+    }
+  }
+}

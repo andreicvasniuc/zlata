@@ -8,6 +8,7 @@ import pascalprechtTranslate from 'angular-translate';
 import 'angular-translate-storage-cookie';
 import 'angular-translate-loader-static-files';
 import 'angular-lightgallery';
+import toastr from 'angular-toastr';
 
 import config from './config';
 import run from './run';
@@ -30,7 +31,8 @@ export default angular
       providers,
       constants,
       ngCookies,
-      pascalprechtTranslate
+      pascalprechtTranslate,
+      toastr
     ])
     .config(config)
     .run(run);

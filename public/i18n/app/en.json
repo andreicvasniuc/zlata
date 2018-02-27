@@ -14,5 +14,12 @@
   "ALL_DRESSES": "All Dresses",
   "ALL_ACCESSORIES": "All Accessories",
   "COLOR": "Color",
-  "SIZE": "Size"
+  "SIZE": "Size",
+  "NAME": "Name*",
+  "EMAIL": "E-mail*",
+  "PHONE": "Phone",
+  "MESSAGE": "Message*",
+  "SEND": "Send",
+  "RESET": "Reset",
+  "MESSAGE_SENT": "Thank you for message. We will contact you as soon as possible."
 }

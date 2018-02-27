@@ -6,6 +6,7 @@ import Router from './router';
 import CollectionRouter from './collectionRouter';
 import ProductRouter from './productRouter';
 import Translator from './translator';
+import Notifier from './notifier';
 import RequestService from './requestService';
 import ProductService from './productService';
 import TreeProcessor from './treeProcessor';
@@ -25,6 +26,7 @@ export default angular
     .service('productRouter', ProductRouter)
     .service('collectionRouter', CollectionRouter)
     .service('translator', Translator)
+    .service('notifier', Notifier)
     .service('requestService', RequestService)
     .service('productService', ProductService)
     .service('treeProcessor', TreeProcessor)
