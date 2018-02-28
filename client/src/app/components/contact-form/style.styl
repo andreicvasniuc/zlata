@@ -1,5 +1,5 @@
 .contact-form {
-  .ng-invalid-required.ng-touched {
+  .ng-invalid.ng-touched {
     border-color: #ff0000;
     
     &::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -13,6 +13,15 @@
 
     &::-ms-input-placeholder { /* Microsoft Edge */
         color: #ff4d4d;
+    }
+  }
+  
+  .form-group-validate {
+    position: relative;
+    
+    span {
+      position: absolute;
+      color: #ff0000;
     }
   }
 }

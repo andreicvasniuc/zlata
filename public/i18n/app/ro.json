@@ -21,5 +21,6 @@
   "MESSAGE": "Mesaj*",
   "SEND": "Trimite",
   "RESET": "Restabili",
-  "MESSAGE_SENT": "Mulțumesc pentru mesaj. Vă vom contacta cât mai curând posibil."
+  "MESSAGE_SENT": "Mulțumesc pentru mesaj. Vă vom contacta cât mai curând posibil.",
+  "EMAIL_INVALID": "Adresa de e-mail este invalida."
 }

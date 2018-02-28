@@ -8,9 +8,10 @@
   </div>
 
   <div class="col-md-12">
-    <div class="form-group">
+    <div class="form-group form-group-validate">
       <label for="name" class="sr-only" translate="EMAIL"></label>
-      <input translate-attr="{ placeholder: 'EMAIL' }" id="email" name="email" type="text" class="form-control input-lg" ng-model="$ctrl.contact.email" ng-required="true">
+      <input translate-attr="{ placeholder: 'EMAIL' }" id="email" name="email" type="text" class="form-control input-lg" ng-model="$ctrl.contact.email" ng-required="true" ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/" ng-blur="$ctrl.form.email.blur = true">
+      <span translate="EMAIL_INVALID" ng-if="$ctrl.form.email.$error.pattern && $ctrl.form.email.blur === true"></span>
     </div>
   </div>
 
@@ -30,7 +31,7 @@
 
   <div class="col-md-12">
     <div class="form-group">
-      <input type="button" class="btn btn-primary btn-lg " translate-attr="{ value: 'SEND' }" ng-disabled="$ctrl.form.$invalid" ng-click="$ctrl.send()">
+      <input type="button" class="btn btn-primary btn-lg " translate-attr="{ value: 'SEND' }" ng-disabled="$ctrl.form.$invalid || $ctrl.isSending" ng-click="$ctrl.send()">
       <input class="btn btn-outline btn-lg " translate-attr="{ value: 'RESET' }" type="reset">
     </div>
   </div>

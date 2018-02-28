@@ -33,6 +33,10 @@ Rails.application.routes.draw do
       resources :contact_groups, only: [] do
         get :list, on: :collection
       end
+
+      resources :contacts, only: [] do
+        post :send_form, on: :collection
+      end
     end
 
     namespace :admin do

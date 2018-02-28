@@ -2,16 +2,20 @@ import './style.styl';
 import template from './template.html';
 
 class ContactFormController {
-  constructor(notifier) {
+  constructor(notifier, contactService) {
     this.notifier = notifier;
+    this.contactService = contactService;
   }
 
   send() {
     if(this.form.$invalid) return;
 
-    console.log('this.contact', this.contact, this.form);
-    this.notifier.success('MESSAGE_SENT');
-    this.contact = null;
+    this.isSending = true;
+    this.contactService.send(this.contact, (response) => {
+      this.notifier.success('MESSAGE_SENT');
+      this.contact = null;
+      this.isSending = false;
+    });
   }
 }
 

@@ -19,6 +19,7 @@ import ColorService from './colorService';
 import BreadcrumbService from './breadcrumbService';
 import SocialNetworkingService from './socialNetworkingService';
 import ContactGroupService from './contactGroupService';
+import ContactService from './contactService';
 
 export default angular
     .module('app.services', [ resources ])
@@ -39,4 +40,5 @@ export default angular
     .service('breadcrumbService', BreadcrumbService)
     .service('socialNetworkingService', SocialNetworkingService)
     .service('contactGroupService', ContactGroupService)
+    .service('contactService', ContactService)
     .name;

@@ -21,5 +21,6 @@
   "MESSAGE": "Message*",
   "SEND": "Send",
   "RESET": "Reset",
-  "MESSAGE_SENT": "Thank you for message. We will contact you as soon as possible."
+  "MESSAGE_SENT": "Thank you for message. We will contact you as soon as possible.",
+  "EMAIL_INVALID": "Email is invalid."
 }
