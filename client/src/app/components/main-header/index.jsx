@@ -39,7 +39,8 @@ class MainHeaderController {
 
 let mainHeader = {
   bindings: {
-    heading: '<'
+    heading: '<',
+    isSliderVisible: '<'
   },
   controller: MainHeaderController,
   templateUrl: template

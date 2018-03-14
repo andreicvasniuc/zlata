@@ -9,7 +9,8 @@ let mainLayout = {
     breadcrumb: '<',
     isLoadingSpinner: '<',
     heading: '<',
-    centered: '<'
+    centered: '<',
+    isSliderVisible: '<'
   },
   controller: MainLayoutController,
   templateUrl: template,

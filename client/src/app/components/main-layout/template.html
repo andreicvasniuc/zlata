@@ -1,6 +1,6 @@
-<main-header heading="$ctrl.heading"></main-header>
+<main-header heading="$ctrl.heading" is-slider-visible="$ctrl.isSliderVisible"></main-header>
 
-<div id="fh5co-main">
+<div id="fh5co-main" ng-class="{'no-margin-top': $ctrl.isSliderVisible}">
   <breadcrumb ng-if="$ctrl.breadcrumb" data="$ctrl.breadcrumb"></breadcrumb>
 
     <loading-icon ng-show="$ctrl.isLoadingSpinner" />

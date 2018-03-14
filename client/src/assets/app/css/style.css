@@ -675,10 +675,35 @@ body.inner-page #fh5co-hero .fh5co-hero-wrap {
   position: relative;
   background: #ffffff;
 }
+
+#fh5co-main.no-margin-top {
+  margin-top: 0px;
+}
+
+.top-products {
+  padding-top: 50px;
+}
+
+.slider .row {
+  margin-right: 0px;
+}
+
+.slider .row .col-md-12 {
+  padding-right: 0px;
+}
+
 @media screen and (max-width: 768px) {
   #fh5co-main {
     margin-top: 0px;
     padding-top: 20px;
+  }
+
+  .slider {
+    margin-top: 45px;
+  }
+
+  .top-products {
+    padding-top: 0px;
   }
 }
 

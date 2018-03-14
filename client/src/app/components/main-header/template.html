@@ -7,7 +7,7 @@
     </div>
 </header>
 
-<aside id="fh5co-hero" ng-style="{'background-image': 'url({{$ctrl.headerBackgroundIcon}})'}">
+<aside id="fh5co-hero" ng-style="{'background-image': 'url({{$ctrl.headerBackgroundIcon}})'}" ng-if="!$ctrl.isSliderVisible">
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -21,3 +21,5 @@
         </div>
     </div>
 </aside>
+
+<carousel ng-if="$ctrl.isSliderVisible"></carousel>

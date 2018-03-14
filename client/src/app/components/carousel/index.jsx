@@ -1,9 +1,5 @@
 import template from './template.html';
 
-import hero2Icon from 'images/hero2.jpg';
-import hero3Icon from 'images/hero3.jpg';
-import hero4Icon from 'images/hero4.jpg';
-
 class CarouselController {
   constructor($timeout) {
     this.createIconList();
@@ -11,7 +7,10 @@ class CarouselController {
   }
 
   createIconList() {
-    this.iconList = [hero2Icon, hero3Icon, hero4Icon];
+    let slide1Image = 'https://pp.userapi.com/c844617/v844617416/2c96/YFegKFAv7U8.jpg';
+    let slide2Image = 'https://pp.userapi.com/c844617/v844617416/2cd3/uTartb_WFHQ.jpg';
+    let slide3Image = 'https://pp.userapi.com/c844617/v844617416/2cc9/IJC5fLT2opQ.jpg';
+    this.iconList = [slide1Image, slide2Image, slide3Image];
   }
 
   createCarousel() {
