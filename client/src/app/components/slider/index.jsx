@@ -1,6 +1,6 @@
 import template from './template.html';
 
-class CarouselController {
+class SliderController {
   constructor($timeout) {
     this.createIconList();
     $timeout(() => this.createCarousel(), 50);
@@ -46,10 +46,10 @@ class CarouselController {
   }
 }
 
-let carousel = {
+let slider = {
   bindings: {},
-  controller: CarouselController,
+  controller: SliderController,
   templateUrl: template
 };
 
-export default carousel
+export default slider
