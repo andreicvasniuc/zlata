@@ -37,6 +37,10 @@ Rails.application.routes.draw do
       resources :contacts, only: [] do
         post :send_form, on: :collection
       end
+
+      resources :sliders, only: [] do
+        get :published, on: :collection
+      end
     end
 
     namespace :admin do
@@ -73,6 +77,14 @@ Rails.application.routes.draw do
         get :list, on: :collection
           
         resources :contacts, except: [:index, :new, :edit] do
+        end
+      end
+
+      resources :sliders, except: [:index, :new, :edit] do
+        post :search, on: :collection
+        get :list, on: :collection
+          
+        resources :slides, except: [:index, :new, :edit] do
         end
       end
 
