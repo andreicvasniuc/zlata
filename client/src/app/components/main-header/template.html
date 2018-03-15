@@ -1,6 +1,6 @@
 <mobile-menu ng-if="$root.isMobileWindowSize"></mobile-menu>
 
-<header ng-if="!$root.isMobileWindowSize" id="fh5co-header-section" role="header" ng-class="{'fh5co-scrolled': $ctrl.isWindowScrolled}">
+<header ng-if="!$root.isMobileWindowSize" id="fh5co-header-section" role="header" ng-class="{'fh5co-scrolled': $ctrl.isWindowScrolled, 'gray-menu-links': $ctrl.isSliderVisible}">
     <div class="container">
         <h1 id="fh5co-logo" class="pull-left"><a href="/" translate="SHORT_SITE_NAME">Zlata</a></h1>
         <main-menu></main-menu>
@@ -22,4 +22,4 @@
     </div>
 </aside>
 
-<carousel ng-if="$ctrl.isSliderVisible"></carousel>
+<slider ng-if="$ctrl.isSliderVisible"></slider>
