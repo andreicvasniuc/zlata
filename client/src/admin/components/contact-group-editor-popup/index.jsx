@@ -22,7 +22,7 @@ class ContactGroupEditorPopupController {
   }
 
   createOpenPopupEvent() {
-    this.$scope.$on('openContactGroupEditorPopup', (event, contactGroup, ) => {
+    this.$scope.$on('openContactGroupEditorPopup', (event, contactGroup) => {
       this.initialize(contactGroup);
       this.stopSavingSpinner();
       this.openContactGroupEditorPopup(); 

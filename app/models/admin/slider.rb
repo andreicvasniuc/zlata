@@ -15,12 +15,12 @@ class Admin::Slider
     .aggregate([
       { '$match' => {
           '$or' => [
-            {"name" => {'$regex' => search}}
+            {"name.#{I18n.locale}" => {'$regex' => search}}
           ]
         }
       },
       { '$project' => {
-          :name => 1, 
+          "name.#{I18n.locale}" => 1, 
           :_slugs => 1,
           :published => 1, 
           :updated_at => 1,
@@ -39,7 +39,7 @@ class Admin::Slider
       }])
 
     list_json = list_json.map do |item_json| 
-      #item_json["name"] = item_json["name"][I18n.locale]
+      item_json["name"] = item_json["name"][I18n.locale]
       self.new(item_json)
     end
 

@@ -3,33 +3,33 @@ import './style.styl';
 import template from './template.html';
 import closeIcon from 'images/close.png';
 
-class ContactEditorPopupController {
-  constructor($scope, $timeout, $uibModal, $translate, contactService, contactNotifier) {
+class SliderEditorPopupController {
+  constructor($scope, $timeout, $uibModal, $translate, sliderService, sliderNotifier) {
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.$uibModal = $uibModal;
     this.$translate = $translate;
-    this.contactService = contactService;
-    this.contactNotifier = contactNotifier;
+    this.sliderService = sliderService;
+    this.sliderNotifier = sliderNotifier;
     this.closeIcon = closeIcon;
 
     this.createOpenPopupEvent();
   }
 
   createOpenPopupEvent() {
-    this.$scope.$on('openContactEditorPopup', (event, contact) => {
-      this.initialize(contact);
+    this.$scope.$on('openSliderEditorPopup', (event, slider) => {
+      this.initialize(slider);
       this.stopSavingSpinner();
-      this.openContactEditorPopup(); 
+      this.openSliderEditorPopup(); 
     });
   }
 
-  initialize(contact) {
-    this.contact = contact;
-    this.isEdit = !!contact;
+  initialize(slider) {
+    this.slider = slider;
+    this.isEdit = !!slider;
   }
 
-  openContactEditorPopup() {
+  openSliderEditorPopup() {
     this.modal = this.$uibModal.open({
       templateUrl: template,
       scope: this.$scope,
@@ -43,17 +43,17 @@ class ContactEditorPopupController {
 
   add() {
     this.startSavingSpinner();
-    this.contactService.add(this.contact, (response) => {
+    this.sliderService.add(this.slider, (response) => {
       this.initialize(response);
-      this.contactNotifier.showSuccessCreateMessage();
+      this.sliderNotifier.showSuccessCreateMessage();
       this.stopSavingSpinner();
     });
   }
 
   edit() {
     this.startSavingSpinner();
-    this.contactService.edit(this.contact, (response) => {
-      this.contactNotifier.showSuccessUpdateMessage();
+    this.sliderService.edit(this.slider, (response) => {
+      this.sliderNotifier.showSuccessUpdateMessage();
       this.stopSavingSpinner();
       this.close();
     });
@@ -69,9 +69,9 @@ class ContactEditorPopupController {
   }
 }
 
-let contactEditorPopup = {
+let sliderEditorPopup = {
   bindings: {},
-  controller: ContactEditorPopupController
+  controller: SliderEditorPopupController
 };
 
-export default contactEditorPopup
+export default sliderEditorPopup

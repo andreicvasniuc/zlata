@@ -13,6 +13,9 @@ export default angular
         contact_groups: '/contact-groups', 
         contact_group_contacts: '/contact-group/:contactGroupId/contacts', 
         contacts: '/contacts',
+        sliders: '/sliders', 
+        slider_slides: '/slider/:sliderId/slides', 
+        slides: '/slides'
       })
     .constant('languages', { en: 'en', ru: 'ru', ua: 'ua', ro: 'ro' })
     .name;

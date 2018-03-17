@@ -4,6 +4,8 @@ import productGrid from './product-grid';
 import collectionGrid from './collection-grid';
 import contactGroupGrid from './contact-group-grid';
 import contactGrid from './contact-grid';
+import sliderGrid from './slider-grid';
+import slideGrid from './slide-grid';
 import gridActionCell from './grid-action-cell';
 import gridPublishedCell from './grid-published-cell';
 import mainLayout from './main-layout';
@@ -32,6 +34,9 @@ import socialNetworkingEditorPopup from './social-networking-editor-popup';
 import contactGroupEditorPopup from './contact-group-editor-popup';
 import contactEditorPopup from './contact-editor-popup';
 import contactGroupSelectorPopup from './contact-group-selector-popup';
+import sliderEditorPopup from './slider-editor-popup';
+import slideEditorPopup from './slide-editor-popup';
+import sliderSelectorPopup from './slider-selector-popup';
 
 export default angular
     .module('admin.components', [])
@@ -39,6 +44,8 @@ export default angular
     .component('collectionGrid', collectionGrid)
     .component('contactGroupGrid', contactGroupGrid)
     .component('contactGrid', contactGrid)
+    .component('sliderGrid', sliderGrid)
+    .component('slideGrid', slideGrid)
     .component('mainLayout', mainLayout)
     .component('mainHeader', mainHeader)
     .component('sidebar', sidebar)
@@ -67,4 +74,7 @@ export default angular
     .component('contactGroupEditorPopup', contactGroupEditorPopup)
     .component('contactEditorPopup', contactEditorPopup)
     .component('contactGroupSelectorPopup', contactGroupSelectorPopup)
+    .component('sliderEditorPopup', sliderEditorPopup)
+    .component('slideEditorPopup', slideEditorPopup)
+    .component('sliderSelectorPopup', sliderSelectorPopup)
     .name;

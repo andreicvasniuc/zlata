@@ -7,6 +7,8 @@ import LoginNotifier from './loginNotifier';
 import SocialNetworkingNotifier from './socialNetworkingNotifier';
 import ContactGroupNotifier from './contactGroupNotifier';
 import ContactNotifier from './contactNotifier';
+import SliderNotifier from './sliderNotifier';
+import SlideNotifier from './slideNotifier';
 
 export default angular
     .module('admin.services.notifiers', [])
@@ -17,4 +19,6 @@ export default angular
     .service('socialNetworkingNotifier', SocialNetworkingNotifier)
     .service('contactGroupNotifier', ContactGroupNotifier)
     .service('contactNotifier', ContactNotifier)
+    .service('sliderNotifier', SliderNotifier)
+    .service('slideNotifier', SlideNotifier)
     .name;

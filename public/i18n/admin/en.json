@@ -121,5 +121,6 @@
   "ENTER_SLIDE_TITLE": "Enter slide title...",
   "ENTER_SLIDE_LINK_TEXT": "Enter slide link text...",
   "ENTER_SLIDE_LINK_URL": "Enter slide link url...",
-  "GO_AND_ADD_SLIDERS": "Go and add sliders"
+  "GO_AND_ADD_SLIDERS": "Go and add sliders",
+  "TITLE": "Title"
 }

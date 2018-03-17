@@ -6,7 +6,7 @@ module SliderConcern
   included do
     store_in collection: 'sliders'
 
-    field :name, type: String
+    field :name, type: String, localize: true
     field :published, type: Boolean
 
     index name: 1

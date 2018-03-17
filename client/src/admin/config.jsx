@@ -7,6 +7,9 @@ import socialNetworkingTemplate from './controllers/social-networking/template.h
 import contactGroupTemplate from './controllers/contact-group/template.html';
 import contactGroupContactTemplate from './controllers/contact-group-contact/template.html';
 import contactTemplate from './controllers/contact/template.html';
+import sliderTemplate from './controllers/slider/template.html';
+import sliderSlideTemplate from './controllers/slider-slide/template.html';
+import slideTemplate from './controllers/slide/template.html';
 
 export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $translateProvider, languages, envProvider, $locationProvider) => {
   /* Routing */
@@ -64,6 +67,24 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
       controller: 'ContactController',
       controllerAs: '$ctrl',
       requiresLogin: true
+    },
+    sliders: {
+      templateUrl: sliderTemplate,
+      controller: 'SliderController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
+    },
+    slider_slides: {
+      templateUrl: sliderSlideTemplate,
+      controller: 'SliderSlideController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
+    },
+    slides: {
+      templateUrl: slideTemplate,
+      controller: 'SlideController',
+      controllerAs: '$ctrl',
+      requiresLogin: true
     }
   };
 
@@ -73,6 +94,8 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
   routeUrls.social_networkings_search = routeUrls.social_networkings + searchPath;
   routeUrls.contact_groups_search = routeUrls.contact_groups + searchPath;
   routeUrls.contact_group_contacts_search = routeUrls.contact_group_contacts + searchPath;
+  routeUrls.sliders_search = routeUrls.sliders + searchPath;
+  routeUrls.slider_slides_search = routeUrls.slider_slides + searchPath;
 
   $routeProvider
     .when(
@@ -120,6 +143,21 @@ export default ($routeProvider, routeUrls, $httpProvider, jwtOptionsProvider, $t
     .when(
         routeUrls.contact_group_contacts_search,
         routes.contact_group_contacts)
+    .when(
+        routeUrls.sliders,
+        routes.sliders)
+    .when(
+        routeUrls.sliders_search,
+        routes.sliders)
+    .when(
+        routeUrls.slides,
+        routes.slides)
+    .when(
+        routeUrls.slider_slides,
+        routes.slider_slides)
+    .when(
+        routeUrls.slider_slides_search,
+        routes.slider_slides)
     .otherwise(
         { redirectTo: routeUrls.collections });
 

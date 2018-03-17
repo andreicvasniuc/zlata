@@ -20,6 +20,9 @@ import SocialNetworkingService from './socialNetworkingService';
 import ContactGroupService from './contactGroupService';
 import ContactRouterService from './contactRouter';
 import ContactService from './contactService';
+import SliderService from './sliderService';
+import SlideRouterService from './slideRouter';
+import SlideService from './slideService';
 
 export default angular
     .module('admin.services', [ resources, notifiers ])
@@ -40,4 +43,7 @@ export default angular
     .service('contactGroupService', ContactGroupService)
     .service('contactRouter', ContactRouterService)
     .service('contactService', ContactService)
+    .service('sliderService', SliderService)
+    .service('slideRouter', SlideRouterService)
+    .service('slideService', SlideService)
     .name;

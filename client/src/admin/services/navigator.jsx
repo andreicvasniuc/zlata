@@ -12,7 +12,9 @@ class Navigator {
       { title: 'PRODUCTS', url: this.routeUrls.products, cssClass: 'table' },
       { title: 'SOCIAL_NETWORKINGS', url: this.routeUrls.social_networkings, cssClass: 'table' },
       { title: 'CONTACT_GROUPS', url: this.routeUrls.contact_groups, cssClass: 'table' },
-      { title: 'CONTACTS', url: this.routeUrls.contacts, cssClass: 'table' }
+      { title: 'CONTACTS', url: this.routeUrls.contacts, cssClass: 'table' },
+      { title: 'SLIDERS', url: this.routeUrls.sliders, cssClass: 'table' },
+      { title: 'SLIDES', url: this.routeUrls.slides, cssClass: 'table' }
     ];
   }
 

@@ -4,8 +4,8 @@ module SlideConcern
   extend ActiveSupport::Concern
 
   included do
-    field :title, type: String
-    field :link_text, type: String
+    field :title, type: String, localize: true
+    field :link_text, type: String, localize: true
     field :link_url, type: String
     field :published, type: Boolean
 

@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h4 class="modal-title">
+        <span ng-if="!$ctrl.isEdit" translate="CREATE"></span> 
+        <span ng-if="$ctrl.isEdit" translate="EDIT"></span> 
+        <span translate="SLIDER"></span>
+
+        <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.close()" class="clickable pull-right">
+        <div class="clearfix"></div>
+    </h4>
+</div>
+
+<div class="modal-body role-modal-body slider">
+    <form name="$ctrl.form" novalidate>
+
+        <div class="pad15">
+            <div class="form-group">
+                <labeled-input label="{{'NAME' | translate}}" 
+                               field-id="name"
+                               value="$ctrl.slider.name"
+                               is-required="true"
+                               placeholder="{{'ENTER_SLIDER_NAME' | translate}}"
+                               focus="true"
+                               css-class="input">
+                </labeled-input>
+            </div>
+
+            <div class="form-group">
+                <labeled-input label="{{'PUBLISHED' | translate}}" 
+                               field-id="is-published"
+                               value="$ctrl.slider.published"
+                               type="checkbox"
+                               css-class="checkbox"
+                               display-after="true">
+                </labeled-input>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.close()" class="rightm10"></button-default>
+
+    <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
+
+    <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
+</div>
