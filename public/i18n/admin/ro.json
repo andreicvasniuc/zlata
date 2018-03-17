@@ -105,5 +105,21 @@
   "DELETE_CONTACT_MESSAGE": "Sunteți sigur că doriți să ștergeți acest contact?",
   "ENTER_CONTACT_GROUP_NAME": "Introduceți nume de grupă de contact...",
   "ENTER_CONTACT_NAME": "Introduceți nume de contact...",
-  "GO_AND_ADD_CONTACT_GROUPS": "Du-te și adaugă grupe de contacte"
+  "GO_AND_ADD_CONTACT_GROUPS": "Du-te și adaugă grupe de contacte",
+  "SLIDERS": "Slidere",
+  "SLIDER": "Slider",
+  "SLIDER_": "Slider",
+  "SLIDES": "Slide",
+  "SLIDE": "Slide",
+  "ADD_SLIDER": "Adaugă slider",
+  "ADD_SLIDE": "Adaugă slide",
+  "SLIDES_COUNT": "Număr de slide",
+  "DELETE_SLIDER_MESSAGE": "Dacă ștergeți aceast slider vă va șterge toate slidele. Sunteți sigur că doriți să ștergeți aceast slider?",
+  "GO_TO_SLIDES": "Merge la slide",
+  "DELETE_SLIDE_MESSAGE": "Sunteți sigur că doriți să ștergeți acest slide?",
+  "ENTER_SLIDER_NAME": "Introduceți nume de slider...",
+  "ENTER_SLIDE_TITLE": "Introduceți title de slide...",
+  "ENTER_SLIDE_LINK_TEXT": "Introduceți link text de slide...",
+  "ENTER_SLIDE_LINK_URL": "Introduceți link url de slide...",
+  "GO_AND_ADD_SLIDERS": "Du-te și adaugă slidere"
 }
