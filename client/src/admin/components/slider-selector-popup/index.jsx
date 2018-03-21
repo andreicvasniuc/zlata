@@ -49,7 +49,7 @@ class SliderSelectorPopupController {
       () => { console.log('error'); });
   }
 
-  goToSliders() {
+  goToSlides() {
     this.close();
     this.router.goTo(this.routeUrls.sliders);
   }

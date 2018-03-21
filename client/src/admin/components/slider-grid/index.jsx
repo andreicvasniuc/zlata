@@ -72,7 +72,7 @@ class SliderGridController {
       delete: this.delete,
       clickOnRow: this.clickOnRow,
       publish: this.publish,
-      goToSliders: this.goToSliders
+      goToSlides: this.goToSlides
     };
   }
 
@@ -119,7 +119,7 @@ class SliderGridController {
     });
   }
 
-  goToSliders(entity) {
+  goToSlides(entity) {
     self.slideRouter.goTo(self.routeUrls.slider_slides, entity.slug);
   }
 

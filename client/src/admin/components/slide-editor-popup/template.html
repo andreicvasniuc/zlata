@@ -2,24 +2,42 @@
     <h4 class="modal-title">
         <span ng-if="!$ctrl.isEdit" translate="CREATE"></span> 
         <span ng-if="$ctrl.isEdit" translate="EDIT"></span> 
-        <span translate="CONTACT_GROUP"></span>
+        <span translate="SLIDE"></span>
 
         <img alt="Close icon" ng-src="{{$ctrl.closeIcon}}" ng-click="$ctrl.close()" class="clickable pull-right">
         <div class="clearfix"></div>
     </h4>
 </div>
 
-<div class="modal-body role-modal-body contact-group">
+<div class="modal-body role-modal-body slide">
     <form name="$ctrl.form" novalidate>
 
         <div class="pad15">
             <div class="form-group">
-                <labeled-input label="{{'NAME' | translate}}" 
-                               field-id="name"
-                               value="$ctrl.contact.name"
+                <labeled-input label="{{'TITLE' | translate}}" 
+                               field-id="title"
+                               value="$ctrl.slide.title"
                                is-required="true"
-                               placeholder="{{'ENTER_CONTACT_NAME' | translate}}"
+                               placeholder="{{'ENTER_SLIDE_TITLE' | translate}}"
                                focus="true"
+                               css-class="input">
+                </labeled-input>
+            </div>
+
+            <div class="form-group">
+                <labeled-input label="{{'LINK_TEXT' | translate}}" 
+                               field-id="link_text"
+                               value="$ctrl.slide.link_text"
+                               placeholder="{{'ENTER_SLIDE_LINK_TEXT' | translate}}"
+                               css-class="input">
+                </labeled-input>
+            </div>
+
+            <div class="form-group">
+                <labeled-input label="{{'LINK_URL' | translate}}" 
+                               field-id="link_url"
+                               value="$ctrl.slide.link_url"
+                               placeholder="{{'ENTER_SLIDE_LINK_URL' | translate}}"
                                css-class="input">
                 </labeled-input>
             </div>
@@ -27,7 +45,7 @@
             <div class="form-group">
                 <labeled-input label="{{'PUBLISHED' | translate}}" 
                                field-id="is-published"
-                               value="$ctrl.contact.published"
+                               value="$ctrl.slide.published"
                                type="checkbox"
                                css-class="checkbox"
                                display-after="true">
