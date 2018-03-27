@@ -3,6 +3,7 @@ import './style.styl';
 import template from './template.html';
 import gridActionCell from './grid-action-cell.html';
 import gridPublishedCell from './grid-published-cell.html';
+import gridImageCell from './grid-image-cell.html';
 
 class SlideGridController {
   constructor($scope, $rootScope, $timeout, $translate, slideService, slideNotifier, modalAlert) {
@@ -22,6 +23,14 @@ class SlideGridController {
 
   createColumnDefinitions() {
     this.columnDefinitions = [
+    {
+          field: 'image',
+          displayName: "IMAGE",
+          headerCellFilter: "translate",
+          cellTemplate: gridImageCell,
+          clickable: false,
+          width: 120
+      },
       {
           field: 'title',
           displayName: 'TITLE',
@@ -69,20 +78,25 @@ class SlideGridController {
   createCallbacks() {
     this.callbacks = {
       edit: this.edit,
+      upload: this.upload,
       delete: this.delete,
       clickOnRow: this.clickOnRow,
       publish: this.publish
     };
   }
 
-  editSlide(entity) {
+  editSlide(entity, openImageUploadingTab) {
     self.slideService.get(entity, (response) => {
-      self.$rootScope.$broadcast('openSlideEditorPopup', response);
+      self.$rootScope.$broadcast('openSlideEditorPopup', response, openImageUploadingTab);
     });
   }
 
   edit(entity, event) {
     self.editSlide(entity);
+  }
+
+  upload(entity, event) {
+    self.editSlide(entity, true);
   }
 
   deleteSlide(slide) {

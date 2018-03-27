@@ -5,4 +5,5 @@ class Admin::Slide
   include SlideConcern
 
   embedded_in :slider, class_name: "Admin::Slider"
+  embeds_one :image, class_name: "Admin::SlideImage"
 end

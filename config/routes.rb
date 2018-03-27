@@ -85,6 +85,7 @@ Rails.application.routes.draw do
         get :list, on: :collection
           
         resources :slides, except: [:index, :new, :edit] do
+          post :upload_image, on: :member
         end
       end
 

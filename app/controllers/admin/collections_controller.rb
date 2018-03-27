@@ -54,7 +54,7 @@ class Admin::CollectionsController < SecuredController
   end
 
   # POST /admin/collections/1/upload_image
-  # POST /admin/collections1/upload_image.json
+  # POST /admin/collections/1/upload_image.json
   def upload_image
     delete_image() unless @collection.image.nil?
 
@@ -63,7 +63,7 @@ class Admin::CollectionsController < SecuredController
     if @image.save
       render json: @collection, status: :ok#, location: @collection
     else
-      render json: image_processor.errors, status: :unprocessable_entity
+      render json: @image.errors, status: :unprocessable_entity
     end
   end
   

@@ -4,29 +4,37 @@ import template from './template.html';
 import closeIcon from 'images/close.png';
 
 class SlideEditorPopupController {
-  constructor($scope, $timeout, $uibModal, $translate, slideService, slideNotifier) {
+  constructor($scope, $timeout, $uibModal, $translate, slideService, slideNotifier, imageNotifier) {
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.$uibModal = $uibModal;
     this.$translate = $translate;
     this.slideService = slideService;
     this.slideNotifier = slideNotifier;
+    this.imageNotifier = imageNotifier;
     this.closeIcon = closeIcon;
+
+    this.tabs = {
+      basicInformation: 0,
+      imageUploading: 1
+    };
 
     this.createOpenPopupEvent();
   }
 
   createOpenPopupEvent() {
-    this.$scope.$on('openSlideEditorPopup', (event, slide) => {
-      this.initialize(slide);
+    this.$scope.$on('openSlideEditorPopup', (event, slide, openImageUploadingTab) => {
+      let activeTab = openImageUploadingTab ? this.tabs.imageUploading : this.tabs.basicInformation;
+      this.initialize(slide, activeTab);
       this.stopSavingSpinner();
       this.openSlideEditorPopup(); 
     });
   }
 
-  initialize(slide) {
+  initialize(slide, activeTab) {
     this.slide = slide;
     this.isEdit = !!slide;
+    this.selectTab(activeTab);
   }
 
   openSlideEditorPopup() {
@@ -44,9 +52,10 @@ class SlideEditorPopupController {
   add() {
     this.startSavingSpinner();
     this.slideService.add(this.slide, (response) => {
-      this.initialize(response);
+      this.initialize(response, this.activeTab);
       this.slideNotifier.showSuccessCreateMessage();
       this.stopSavingSpinner();
+      this.selectTab(this.tabs.imageUploading);
     });
   }
 
@@ -66,6 +75,24 @@ class SlideEditorPopupController {
   close() {
     this.reloadGrid();
     this.modal.dismiss('cancel');
+  }
+
+  selectTab(tab) {
+    this.activeTab = tab;
+  }
+
+  isCurrentTab(tab) {
+    return this.activeTab == tab;
+  }
+
+  uploadImage() {
+    this.slideService.uploadImage(this.slide, (response) => {
+      this.imageNotifier.showSuccessUploadMessage();
+    });
+  }
+
+  deleteImage() {
+    delete this.slide.image;
   }
 }
 

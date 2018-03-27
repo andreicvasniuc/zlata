@@ -21,6 +21,10 @@ class SlideService {
   delete(slide, successCallback, errorCallback) {
     this.slideResource.remove({ id: slide.slug, sliderId: this.slideRouter.getSliderId(), locale: this.localeService.get() }, successCallback, errorCallback);
   }
+
+  uploadImage(slide, successCallback, errorCallback){
+    this.slideResource.uploadImage({ id: slide.slug, image: slide.image, sliderId: this.slideRouter.getSliderId(), locale: this.localeService.get() }, successCallback, errorCallback);
+  }
 }
 
 export default SlideService

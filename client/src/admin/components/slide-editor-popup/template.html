@@ -12,46 +12,79 @@
 <div class="modal-body role-modal-body slide">
     <form name="$ctrl.form" novalidate>
 
-        <div class="pad15">
-            <div class="form-group">
-                <labeled-input label="{{'TITLE' | translate}}" 
-                               field-id="title"
-                               value="$ctrl.slide.title"
-                               is-required="true"
-                               placeholder="{{'ENTER_SLIDE_TITLE' | translate}}"
-                               focus="true"
-                               css-class="input">
-                </labeled-input>
-            </div>
+      <uib-tabset active="$ctrl.activeTab" justified="true">
+            <uib-tab index="$ctrl.tabs.basicInformation" heading="{{'BASIC' | translate}}" select="$ctrl.selectTab($ctrl.tabs.basicInformation)">
 
-            <div class="form-group">
-                <labeled-input label="{{'LINK_TEXT' | translate}}" 
-                               field-id="link_text"
-                               value="$ctrl.slide.link_text"
-                               placeholder="{{'ENTER_SLIDE_LINK_TEXT' | translate}}"
-                               css-class="input">
-                </labeled-input>
-            </div>
+          <div class="pad15">
+              <div class="form-group">
+                  <labeled-input label="{{'TITLE' | translate}}" 
+                                 field-id="title"
+                                 value="$ctrl.slide.title"
+                                 is-required="true"
+                                 placeholder="{{'ENTER_SLIDE_TITLE' | translate}}"
+                                 focus="true"
+                                 css-class="input">
+                  </labeled-input>
+              </div>
 
-            <div class="form-group">
-                <labeled-input label="{{'LINK_URL' | translate}}" 
-                               field-id="link_url"
-                               value="$ctrl.slide.link_url"
-                               placeholder="{{'ENTER_SLIDE_LINK_URL' | translate}}"
-                               css-class="input">
-                </labeled-input>
-            </div>
+              <div class="form-group">
+                  <labeled-input label="{{'LINK_TEXT' | translate}}" 
+                                 field-id="link_text"
+                                 value="$ctrl.slide.link_text"
+                                 placeholder="{{'ENTER_SLIDE_LINK_TEXT' | translate}}"
+                                 css-class="input">
+                  </labeled-input>
+              </div>
 
-            <div class="form-group">
-                <labeled-input label="{{'PUBLISHED' | translate}}" 
-                               field-id="is-published"
-                               value="$ctrl.slide.published"
-                               type="checkbox"
-                               css-class="checkbox"
-                               display-after="true">
-                </labeled-input>
-            </div>
-        </div>
+              <div class="form-group">
+                  <labeled-input label="{{'LINK_URL' | translate}}" 
+                                 field-id="link_url"
+                                 value="$ctrl.slide.link_url"
+                                 placeholder="{{'ENTER_SLIDE_LINK_URL' | translate}}"
+                                 css-class="input">
+                  </labeled-input>
+              </div>
+
+              <div class="form-group">
+                  <labeled-input label="{{'PUBLISHED' | translate}}" 
+                                 field-id="is-published"
+                                 value="$ctrl.slide.published"
+                                 type="checkbox"
+                                 css-class="checkbox"
+                                 display-after="true">
+                  </labeled-input>
+              </div>
+          </div>
+
+        </uib-tab>
+
+        <uib-tab index="$ctrl.tabs.imageUploading" heading="{{'IMAGE_UPLOADING' | translate}}" disable="!$ctrl.isEdit" select="$ctrl.selectTab($ctrl.tabs.imageUploading)">
+              <div class="pad15">
+                
+                <div class="form-group" ng-if="!$ctrl.slide.image">
+                    <div class="textarea">
+                      <textarea id="image-url" 
+                          class="rightm10 form-control" 
+                          ng-model="$ctrl.slide.image.url" 
+                          placeholder="{{'DRAG_IMAGE_HERE' | translate}}"
+                          ng-change="$ctrl.uploadImage()">
+                      </textarea>
+                    </div>
+                </div>
+
+                <div class="gallery-box" ng-if="$ctrl.slide.image">
+                    <div class="thumbnail">
+                        <img ng-src="{{$ctrl.slide.image.url}}" />
+                    </div>
+
+                    <div class="btn-group">
+                        <a ng-click="$ctrl.deleteImage()" class="btn btn-xs btn-danger" translate="DELETE"></a>
+                    </div>
+                </div>
+
+              </div>
+            </uib-tab>
+        </uib-tabset>
 
     </form>
 </div>
@@ -59,7 +92,9 @@
 <div class="modal-footer">
     <button-default label="{{'CLOSE' | translate}}" click-callback="$ctrl.close()" class="rightm10"></button-default>
 
-    <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
+    <span ng-show="$ctrl.isCurrentTab($ctrl.tabs.basicInformation)">
+        <button-spinner label="{{'ADD' | translate}}" click-callback="$ctrl.add()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="!$ctrl.isEdit"></button-spinner>
 
-    <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
+        <button-spinner label="{{'EDIT' | translate}}" click-callback="$ctrl.edit()" is-disabled="$ctrl.form.$invalid" is-loading-spinner="$ctrl.isSavingSpinner" ng-if="$ctrl.isEdit"></button-spinner>
+    </span>
 </div>

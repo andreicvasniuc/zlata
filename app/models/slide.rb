@@ -5,4 +5,5 @@ class Slide
   include SlideConcern
 
   embedded_in :slider, class_name: "Slider"
+  embeds_one :image, class_name: "SlideImage"
 end
