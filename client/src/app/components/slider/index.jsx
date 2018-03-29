@@ -1,16 +1,24 @@
+import './style.styl';
 import template from './template.html';
 
 class SliderController {
-  constructor($timeout) {
-    this.createIconList();
-    $timeout(() => this.createCarousel(), 50);
+  constructor($timeout, sliderService) {
+    this.$timeout = $timeout;
+    this.sliderService = sliderService;
+
+    this.loadSlider();
   }
 
-  createIconList() {
-    let slide1Image = 'https://pp.userapi.com/c844617/v844617416/2c96/YFegKFAv7U8.jpg';
-    let slide2Image = 'https://pp.userapi.com/c844617/v844617416/2cd3/uTartb_WFHQ.jpg';
-    let slide3Image = 'https://pp.userapi.com/c844617/v844617416/2cc9/IJC5fLT2opQ.jpg';
-    this.iconList = [slide1Image, slide2Image, slide3Image];
+  loadSlider() {
+    this.isLoadingSpinner = true;
+
+    this.sliderService.home((response) => {
+      this.slider = response.slider || {};
+      this.$timeout(() => {
+        this.isLoadingSpinner = false;
+        this.createCarousel();
+      }, 50);
+    });
   }
 
   createCarousel() {

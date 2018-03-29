@@ -39,7 +39,7 @@ Rails.application.routes.draw do
       end
 
       resources :sliders, only: [] do
-        get :published, on: :collection
+        get :home, on: :collection
       end
     end
 

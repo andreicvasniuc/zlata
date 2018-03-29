@@ -2,8 +2,14 @@
     <div class="row">
         <div class="col-md-12 text-center">
             <div class="owl-carousel owl-theme fh5co-light-arrow owl-carousel-fullwidth1">
-                <div class="item" ng-repeat="icon in $ctrl.iconList">
-                    <img ng-src="{{icon}}">
+                <div class="item" ng-repeat="slide in $ctrl.slider.slides">
+                    <div class="text-overlay">
+                      <h1 class="fh5co-serif">{{slide.title}}</h1>
+                      <div>
+                        <a ng-href="{{slide.link_url}}" title="{{slide.link_text}}">{{slide.link_text}}</a>
+                      </div>
+                    </div>
+                    <img ng-src="{{slide.image.url}}" alt="{{slide.title}}"/>
                 </div>
             </div>
         </div>

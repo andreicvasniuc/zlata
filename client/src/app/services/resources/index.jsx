@@ -7,6 +7,7 @@ import ColorResource from './colorResource';
 import SocialNetworkingResource from './socialNetworkingResource';
 import ContactGroupResource from './contactGroupResource';
 import ContactResource from './contactResource';
+import SliderResource from './sliderResource';
 
 export default angular
     .module('app.services.resources', [])
@@ -17,4 +18,5 @@ export default angular
     .service('socialNetworkingResource', SocialNetworkingResource)
     .service('contactGroupResource', ContactGroupResource)
     .service('contactResource', ContactResource)
+    .service('sliderResource', SliderResource)
     .name;
