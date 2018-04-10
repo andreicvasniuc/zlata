@@ -64,6 +64,6 @@ class Admin::SlidersController < SecuredController
     end
 
     def slider_params
-      params.require(:slider).permit(:name, :published)
+      params.require(:slider).permit(:name, :autoplay, :published)
     end
 end

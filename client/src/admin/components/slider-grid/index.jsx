@@ -32,6 +32,12 @@ class SliderGridController {
           sortable: true
       },
       {
+          field: 'autoplay',
+          displayName: 'AUTOPLAY',
+          headerCellFilter: "translate",
+          sortable: true
+      },
+      {
           field: 'updated_at',
           displayName: 'EDIT_DATE',
           headerCellFilter: "translate",

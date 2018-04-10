@@ -31,6 +31,9 @@ class SliderController {
       nav: true,
       dots: true,
       smartSpeed: 500,
+      autoplay: this.slider.autoplay,
+      autoplayTimeout: 5000,
+      autoplayHoverPause: true,
       navText: [
         "<i class='ti-arrow-left owl-direction'></i>",
         "<i class='ti-arrow-right owl-direction'></i>"

@@ -8,7 +8,7 @@ class Slider
 
   scope :published, -> { where(published: true) }
   scope :latest, -> { order( created_at: :desc ) }
-  scope :main_info, -> { only( :name, :_slugs, :slides ) }
+  scope :main_info, -> { only( :name, :_slugs, :autoplay, :slides ) }
 
   def self.first_published
     self.published.main_info.first

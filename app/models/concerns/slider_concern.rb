@@ -7,6 +7,7 @@ module SliderConcern
     store_in collection: 'sliders'
 
     field :name, type: String, localize: true
+    field :autoplay, type: Boolean
     field :published, type: Boolean
 
     index name: 1

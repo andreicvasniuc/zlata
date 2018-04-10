@@ -24,6 +24,7 @@ class Admin::Slider
       { '$project' => {
           "name.#{I18n.locale}" => 1, 
           :_slugs => 1,
+          :autoplay => 1, 
           :published => 1, 
           :updated_at => 1,
           :slides_count => { '$size' => { '$ifNull' => ['$slides', []] } }

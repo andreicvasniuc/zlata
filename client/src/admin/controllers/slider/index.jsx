@@ -23,7 +23,7 @@ class SliderController {
   }
 
   initializeSorting(uiGridConstants) {
-    this.sortByEnum = { name: 'name', published: 'published', updated_at: 'updated_at' };
+    this.sortByEnum = { name: 'name', autoplay: 'autoplay', published: 'published', updated_at: 'updated_at' };
     this.router.initialize(this.sortByEnum, this.sortByEnum.updated_at, uiGridConstants.DESC);
 
     [this.sortBy, this.sortByDirection, this.searchText] = this.router.getSortAndSearch();
