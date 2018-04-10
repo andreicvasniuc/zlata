@@ -8,6 +8,8 @@ class Admin::Slider
 
   scope :names, -> { only(:name, :_slugs) }
 
+  after_create :create_for_all_locales
+
   def self.search(search, pagination, sorting)
     directions = { asc: 1, desc: -1 }
     
@@ -44,5 +46,15 @@ class Admin::Slider
     end
 
     [list_json, collection.count]
+  end
+
+  def create_for_all_locales
+    saved_name = self.name
+    
+    LocaleLooper.run do
+      self.name = saved_name
+    end
+
+    self.save
   end
 end
