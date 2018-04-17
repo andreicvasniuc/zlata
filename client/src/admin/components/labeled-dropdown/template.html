@@ -8,8 +8,22 @@
             ng-disabled="$ctrl.isDisabled" 
             class="form-control {{$ctrl.selectClass}}"
             ng-required="$ctrl.isRequired"
+            ng-if="!$ctrl.isMultiple"
         >
         <option value="" selected>{{'CHOOSE' | translate}}</option>
+        <option value="" ng-if="false"></option>
+    </select>
+
+    <select id="{{$ctrl.fieldId}}" 
+            name="{{$ctrl.fieldName}}"
+            ng-model="$ctrl.value" 
+            ng-options="item['{{$ctrl.valueProperty}}'] as item['{{$ctrl.textProperty}}'] for item in $ctrl.items" 
+            ng-disabled="$ctrl.isDisabled" 
+            class="form-control {{$ctrl.selectClass}}"
+            ng-required="$ctrl.isRequired"
+            multiple="$ctrl.isMultiple"
+            ng-if="$ctrl.isMultiple"
+        >
         <option value="" ng-if="false"></option>
     </select>
 </div>

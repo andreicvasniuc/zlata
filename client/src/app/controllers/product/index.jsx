@@ -48,15 +48,15 @@ class ProductController {
   }
 
   setColor(colors) {
-    this.product.color = this.getItem(colors, this.product.color_id);
+    this.product.colors = this.getItems(colors, this.product.color_ids);
   }
 
   setSize(sizes) {
-    this.product.size = this.getItem(sizes, this.product.size_id);
+    this.product.sizes = this.getItems(sizes, this.product.size_ids);
   }
 
-  getItem(items, itemId) {
-    return items.find((item) => item._id.$oid == itemId);
+  getItems(items, itemIds) {
+    return items.filter((item) => itemIds.includes(item._id.$oid));
   }
 }
 

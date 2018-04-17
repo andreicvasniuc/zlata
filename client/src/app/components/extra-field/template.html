@@ -1,0 +1,7 @@
+<div ng-if="$ctrl.items">
+    <span>{{$ctrl.label | translate}}</span>: &nbsp;
+    <span ng-repeat="item in $ctrl.items">
+        <span>{{item.name}}</span>
+        <span ng-if="!$last">, </span>
+    </span>
+</div>

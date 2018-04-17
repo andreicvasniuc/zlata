@@ -11,14 +11,8 @@
 
         <h1 ng-bind="$ctrl.item.name"></h1>
         <div class="extra-fields">
-            <div ng-if="$ctrl.item.color">
-                <span translate="COLOR"></span>: 
-                <span ng-bind="$ctrl.item.color.name"></span>
-            </div>
-            <div ng-if="$ctrl.item.size">
-                <span translate="SIZE"></span>: 
-                <span ng-bind="$ctrl.item.size.name"></span>
-            </div>
+            <extra-field label="COLORS" items="$ctrl.item.colors"></extra-field>
+            <extra-field label="SIZES" items="$ctrl.item.sizes"></extra-field>
         </div>
         <div class="description" ng-bind="$ctrl.item.description"></div>
     </div>

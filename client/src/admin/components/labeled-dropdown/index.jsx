@@ -19,7 +19,8 @@ let labeledDropdown = {
     cssClass: '@',
     labelClass: '@',
     selectClass: '@',
-    isRequired: '='
+    isRequired: '=',
+    isMultiple: '='
   },
   controller: LabeledDropdownController,
   templateUrl: template

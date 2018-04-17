@@ -11,6 +11,7 @@ import topProducts from './top-products';
 import loadingIcon from './loading-icon';
 import items from './items';
 import itemDetails from './item-details';
+import extraField from './extra-field';
 import breadcrumb from './breadcrumb';
 import socialNetworkings from './social-networkings';
 import navigation from './navigation';
@@ -30,6 +31,7 @@ export default angular
     .component('loadingIcon', loadingIcon)
     .component('items', items)
     .component('itemDetails', itemDetails)
+    .component('extraField', extraField)
     .component('breadcrumb', breadcrumb)
     .component('socialNetworkings', socialNetworkings)
     .component('navigation', navigation)

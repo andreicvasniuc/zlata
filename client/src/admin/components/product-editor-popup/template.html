@@ -40,10 +40,11 @@
                         <labeled-dropdown label="{{'SIZE' | translate}}" 
                                           field-id="size"
                                           items="$ctrl.sizes"
-                                          value="$ctrl.product.size_id"
+                                          value="$ctrl.product.size_ids"
                                           text-property="name"
                                           value-property="id"
-                                          css-class="dropdown">
+                                          css-class="dropdown"
+                                          is-multiple="true">
                         </labeled-dropdown>
 
                         <button-default label="{{'ADD_SIZE' | translate}}" class="add-item-btn" uib-popover-template="$ctrl.sizeTemplate" popover-placement="right-top"></button-default>
@@ -53,10 +54,11 @@
                         <labeled-dropdown label="{{'COLOR' | translate}}" 
                                           field-id="color"
                                           items="$ctrl.colors"
-                                          value="$ctrl.product.color_id"
+                                          value="$ctrl.product.color_ids"
                                           text-property="name"
                                           value-property="id"
-                                          css-class="dropdown">
+                                          css-class="dropdown"
+                                          is-multiple="true">
                         </labeled-dropdown>
 
                         <button-default label="{{'ADD_COLOR' | translate}}" class="add-item-btn" uib-popover-template="$ctrl.colorTemplate" popover-placement="right-top"></button-default>
