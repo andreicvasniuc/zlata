@@ -28,6 +28,7 @@ class ProductController {
 
   getProduct(collection) {
     this.product = collection.products.find((product) => this.findProduct(product));
+    this.product.images = this.reorderImages(this.product.images);
     this.index = collection.products.findIndex((product) => this.findProduct(product));
     if(this.product) {
       this.createBreadcrumb(collection, this.product);
@@ -35,6 +36,13 @@ class ProductController {
       // go to 404
       console.log('go to 404');
     }
+  }
+
+  reorderImages(images) {
+    let coverImage = _.find(images, { is_cover: true });
+    let reorderImages = _.filter(images, { is_cover: false });
+    reorderImages.unshift(coverImage);
+    return reorderImages;
   }
 
   findProduct(product) {
