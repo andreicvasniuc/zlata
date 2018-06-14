@@ -64,7 +64,7 @@ class ProductController {
   }
 
   getItems(items, itemIds) {
-    return items.filter((item) => itemIds.includes(item._id.$oid));
+    return items.filter((item) => itemIds && itemIds.includes(item._id.$oid));
   }
 }
 
