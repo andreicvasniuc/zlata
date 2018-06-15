@@ -1,6 +1,6 @@
 import template from './template.html';
 
-import headerBackgroundIcon from 'images/hero2.jpg';
+import headerBackgroundIcon from 'images/1-blured.jpg';
 
 class MainHeaderController {
   constructor($scope, $rootScope, $window) {
