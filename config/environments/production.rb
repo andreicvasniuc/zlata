@@ -78,4 +78,6 @@ Rails.application.configure do
 
   # Show the logging configuration on STDOUT
   config.show_log_configuration = false
+
+  config.assets.compile = false
 end
