@@ -11,7 +11,9 @@ class Product
 
   def self.top_list
     criteria = published_collection.where("products.is_top" => true)
-    get_products(criteria).select{ |product| product.published && product.is_top }
+    list = get_products(criteria).select{ |product| product.published && product.is_top }
+    list = list.sort_by{ |product| [product.updated_at, product.created_at] }.reverse
+    list
   end
 
   # def self.dresses
