@@ -30,7 +30,8 @@ class SocialNetworkingService {
       { name: 'Vkontakte', id: 'ti-vk' },
       { name: 'Facebook', id: 'ti-facebook' },
       { name: 'Instagram', id: 'ti-instagram' },
-      { name: 'Pinterest', id: 'ti-pinterest-alt' }
+      { name: 'Pinterest', id: 'ti-pinterest-alt' },
+      { name: 'Telegram', id: 'ti-telegram' }
     ];
   }
 }

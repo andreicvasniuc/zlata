@@ -986,9 +986,9 @@
 .ti-flickr:before {
 	content: "\e740";
 }
-.ti-facebook:before {
+/*.ti-facebook:before {
 	content: "\e741";
-}
+}*/
 .ti-dropbox:before {
 	content: "\e742";
 }
@@ -1091,6 +1091,30 @@
 .ti-vk:hover {
 	background-image: url(../images/vk-hover.png);
 	top: 11px;
+}
+
+.ti-facebook {
+	background: #fff url(../images/facebook.png) no-repeat center center;
+	width: 39px;
+	height: 47px;
+	display: inline-block;
+	position: relative;
+	top: 10px;
+}
+
+.ti-facebook:hover {
+	background-image: url(../images/facebook-hover.png);
+	width: 40px;
+	height: 48px;
+}
+
+.ti-telegram {
+	background: #fff url(../images/telegram.png) no-repeat center center;
+	width: 42px;
+	height: 50px;
+	display: inline-block;
+	position: relative;
+	top: 12px;
 }
 
 .ti-viber {
