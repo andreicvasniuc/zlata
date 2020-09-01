@@ -50,7 +50,7 @@
     "bootstrap": "^3.3.7",
     "easy-responsive-tabs": "0.0.2",
     "fastclick": "^1.0.6",
-    "jquery": "^2.2.4",
+    "jquery": "^3.5.1",
     "jquery-hoverintent": "^1.8.2",
     "jquery.easing": "^1.4.1",
     "lodash": "^4.16.4",
