@@ -91,7 +91,7 @@ GEM
     nokogiri (1.8.0)
       mini_portile2 (~> 2.2.0)
     origin (2.3.0)
-    puma (3.11.0)
+    puma (3.12.6)
     rack (1.6.10)
     rack-cors (0.4.0)
     rack-test (0.6.3)
