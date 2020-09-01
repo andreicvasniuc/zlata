@@ -11,4 +11,5 @@ export default angular
         contacts: '/contacts'
       })
     .constant('languages', { en: 'en', ru: 'ru', ua: 'ua', ro: 'ro' })
+    .constant('defaultLanguage', 'en')
     .name;
