@@ -89,6 +89,11 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :data, only: [] do
+        post :export, on: :collection
+        post :import, on: :collection
+      end
+
       get '*path', to: '/home#admin'
     end
 

@@ -10,6 +10,7 @@ import ContactGroupResource from './contactGroupResource';
 import ContactResource from './contactResource';
 import SliderResource from './sliderResource';
 import SlideResource from './slideResource';
+import DataResource from './dataResource';
 
 export default angular
     .module('admin.services.resources', [])
@@ -23,4 +24,5 @@ export default angular
     .service('contactResource', ContactResource)
     .service('sliderResource', SliderResource)
     .service('slideResource', SlideResource)
+    .service('dataResource', DataResource)
     .name;

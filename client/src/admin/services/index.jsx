@@ -23,6 +23,7 @@ import ContactService from './contactService';
 import SliderService from './sliderService';
 import SlideRouterService from './slideRouter';
 import SlideService from './slideService';
+import DataService from './dataService';
 
 export default angular
     .module('admin.services', [ resources, notifiers ])
@@ -46,4 +47,5 @@ export default angular
     .service('sliderService', SliderService)
     .service('slideRouter', SlideRouterService)
     .service('slideService', SlideService)
+    .service('dataService', DataService)
     .name;

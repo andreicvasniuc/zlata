@@ -56,6 +56,25 @@
         </a>
         <ul class="dropdown-menu dropdown-tasks" uib-dropdown-menu>
             <li>
+                <a class="clickable" ng-click="$ctrl.export()">
+                    <div>
+                        <p>
+                            <strong>Export</strong>
+                        </p>
+                    </div>
+                </a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a class="clickable" ng-click="$ctrl.import()">
+                    <div>
+                        <p>
+                            <strong>Import</strong>
+                        </p>
+                    </div>
+                </a>
+            </li>
+<!--             <li>
                 <a class="clickable" ng-click="$ctrl.alert()">
                     <div>
                         <p>
@@ -124,7 +143,7 @@
                     <strong>See All Tasks</strong>
                     <i class="fa fa-angle-right"></i>
                 </a>
-            </li>
+            </li> -->
         </ul>
         <!-- /.dropdown-tasks -->
     </li>
