@@ -18,4 +18,5 @@ export default angular
         slides: '/slides'
       })
     .constant('languages', { en: 'en', ru: 'ru', ua: 'ua', ro: 'ro' })
+    .constant('defaultLanguage', 'en')
     .name;

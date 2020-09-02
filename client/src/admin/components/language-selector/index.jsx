@@ -8,12 +8,15 @@ import uaIcon from 'images/flags/ua.png';
 import roIcon from 'images/flags/ro.png';
 
 class LanguageSelectorController {
-  constructor(localeService, languages) {
+  constructor(localeService, languages, defaultLanguage) {
     this.localeService = localeService;
     this.languages = languages;
+    this.defaultLanguage = defaultLanguage;
+  }
 
+  $onInit() {
     this.createLanguageList();
-    this.getLanguageFromCoockies();
+    this.getLanguageFromCookies();
   }
 
   createLanguageList() {
@@ -25,9 +28,19 @@ class LanguageSelectorController {
     ];
   }
 
-  getLanguageFromCoockies() {
+  getLanguageFromCookies() {
     let languageKey = this.localeService.get();
-    this.selectedLanguage = _.find(this.languageList, { key: languageKey });
+    if(languageKey) {
+      this.selectedLanguage = this.getLanguageByKey(languageKey);
+    } else {
+      languageKey = navigator.language.split('-')[0].toLowerCase();
+      this.selectedLanguage = this.getLanguageByKey(languageKey) || this.getLanguageByKey(this.defaultLanguage);
+      this.selectLanguage(this.selectedLanguage);
+    }
+  }
+
+  getLanguageByKey(languageKey) {
+    return _.find(this.languageList, { key: languageKey });
   }
 
   selectLanguage(language) {
@@ -37,8 +50,7 @@ class LanguageSelectorController {
 }
 
 let languageSelector = {
-  bindings: {
-  },
+  bindings: {},
   controller: LanguageSelectorController,
   templateUrl: template
 };
