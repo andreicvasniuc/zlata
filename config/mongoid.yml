@@ -139,4 +139,4 @@ test:
 production:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] %>
+      uri: <%= ENV['DB_URI'] %>
