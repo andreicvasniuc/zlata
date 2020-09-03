@@ -42,9 +42,9 @@ Rails.application.configure do
       'Access-Control-Request-Method' => %w{GET POST PUT DELETE}.join(",")
   }
 
-  config.middleware.insert_before 0, "Rack::Cors", :debug => true, :logger => (-> { Rails.logger }) do
+  config.middleware.insert_before 0, Rack::Cors, :debug => true, :logger => (-> { Rails.logger }) do
       allow do
-        origins '*'
+        origins 'localhost:8080'
 
         resource '/cors',
           :headers => :any,
@@ -65,8 +65,9 @@ Rails.application.configure do
   # Show the logging configuration on STDOUT
   config.show_log_configuration = true
 
-  config.mongoid.logger = Logger.new($stdout, :debug)
+  config.mongoid.logger = Logger.new($stdout, :warn)
+  config.mongoid.logger.level = Logger::INFO
 
-  Mongoid.logger.level = Logger::DEBUG
-  Mongoid.logger = Logger.new($stdout)
+  # Mongoid.logger.level = Logger::INFO
+  # Mongoid.logger = Logger.new($stdout)
 end
