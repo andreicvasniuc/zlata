@@ -4,7 +4,7 @@ class Product
   include Mongoid::Slug
   include ProductConcern
 
-  embedded_in :collection, class_name: "Collection"
+  embedded_in :product_collection, class_name: "Collection"
   embeds_many :images, class_name: "ProductImage"
 
   # scope :published, -> { where("products.published" => true) }
@@ -33,7 +33,7 @@ class Product
 
   private
     def self.published_collection
-      Collection.only(:products, :_slugs).published.where("products.published" => true)
+      Collection.published.where("products.published" => true)
     end
 
     def self.get_products(criteria)

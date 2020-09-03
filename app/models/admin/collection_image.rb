@@ -1,3 +1,3 @@
 class Admin::CollectionImage < Admin::Image
-  embedded_in :collection, class_name: "Admin::Collection"
+  embedded_in :product_collection, class_name: "Admin::Collection"
 end

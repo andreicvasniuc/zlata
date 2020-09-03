@@ -11,7 +11,7 @@ class Collection
   scope :dresses, -> { any_of({ has_accessories: false }, { has_accessories: nil }) }
   scope :accessories, -> { where( has_accessories: true ) }
   scope :latest, -> { order( created_at: :desc ) }
-  scope :base_info, -> { only( :name, :description, :image, :_slugs ) }
+  scope :base_info, -> { only( :name, :description, :_slugs, 'image._id', 'image.url' ) }
 
   # def self.search(search, pagination, sorting)
   #   ### this query does NOT provide a way to get products_count

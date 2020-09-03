@@ -4,7 +4,7 @@ class Admin::Product
   include Mongoid::Slug
   include ProductConcern
 
-  embedded_in :collection, class_name: "Admin::Collection"
+  embedded_in :product_collection, class_name: "Admin::Collection"
   embeds_many :images, class_name: "Admin::ProductImage"
 
   after_create :create_for_all_locales
