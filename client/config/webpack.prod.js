@@ -1,14 +1,14 @@
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var helpers = require('./helpers');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const helpers = require('./helpers');
 
-var commonConfig = require('./webpack.common.admin.js');
-//var commonConfig = require('./webpack.common.app.js');
+const commonConfig = require('./webpack.common.admin.js');
+// const commonConfig = require('./webpack.common.app.js');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 
-module.exports = webpackMerge(commonConfig, {
+module.exports = merge(commonConfig, {
   devtool: 'source-map',
 
   output: {
@@ -17,17 +17,19 @@ module.exports = webpackMerge(commonConfig, {
     chunkFilename: '[id].[hash].chunk.js'
   },
 
-  htmlLoader: {
-    minimize: false // workaround for ng2
+  // htmlLoader: {
+  //   minimize: false // workaround for ng2
+  // },
+
+  optimization: {
+    minimize: false
   },
 
   plugins: [
-    new webpack.NoErrorsPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({
-      mangle: false
+    new webpack.NoEmitOnErrorsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css'
     }),
-    new ExtractTextPlugin('[name].[hash].css'),
     new webpack.DefinePlugin({
       'process.env': {
         'ENV': JSON.stringify(ENV)

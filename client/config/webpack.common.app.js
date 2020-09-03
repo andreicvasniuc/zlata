@@ -1,14 +1,13 @@
-var _ = require('lodash');
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
-var helpers = require('./helpers');
+const _ = require('lodash');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
 
+const pathToApp = _.partial(helpers.src, 'app');
 
-var pathToApp = _.partial(helpers.src, 'app');
-
-module.exports = webpackMerge(commonConfig, {
+module.exports = merge(commonConfig, {
   entry: {
     vendor: pathToApp('vendor.jsx'),
     app: pathToApp('index.jsx')
@@ -19,12 +18,28 @@ module.exports = webpackMerge(commonConfig, {
   },
 
   resolve: {
-      alias: {
-          css: helpers.src('assets/app/css'),
-          images: helpers.src('assets/app/images'),
-          js: helpers.src('assets/app/js')
-      }
+    alias: {
+      css: helpers.src('assets/app/css'),
+      images: helpers.src('assets/app/images'),
+      js: helpers.src('assets/app/js')
+    }
   },
+
+  // optimization: {
+  //   runtimeChunk: 'single',
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       appGroup: {
+  //         name: 'app',
+  //         chunks: 'all'
+  //       },
+  //       vendorGroup: {
+  //         name: 'vendor',
+  //         chunks: 'all'
+  //       }
+  //     }
+  //   }
+  // },
 
   plugins: [
     new webpack.ProvidePlugin({
@@ -32,10 +47,6 @@ module.exports = webpackMerge(commonConfig, {
         $: 'jquery',
         jquery: 'jquery',
         'window.jQuery': 'jquery'
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ['app', 'vendor']
     }),
 
     new HtmlWebpackPlugin({

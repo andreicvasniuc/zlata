@@ -1,13 +1,14 @@
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.js');
+const webpack = require('webpack');
+const { merge } = require('webpack-merge');
+const commonConfig = require('./webpack.common.js');
+const helpers = require('./helpers');
 
 const ENV = process.env.NODE_ENV = process.env.ENV = 'development';
 const API_URL = 'http://localhost:3000';
 
-module.exports = webpackMerge(commonConfig, {
+module.exports = merge(commonConfig, {
   output: {
-    path: '../../public/javascripts',
+    path: helpers.root('../public/javascripts'),
     //path: pathApp(),
     filename: '[name].js', // Template based on keys in entry above
     chunkFilename: '[id].chunk.js',
