@@ -18,9 +18,6 @@ gem 'puma'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-# API
-gem 'rails-api'
-
 # Mongoid
 gem 'mongoid'
 gem 'bson_ext'
