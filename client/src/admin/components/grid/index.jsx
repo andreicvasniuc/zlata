@@ -9,7 +9,9 @@ class GridController {
     this.$scope = $scope;
     this.$timeout = $timeout;
     this.uiGridConstants = uiGridConstants;
+  }
 
+  $onInit() {
     this.setGridId();
     this.setGridOptions();
     this.setGridHeight();

@@ -15,10 +15,8 @@ import 'lodash';
 
 import 'jquery';
 // import 'bootstrap';
-import 'owl.carousel';
-import 'magnific-popup'
-import 'jquery-hoverintent'
-import 'superfish'
-import 'easy-responsive-tabs'
-import 'fastclick'
-// import 'js/main'
+import 'magnific-popup';
+import 'jquery-hoverintent';
+import 'superfish';
+import 'easy-responsive-tabs';
+import 'fastclick';

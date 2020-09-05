@@ -1,3 +1,5 @@
+import './style.styl';
+
 export default () => {
   return (scope, element, attrs) => {
     if (scope.$last) {

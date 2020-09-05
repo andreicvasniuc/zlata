@@ -46,7 +46,7 @@ class LoginController {
         sessionStorage.setItem('auth_token', response.jwt);
         this.router.goTo(this.loginService.redirectToUrl);
       },
-      (data, status, headers, config) => {
+      (data, status) => {
         if(status == 404) {
           this.loginNotifier.showErrorLoginMessage();
         }

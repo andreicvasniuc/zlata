@@ -11,7 +11,9 @@ class CollectionSelectorPopupController {
     this.productRouter = productRouter;
     this.routeUrls = routeUrls;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
     this.loadCollections();
   }
@@ -31,11 +33,12 @@ class CollectionSelectorPopupController {
 
   select(collection, event) {
     event.preventDefault();
+    this.close();
     this.productRouter.goTo(this.routeUrls.collection_products, collection.slug);
   }
 
   close() {
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 
   loadCollections(successCallback) {

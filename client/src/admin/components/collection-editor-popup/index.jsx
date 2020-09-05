@@ -16,7 +16,9 @@ class CollectionEditorPopupController {
       basicInformation: 0,
       imageUploading: 1
     };
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
   }
 
@@ -72,7 +74,7 @@ class CollectionEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 
   selectTab(tab) {

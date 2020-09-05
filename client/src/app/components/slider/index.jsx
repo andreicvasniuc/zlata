@@ -1,3 +1,4 @@
+import 'owl.carousel';
 import './style.styl';
 import template from './template.html';
 
@@ -5,7 +6,9 @@ class SliderController {
   constructor($timeout, sliderService) {
     this.$timeout = $timeout;
     this.sliderService = sliderService;
+  }
 
+  $onInit() {
     this.loadSlider();
   }
 

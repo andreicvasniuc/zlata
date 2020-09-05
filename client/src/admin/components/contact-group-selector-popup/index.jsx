@@ -11,7 +11,9 @@ class ContactGroupSelectorPopupController {
     this.contactRouter = contactRouter;
     this.routeUrls = routeUrls;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
     this.loadContactGroups();
   }
@@ -31,11 +33,12 @@ class ContactGroupSelectorPopupController {
 
   select(contactGroup, event) {
     event.preventDefault();
+    this.close();
     this.contactRouter.goTo(this.routeUrls.contact_group_contacts, contactGroup.slug);
   }
 
   close() {
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 
   loadContactGroups(successCallback) {

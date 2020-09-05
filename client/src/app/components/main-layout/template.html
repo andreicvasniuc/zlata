@@ -3,7 +3,7 @@
 <div id="fh5co-main" ng-class="{'no-margin-top': $ctrl.isSliderVisible}">
   <breadcrumb ng-if="$ctrl.breadcrumb" data="$ctrl.breadcrumb"></breadcrumb>
 
-    <loading-icon ng-show="$ctrl.isLoadingSpinner" />
+    <loading-icon ng-show="$ctrl.isLoadingSpinner"></loading-icon>
 
     <div ng-transclude ng-hide="$ctrl.isLoadingSpinner" ng-class="{ 'col-md-10 col-md-offset-1 clearfix': $ctrl.centered }"></div>
 

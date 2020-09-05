@@ -15,7 +15,9 @@ class SlideGridController {
     this.slideService = slideService;
     this.slideNotifier = slideNotifier;
     this.modalAlert = modalAlert;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();

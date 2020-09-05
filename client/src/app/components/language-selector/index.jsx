@@ -16,7 +16,9 @@ class LanguageSelectorController {
     this.localeService = localeService;
     this.languages = languages;
     this.defaultLanguage = defaultLanguage;
+  }
 
+  $onInit() {
     this.createLanguageList();
     this.getLanguageFromCookies();
   }

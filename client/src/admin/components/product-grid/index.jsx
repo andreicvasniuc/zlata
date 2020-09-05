@@ -15,7 +15,9 @@ class ProductGridController {
     this.productService = productService;
     this.productNotifier = productNotifier;
     this.modalAlert = modalAlert;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();

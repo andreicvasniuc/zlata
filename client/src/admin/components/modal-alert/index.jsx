@@ -6,7 +6,9 @@ class ModalAlertController {
   constructor($scope, $uibModal) {
     this.$scope = $scope;
     this.$uibModal = $uibModal;
+  }
 
+  $onInit() {
     this.$scope.$on('openModalAlert', (event, config) => {
       this.config = config;
       this.createCallbacks();
@@ -34,7 +36,7 @@ class ModalAlertController {
   }
 
   close() {
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 }
 

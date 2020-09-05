@@ -4,7 +4,9 @@ class SocialNetworkingsController {
   constructor($timeout, socialNetworkingService) {
     this.$timeout = $timeout;
     this.socialNetworkingService = socialNetworkingService;
+  }
 
+  $onInit() {
     this.loadSocialNetworkings();
   }
 

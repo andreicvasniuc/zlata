@@ -30,7 +30,9 @@ class ProductEditorPopupController {
       basicInformation: 0,
       imageUploading: 1
     };
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
   }
 
@@ -127,7 +129,7 @@ class ProductEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 
   selectTab(tab) {

@@ -9,7 +9,9 @@ class SocialNetworkingEditorPopupController {
     this.socialNetworkingService = socialNetworkingService;
     this.socialNetworkingNotifier = socialNetworkingNotifier;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
     this.createSocialNetworkingCssClasses();
   }
@@ -67,7 +69,7 @@ class SocialNetworkingEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 }
 

@@ -9,7 +9,9 @@ class MainHeaderController {
     this.$window = $($window);
     this.headerBackgroundIcon = headerBackgroundIcon;
     this.headingOpacity = 1;
+  }
 
+  $onInit() {
     this.$window.unbind('scroll').scroll(() => this.windowScroll());
     this.$window.unbind('resize').resize(() => this.windowResize());
     this.checkMobileWindowSize();

@@ -14,7 +14,9 @@ class ContactGridController {
     this.contactService = contactService;
     this.contactNotifier = contactNotifier;
     this.modalAlert = modalAlert;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();

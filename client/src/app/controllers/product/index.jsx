@@ -39,8 +39,8 @@ class ProductController {
   }
 
   reorderImages(images) {
-    let coverImage = _.find(images, { is_cover: true });
-    let reorderImages = _.filter(images, { is_cover: false });
+    const coverImage = _.find(images, { is_cover: true });
+    const reorderImages = _.filter(images, image => !image.is_cover);
     reorderImages.unshift(coverImage);
     return reorderImages;
   }

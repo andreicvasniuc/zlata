@@ -11,7 +11,9 @@ class SliderSelectorPopupController {
     this.slideRouter = slideRouter;
     this.routeUrls = routeUrls;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
     this.loadSliders();
   }
@@ -31,11 +33,12 @@ class SliderSelectorPopupController {
 
   select(slider, event) {
     event.preventDefault();
+    this.close();
     this.slideRouter.goTo(this.routeUrls.slider_slides, slider.slug);
   }
 
   close() {
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 
   loadSliders(successCallback) {

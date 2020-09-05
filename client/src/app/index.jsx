@@ -8,6 +8,7 @@ import pascalprechtTranslate from 'angular-translate';
 import 'angular-translate-storage-cookie';
 import 'angular-translate-loader-static-files';
 import 'angular-lightgallery';
+import 'lg-fullscreen.js';
 import toastr from 'angular-toastr';
 
 import config from './config';

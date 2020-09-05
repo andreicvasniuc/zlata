@@ -10,7 +10,9 @@ class ContactGroupEditorPopupController {
     this.contactGroupService = contactGroupService;
     this.contactGroupNotifier = contactGroupNotifier;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
     this.createContactGroupCssClasses();
   }
@@ -68,7 +70,7 @@ class ContactGroupEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 }
 

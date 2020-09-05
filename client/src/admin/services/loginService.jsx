@@ -7,11 +7,8 @@ class LoginService {
   }
 
   signin(email, password, successCallback, errorCallback){
-    let request = { auth: { email, password } };
-
-    this.$http.post(this.authTokenUrl, request)
-      .success(successCallback)
-      .error(errorCallback);
+    const request = { auth: { email, password } };
+    this.$http.post(this.authTokenUrl, request).then(response => successCallback(response.data), response => errorCallback(response.data, response.status));
   }
 }
 

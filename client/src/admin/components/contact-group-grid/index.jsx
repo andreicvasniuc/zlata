@@ -17,7 +17,9 @@ class ContactGroupGridController {
     this.modalAlert = modalAlert;
     this.contactRouter = contactRouter;
     this.routeUrls = routeUrls;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();

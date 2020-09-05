@@ -10,7 +10,9 @@ class SliderEditorPopupController {
     this.sliderService = sliderService;
     this.sliderNotifier = sliderNotifier;
     this.closeIcon = closeIcon;
+  }
 
+  $onInit() {
     this.createOpenPopupEvent();
   }
 
@@ -63,7 +65,7 @@ class SliderEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 }
 

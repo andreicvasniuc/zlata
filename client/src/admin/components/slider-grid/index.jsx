@@ -17,7 +17,9 @@ class SliderGridController {
     this.modalAlert = modalAlert;
     this.slideRouter = slideRouter;
     this.routeUrls = routeUrls;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();

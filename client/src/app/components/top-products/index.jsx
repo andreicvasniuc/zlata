@@ -5,7 +5,9 @@ class TopProductsController {
     this.$timeout = $timeout;
     this.productService = productService;
     this.collectionRouter = collectionRouter;
+  }
 
+  $onInit() {
     this.loadTopProducts();
   }
 

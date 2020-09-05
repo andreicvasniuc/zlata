@@ -10,7 +10,9 @@ class ContactEditorPopupController {
     this.contactService = contactService;
     this.contactNotifier = contactNotifier;
     this.closeIcon = closeIcon;
-
+  }
+  
+  $onInit() {
     this.createOpenPopupEvent();
   }
 
@@ -63,7 +65,7 @@ class ContactEditorPopupController {
 
   close() {
     this.reloadGrid();
-    this.modal.dismiss('cancel');
+    this.modal.close();
   }
 }
 

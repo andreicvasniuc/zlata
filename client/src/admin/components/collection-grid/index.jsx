@@ -18,7 +18,9 @@ class CollectionGridController {
     this.modalAlert = modalAlert;
     this.productRouter = productRouter;
     this.routeUrls = routeUrls;
+  }
 
+  $onInit() {
     this.createColumnDefinitions();
     this.createCallbacks();
     this.setGridHeight();
