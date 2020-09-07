@@ -67,6 +67,7 @@ Rails.application.configure do
 
   config.mongoid.logger = Logger.new($stdout, :warn)
   config.mongoid.logger.level = Logger::INFO
+  # config.mongoid.logger.level = Logger::DEBUG
 
   # Mongoid.logger.level = Logger::INFO
   # Mongoid.logger = Logger.new($stdout)
