@@ -1,6 +1,6 @@
 <article class="item-details">
     <div class="gallery">
-        <a light-gallery ng-repeat="image in $ctrl.item.images" ng-href="{{image.url}}">
+        <a light-gallery ng-click="$ctrl.clickOnItem()" ng-repeat="image in $ctrl.item.images" ng-href="{{image.url}}">
             <img ng-class="image.is_cover ? 'cover-image' : 'no-cover-image'" ng-src="{{image.url}}">
         </a>
     </div>
