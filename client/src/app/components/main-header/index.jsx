@@ -1,6 +1,8 @@
 import template from './template.html';
 
 import headerBackgroundIcon from 'images/1-blured.jpg';
+import logoWhiteIcon from 'images/logo-white.png';
+import logoBlackIcon from 'images/logo-black.png';
 
 class MainHeaderController {
   constructor($scope, $rootScope, $window) {
@@ -8,6 +10,8 @@ class MainHeaderController {
     this.$rootScope = $rootScope;
     this.$window = $($window);
     this.headerBackgroundIcon = headerBackgroundIcon;
+    this.logoWhiteIcon = logoWhiteIcon;
+    this.logoBlackIcon = logoBlackIcon;
     this.headingOpacity = 1;
   }
 

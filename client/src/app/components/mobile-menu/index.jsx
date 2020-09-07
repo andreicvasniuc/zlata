@@ -1,8 +1,11 @@
 import template from './template.html';
 
+import logoBlackIcon from 'images/logo-black-text.png';
+
 class MobileMenuController {
   constructor($rootScope, menuService) {
     this.$rootScope = $rootScope;
+    this.logoBlackIcon = logoBlackIcon;
     this.menu = menuService.getMenu();
   }
 

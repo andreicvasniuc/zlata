@@ -227,7 +227,7 @@ textarea {
 
 #fh5co-logo {
   font-size: 20px;
-  margin: 16px 0 0 0;
+  margin: -40px 0 0 -20px;
   padding: 0;
   font-weight: bold;
 }
@@ -236,6 +236,14 @@ textarea {
   color: #fff;
   letter-spacing: 3px;
   text-transform: uppercase;
+}
+#fh5co-logo a img {
+  width: 150px;
+}
+.fh5co-scrolled #fh5co-logo img {
+  position: relative;
+  top: 26px;
+  width: 100px;
 }
 @media screen and (max-width: 768px) {
   #fh5co-logo {
@@ -576,6 +584,9 @@ textarea {
   color: #2e2e2e;
   letter-spacing: 3px;
   text-transform: uppercase;
+}
+#fh5co-logo-mobile a img {
+  width: 100px;
 }
 
 #fh5co-feature {
