@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'data_processor').to_s
+
 class Admin::DataController < SecuredController
   def export
     dataProcessor = DataProcessor.new
