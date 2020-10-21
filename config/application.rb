@@ -23,6 +23,7 @@ module IshopWeb
   class Application < Rails::Application
     config.api_only = true
     
+    config.autoloader = :classic
     config.autoload_paths << Rails.root.join('lib')
 
     # config.i18n.fallbacks = true
