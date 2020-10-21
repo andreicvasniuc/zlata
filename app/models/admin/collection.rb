@@ -64,13 +64,27 @@ class Admin::Collection
   end
 
   def create_for_all_locales
+    puts "create_for_all_locales"
     saved_name = self.name
+    puts saved_name
     saved_description = self.description
-    
+    puts saved_description
+
+    puts LocaleLooper.inspect
+    puts self.inspect
+
+    puts "before run"
+
     LocaleLooper.run do
+      puts "inside run"
+      puts self.inspect
       self.name = saved_name
+      puts self.name
       self.description = saved_description
+      puts self.description
     end
+
+    puts "after run"
 
     self.save
   end
