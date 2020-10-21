@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'locale_looper').to_s
+
 class Admin::Collection
   include Mongoid::Document
   include Mongoid::Timestamps
