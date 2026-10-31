@@ -129,5 +129,7 @@
   "EXPORT": "Export",
   "LOGOUT": "Deconectare",
   "EXPORT_FAILED": "Exportul a eșuat",
-  "SOMETHING_WENT_WRONG": "Ceva nu a funcționat. Încercați din nou."
+  "SOMETHING_WENT_WRONG": "Ceva nu a funcționat. Încercați din nou.",
+  "PRICE": "Preț",
+  "CURRENCY": "Monedă"
 }

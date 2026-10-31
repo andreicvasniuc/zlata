@@ -3,7 +3,8 @@ import { nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import DataTable, { type DataTableRowClickEvent, type DataTableSortEvent } from 'primevue/datatable'
 import Column from 'primevue/column'
-import type { ImageFile, SortDirection } from '@shared/types'
+import { formatPrice } from '@shared/format/price'
+import type { Currency, ImageFile, Locale, SortDirection } from '@shared/types'
 import IconEdit from '~icons/lucide/pencil'
 import IconUpload from '~icons/lucide/upload'
 import IconDelete from '~icons/lucide/trash'
@@ -16,8 +17,9 @@ export interface GridColumn {
   header: string
   sortable?: boolean
   width?: string
-  // `image`: thumbnail (click opens the image tab), `count`: link to the child list, default: plain text
-  kind?: 'text' | 'date' | 'image' | 'count' | 'boolean'
+  // `image`: thumbnail (click opens the image tab), `count`: link to the child list, `price`: the row's
+  // `price` with its `currency`, default: plain text
+  kind?: 'text' | 'date' | 'image' | 'count' | 'boolean' | 'price'
   // i18n key of the title of the `count` link
   linkTitle?: string
 }
@@ -46,7 +48,7 @@ const emit = defineEmits<{
   loadMore: []
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const scroller = ref<HTMLElement>()
 
 const value = (row: T, field: string) => (row as Record<string, unknown>)[field]
@@ -60,6 +62,9 @@ function formatDate(raw: unknown): string {
   const pad = (n: number) => String(n).padStart(2, '0')
   return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()}`
 }
+
+const priceOf = (row: T) =>
+  formatPrice(value(row, 'price') as number | null, value(row, 'currency') as Currency | null, locale.value as Locale) ?? ''
 
 // 1 item, 2-4 items (own form in ua/ru), other
 const countLabel = (count: number) => (count === 1 ? 'ITEM' : count >= 2 && count <= 4 ? 'ITEM_2_3_4' : 'ITEMS')
@@ -151,6 +156,7 @@ watch(
               </button>
             </template>
             <template v-else-if="column.kind === 'date'">{{ formatDate(value(data, column.field)) }}</template>
+            <template v-else-if="column.kind === 'price'">{{ priceOf(data) }}</template>
             <template v-else-if="column.kind === 'boolean'">{{ value(data, column.field) ? '✓' : '' }}</template>
             <template v-else>{{ value(data, column.field) }}</template>
           </template>

@@ -33,5 +33,6 @@
   "MENU": "Menu",
   "LANGUAGE": "Language",
   "SOCIAL_NETWORKS": "Social networks",
-  "MESSAGE_FAILED": "Sorry, the message could not be sent. Please try again later."
+  "MESSAGE_FAILED": "Sorry, the message could not be sent. Please try again later.",
+  "PRICE_FROM": "from"
 }

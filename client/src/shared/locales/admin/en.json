@@ -129,5 +129,7 @@
   "EXPORT": "Export",
   "LOGOUT": "Log out",
   "EXPORT_FAILED": "Export failed",
-  "SOMETHING_WENT_WRONG": "Something went wrong. Please try again."
+  "SOMETHING_WENT_WRONG": "Something went wrong. Please try again.",
+  "PRICE": "Price",
+  "CURRENCY": "Currency"
 }

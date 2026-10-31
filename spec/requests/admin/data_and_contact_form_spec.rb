@@ -34,7 +34,7 @@ RSpec.describe 'Admin data export/import and the contact form', type: :request d
 
     it 'restores an export into an empty database, keeping ids' do
       collection = create_collection('Spring', has_accessories: false)
-      product = create_product(collection, 'Rose', is_top: true)
+      product = create_product(collection, 'Rose', is_top: true, price: 1200, currency: 'EUR')
       create_image(product, 'https://img.example.test/1.jpg', is_cover: true)
       collection.create_image(url: 'https://img.example.test/c.jpg')
       Admin::Size.create!(name: 'M')
@@ -61,6 +61,7 @@ RSpec.describe 'Admin data export/import and the contact form', type: :request d
       expect(restored.name).to eq('Spring')
       expect(restored.image.url).to eq('https://img.example.test/c.jpg')
       expect(restored.products.find(ids[:product]).images.first.url).to eq('https://img.example.test/1.jpg')
+      expect(restored.products.find(ids[:product])).to have_attributes(price: 1200, currency: 'EUR')
       expect(Admin::Size.first.name).to eq('M')
       expect(Admin::Color.first.name).to eq('Ivory')
       expect(Admin::ContactGroup.find(ids[:group]).contacts.first.name).to eq('Anna')

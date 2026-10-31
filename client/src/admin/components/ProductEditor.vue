@@ -3,13 +3,15 @@ import { computed, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from 'primevue/button'
 import Checkbox from 'primevue/checkbox'
+import InputNumber from 'primevue/inputnumber'
 import InputText from 'primevue/inputtext'
 import MultiSelect from 'primevue/multiselect'
 import Popover from 'primevue/popover'
+import Select from 'primevue/select'
 import Textarea from 'primevue/textarea'
 import { colorsApi, sizesApi } from '@shared/api/resources/items'
 import { imagesApi, productsApi } from '@shared/api/resources/products'
-import type { Color, ImageFile, Product, Size } from '@shared/types'
+import { CURRENCIES, type Color, type Currency, type ImageFile, type Product, type Size } from '@shared/types'
 import { useBusy } from '../composables/useBusy'
 import { useConfirm } from '../composables/useConfirm'
 import { useNotify } from '../composables/useNotify'
@@ -29,6 +31,8 @@ const props = defineProps<{
 const visible = defineModel<boolean>('visible', { required: true })
 const emit = defineEmits<{ closed: [] }>()
 
+const DEFAULT_CURRENCY: Currency = CURRENCIES[0]
+
 const { t } = useI18n()
 const notify = useNotify()
 const confirm = useConfirm()
@@ -45,6 +49,9 @@ const form = reactive({
   is_top: false,
   size_ids: [] as string[],
   color_ids: [] as string[],
+  price: null as number | null,
+  // the first currency (EUR) until another one is chosen; only sent together with a price
+  currency: DEFAULT_CURRENCY as Currency,
 })
 
 const sizePopover = ref<InstanceType<typeof Popover>>()
@@ -67,6 +74,8 @@ function reset() {
   form.is_top = !!product?.is_top
   form.size_ids = [...(product?.size_ids ?? [])]
   form.color_ids = [...(product?.color_ids ?? [])]
+  form.price = product?.price ?? null
+  form.currency = product?.currency ?? DEFAULT_CURRENCY
   void loadSizes()
   void loadColors()
 }
@@ -75,17 +84,19 @@ watch(visible, (open) => open && reset(), { immediate: true })
 
 const isEdit = computed(() => !!current.value)
 const canSave = computed(() => form.name.trim() !== '')
+// clearing the amount clears the currency as well
+const payload = () => ({ ...form, currency: form.price ? form.currency : null })
 const images = computed<ImageFile[]>(() => current.value?.images ?? [])
 
 async function save() {
   const existing = current.value
   if (existing) {
-    const saved = await run(() => productsApi.update(props.collectionSlug, existing.slug, { ...form }))
+    const saved = await run(() => productsApi.update(props.collectionSlug, existing.slug, payload()))
     if (!saved) return
     notify.updated('PRODUCT')
     visible.value = false
   } else {
-    const created = await run(() => productsApi.create(props.collectionSlug, { ...form }))
+    const created = await run(() => productsApi.create(props.collectionSlug, payload()))
     if (!created) return
     current.value = created
     notify.created('PRODUCT')
@@ -202,6 +213,27 @@ const removeImage = (image: ImageFile) =>
         <Popover ref="colorPopover">
           <ItemEditor :api="colorsApi" :items="colors" delete-message="DELETE_COLOR_MESSAGE" @changed="loadColors" />
         </Popover>
+      </FormRow>
+      <FormRow :label="t('PRICE')" for="product-price">
+        <div class="flex gap-2">
+          <InputNumber
+            v-model="form.price"
+            input-id="product-price"
+            :min="1"
+            :max-fraction-digits="0"
+            use-grouping
+            class="min-w-0 flex-1"
+            input-class="w-full"
+          />
+          <Select
+            v-model="form.currency"
+            input-id="product-currency"
+            :options="[...CURRENCIES]"
+            :aria-label="t('CURRENCY')"
+            :disabled="!form.price"
+            class="w-28"
+          />
+        </div>
       </FormRow>
       <FormRow :label="t('PUBLISHED')" for="product-published">
         <Checkbox v-model="form.published" input-id="product-published" binary />

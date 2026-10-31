@@ -1,1 +1,0 @@
-import{x as e}from"./vue-router-CjfdVQqW.js";var t=5e3,n=1,r=e(`notifier`,{state:()=>({toasts:[]}),actions:{push(e,r){let i=n++;this.toasts.push({id:i,text:e,kind:r}),setTimeout(()=>this.dismiss(i),t)},success(e){this.push(e,`success`)},error(e){this.push(e,`error`)},dismiss(e){this.toasts=this.toasts.filter(t=>t.id!==e)}}});export{r as t};

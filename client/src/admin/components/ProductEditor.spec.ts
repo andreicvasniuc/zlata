@@ -54,6 +54,13 @@ function mountEditor(editing: Product | undefined, startTab: 'basic' | 'images' 
   return wrapper
 }
 
+// PrimeVue's InputNumber commits the typed value on blur
+function setPrice(value: string) {
+  const input = document.getElementById('product-price')
+  setValue(input, value)
+  input?.dispatchEvent(new Event('blur'))
+}
+
 const covers = () => allByTestId('product-image').map((element) => element.textContent?.includes('Cover') ?? false)
 
 beforeEach(() => {
@@ -182,7 +189,59 @@ describe('ProductEditor form', () => {
       is_top: false,
       size_ids: ['s1'],
       color_ids: ['c1'],
+      price: null,
+      currency: null,
     })
+  })
+
+  it('keeps the price and currency of a priced product', async () => {
+    vi.mocked(productsApi.update).mockResolvedValue(product([]))
+    mountEditor({ ...product([]), price: 1200, currency: 'USD' }, 'basic')
+    await flush()
+
+    expect((document.getElementById('product-price') as HTMLInputElement).value).toBe('1,200')
+    byTestId('editor-save')!.click()
+    await flush()
+
+    expect(productsApi.update).toHaveBeenCalledWith(
+      'queen',
+      'elayza',
+      expect.objectContaining({ price: 1200, currency: 'USD' }),
+    )
+  })
+
+  it('sends the price with the default currency EUR when only an amount is entered', async () => {
+    vi.mocked(productsApi.create).mockResolvedValue(product([]))
+    mountEditor(undefined, 'basic')
+    await flush()
+
+    setValue(document.getElementById('product-name'), 'Elayza')
+    setPrice('950')
+    await flush()
+    byTestId('editor-save')!.click()
+    await flush()
+
+    expect(productsApi.create).toHaveBeenCalledWith(
+      'queen',
+      expect.objectContaining({ name: 'Elayza', price: 950, currency: 'EUR' }),
+    )
+  })
+
+  it('clears the price and the currency when the amount is cleared', async () => {
+    vi.mocked(productsApi.update).mockResolvedValue(product([]))
+    mountEditor({ ...product([]), price: 1200, currency: 'UAH' }, 'basic')
+    await flush()
+
+    setPrice('')
+    await flush()
+    byTestId('editor-save')!.click()
+    await flush()
+
+    expect(productsApi.update).toHaveBeenCalledWith(
+      'queen',
+      'elayza',
+      expect.objectContaining({ price: null, currency: null }),
+    )
   })
 
   it('creates a product in the collection and opens the image tab', async () => {
@@ -203,6 +262,8 @@ describe('ProductEditor form', () => {
       is_top: false,
       size_ids: [],
       color_ids: [],
+      price: null,
+      currency: null,
     })
     expect(byTestId('image-url')).not.toBeNull()
   })

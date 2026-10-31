@@ -111,6 +111,42 @@ RSpec.describe 'Public SPA shell (meta tags, hreflang, 404)', type: :request do
       end
     end
 
+    it 'has no price tags or JSON-LD without a price' do
+      doc = shell('/en/queen/elayza')
+
+      expect(meta(doc, 'meta[property="og:type"]')).to eq('website')
+      expect(doc.at_css('meta[property^="product:price"]')).to be_nil
+      expect(doc.at_css('script[type="application/ld+json"]')).to be_nil
+    end
+
+    it 'adds the price as Open Graph tags and schema.org JSON-LD' do
+      priced = create_product(collection, 'Priced', description: 'A priced dress', price: 1200, currency: 'EUR')
+      create_image(priced, 'https://img.example.test/priced.jpg', is_cover: true)
+
+      doc = shell('/en/queen/priced')
+
+      expect(meta(doc, 'meta[property="og:type"]')).to eq('product')
+      expect(meta(doc, 'meta[property="product:price:amount"]')).to eq('1200')
+      expect(meta(doc, 'meta[property="product:price:currency"]')).to eq('EUR')
+      expect(JSON.parse(doc.at_css('script[type="application/ld+json"]').text)).to eq(
+        '@context' => 'https://schema.org', '@type' => 'Product', 'name' => 'Priced', 'description' => 'A priced dress',
+        'image' => 'https://img.example.test/priced.jpg', 'url' => 'http://www.example.com/en/queen/priced',
+        'offers' => { '@type' => 'AggregateOffer', 'lowPrice' => 1200, 'priceCurrency' => 'EUR' }
+      )
+    end
+
+    it 'escapes the product text in the JSON-LD' do
+      create_product(collection, 'Evil', description: '</script><script>alert(1)</script> & co', price: 100, currency: 'USD')
+
+      shell('/en/queen/evil')
+
+      expect(response.body.scan('<script type="application/ld+json">').size).to eq(1)
+      expect(response.body).not_to include('<script>alert')
+      json_ld = response.body[%r{<script type="application/ld\+json">(.*?)</script>}m, 1]
+      expect(json_ld).not_to match(/[<>&]/)
+      expect(JSON.parse(json_ld)['name']).to eq('Evil')
+    end
+
     it 'falls back to the name when there is no description' do
       create_product(collection, 'Plain', description: '')
 

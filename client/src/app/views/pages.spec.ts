@@ -153,6 +153,28 @@ describe('collection page', () => {
     expect(wrapper.findAll('.breadcrumb li').map((item) => item.text())).toEqual(['Home', 'All Collections', 'Queen'])
   })
 
+  it('shows the "from" price under the name of priced products only', async () => {
+    api.collectionsApi.get.mockResolvedValue({
+      collection: collection({
+        products: [product('anna', { price: 1200, currency: 'EUR' }), product('clara')],
+      }),
+    })
+    const { wrapper } = await mountWithApp(CollectionView, { path: '/queen' })
+
+    const captions = wrapper.findAll('.portfolio-item figcaption')
+    expect(captions[0]?.get('.price').text().replace(/\s/g, ' ')).toBe('from €1,200')
+    expect(captions[1]?.find('.price').exists()).toBe(false)
+  })
+
+  it('translates the "from" label and formats the price for the language', async () => {
+    api.collectionsApi.get.mockResolvedValue({
+      collection: collection({ products: [product('anna', { price: 1200, currency: 'UAH' })] }),
+    })
+    const { wrapper } = await mountWithApp(CollectionView, { path: '/ua/queen', locale: 'ua' })
+
+    expect(wrapper.get('.portfolio-item .price').text().replace(/\s/g, ' ')).toBe('від 1 200 ₴')
+  })
+
   it('files accessory collections under All Accessories', async () => {
     api.collectionsApi.get.mockResolvedValue({ collection: collection({ has_accessories: true }) })
     const { wrapper } = await mountWithApp(CollectionView, { path: '/queen' })
@@ -195,6 +217,17 @@ describe('product page', () => {
       'Queen',
       'ANNA',
     ])
+  })
+
+  it('shows the "from" price under the name, only when the product has one', async () => {
+    api.collectionsApi.get.mockResolvedValue({
+      collection: collection({ products: [product('anna', { price: 1200, currency: 'USD' }), product('clara')] }),
+    })
+    const priced = await mountWithApp(ProductView, { path: '/queen/anna' })
+    expect(priced.wrapper.get('[data-testid=product-price]').text().replace(/\s/g, ' ')).toMatch(/^from .*1,200/)
+
+    const plain = await mountWithApp(ProductView, { path: '/queen/clara' })
+    expect(plain.wrapper.find('[data-testid=product-price]').exists()).toBe(false)
   })
 
   it('links to the previous and next published product', async () => {

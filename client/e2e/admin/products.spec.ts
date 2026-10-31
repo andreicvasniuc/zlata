@@ -136,6 +136,33 @@ test.describe.serial('products', () => {
     await expect(page).toHaveURL(/\/sort\/name\/(asc|desc)\/search$/)
   })
 
+  test('set a price, see it in the grid and on the public product page, then clear it', async ({ page }) => {
+    const collectionSlug = base.split('/')[2]
+    await open(page, base)
+    await row(page, renamed).getByTestId('edit').click()
+    await dialog(page).getByLabel('Price').fill('1200')
+    await dialog(page).getByLabel('Price').press('Tab')
+    await expect(dialog(page).getByLabel('Currency')).toBeEnabled()
+    await dialog(page).getByTestId('editor-save').click()
+    await expect(toast(page).last()).toContainText('Product was updated successfully.')
+    await expect(row(page, renamed)).toContainText('€1,200')
+
+    await page.goto(`/en/${collectionSlug}/${renamed}`)
+    await expect(page.getByTestId('product-price')).toContainText('from €1,200')
+
+    await open(page, base)
+    await row(page, renamed).getByTestId('edit').click()
+    await dialog(page).getByLabel('Price').fill('')
+    await dialog(page).getByLabel('Price').press('Tab')
+    await dialog(page).getByTestId('editor-save').click()
+    await expect(toast(page).last()).toContainText('Product was updated successfully.')
+    await expect(row(page, renamed)).not.toContainText('€')
+
+    await page.goto(`/en/${collectionSlug}/${renamed}`)
+    await expect(page.getByRole('heading', { level: 1 })).toContainText(renamed)
+    await expect(page.getByTestId('product-price')).toHaveCount(0)
+  })
+
   test('delete the product and the size', async ({ page }) => {
     await open(page, base)
     await row(page, renamed).getByTestId('delete').click()

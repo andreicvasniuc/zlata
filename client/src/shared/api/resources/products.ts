@@ -1,4 +1,4 @@
-import type { Id, Product } from '../../types'
+import type { Currency, Id, Product } from '../../types'
 import { adminApi } from '../index'
 
 export interface ProductInput {
@@ -8,6 +8,8 @@ export interface ProductInput {
   is_top?: boolean
   size_ids?: Id[]
   color_ids?: Id[]
+  price?: number | null
+  currency?: Currency | null
 }
 
 const base = (collectionSlug: string) => `/collections/${encodeURIComponent(collectionSlug)}/products`
