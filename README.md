@@ -135,13 +135,15 @@ Runs the app the way Heroku does (`RAILS_ENV=production`, no development gems, c
 
 ## Deployment
 
-Heroku (stack heroku-26), classic Ruby buildpack, manual `git push`. Commit a fresh `public/build/` before pushing (see [Build and commit](#build-and-commit)). The upgraded app runs as `zlata-weddingfashion`; the old `zlata` app (heroku-16, 2020 slug) stays as the rollback until decommissioned. The full procedure, cutover and rollback are in [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
+Heroku (stack heroku-26), classic Ruby buildpack, manual deploy. Commit a fresh `public/build/` before deploying (see [Build and commit](#build-and-commit)). The upgraded app runs as `zlata-weddingfashion`; the old `zlata` app (heroku-16, 2020 slug) stays as the rollback until decommissioned. The full procedure, cutover and rollback are in [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
 
 ```powershell
-git remote add heroku-new https://git.heroku.com/zlata-weddingfashion.git   # one time
-git push heroku-new develop:main
-heroku run rails db:mongoid:create_indexes -a zlata-weddingfashion          # after the first deploy; safe to repeat
+.\deploy.ps1                       # pushes develop to zlata-weddingfashion, asks for confirmation
+.\deploy.ps1 -Yes                  # no confirmation
+.\deploy.ps1 -Branch <branch> -App <app>
 ```
+
+`deploy.ps1` authenticates with a Heroku API key, from `$env:HEROKU_API_KEY` or else the gitignored `.mcp.json` (`mcpServers.heroku.env.HEROKU_API_KEY`). The key is sent as an HTTP header for that one push, so there is no `heroku login`, no `heroku-new` remote and no stored git credential. It pushes the committed state of the branch (uncommitted changes are not deployed) and then prints the latest release. After the first deploy, run `heroku run rails db:mongoid:create_indexes -a zlata-weddingfashion` (safe to repeat).
 
 Heroku's URL for the app carries a suffix (`https://zlata-weddingfashion-<suffix>.herokuapp.com`). `heroku apps:info -a zlata-weddingfashion` shows it.
 
