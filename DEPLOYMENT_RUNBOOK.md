@@ -80,7 +80,7 @@ Never print secret values in terminals, tickets or docs.
 
 ### 5.3 Deploy and verify (test database)
 - [ ] `git remote add heroku-new https://git.heroku.com/<new-app>.git`
-- [ ] `git push heroku-new upgrade/rails-8:main`. Check the build log: Ruby version, no Node install, no `assets:precompile`.
+- [ ] `git push heroku-new develop:main`. Check the build log: Ruby version, no Node install, no `assets:precompile`.
 - [ ] `heroku run rails db:mongoid:create_indexes -a <new-app>`
 - [ ] Run the snapshot script against `https://<new-app>.herokuapp.com`; the diff must be empty.
 - [ ] Admin walkthrough on the new app: log in, create/edit/delete for every entity, data export.
