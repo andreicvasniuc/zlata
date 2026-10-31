@@ -78,6 +78,8 @@ class DataProcessor
             productRecord.description = product['description'] || productRecord.description
             productRecord.published = product['published'] || productRecord.published
             productRecord.is_top = product['is_top'] || productRecord.is_top
+            productRecord.price = product['price'] || productRecord.price
+            productRecord.currency = product['currency'] || productRecord.currency
             productRecord.size_ids = product['size_ids'] || productRecord.size_ids
             productRecord.color_ids = product['color_ids'] || productRecord.color_ids
 

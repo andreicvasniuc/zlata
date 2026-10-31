@@ -12,6 +12,9 @@ export interface ImageFile {
   is_cover?: boolean
 }
 
+export const CURRENCIES = ['EUR', 'USD', 'UAH'] as const
+export type Currency = (typeof CURRENCIES)[number]
+
 export interface Product {
   id: Id
   name: string
@@ -20,6 +23,9 @@ export interface Product {
   is_top?: boolean
   size_ids: Id[]
   color_ids: Id[]
+  // "from" price, the same in every locale; without a price both are null
+  price?: number | null
+  currency?: Currency | null
   slug: string
   collection_slug?: string
   images: ImageFile[]

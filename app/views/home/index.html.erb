@@ -13,7 +13,7 @@
 <% end %>
 <% if @meta.canonical %>
     <link rel="canonical" href="<%= @meta.canonical %>">
-    <meta property="og:type" content="website">
+    <meta property="og:type" content="<%= @meta.price ? 'product' : 'website' %>">
     <meta property="og:site_name" content="<%= I18n.t('seo.site_name', locale: @meta.locale) %>">
     <meta property="og:title" content="<%= @meta.title %>">
     <meta property="og:description" content="<%= @meta.description %>">
@@ -22,6 +22,13 @@
 <% if @meta.image %>
     <meta property="og:image" content="<%= @meta.image %>">
     <meta name="twitter:card" content="summary_large_image">
+<% end %>
+<% if @meta.price %>
+    <meta property="product:price:amount" content="<%= @meta.price %>">
+    <meta property="product:price:currency" content="<%= @meta.currency %>">
+<% end %>
+<% if @meta.json_ld %>
+    <script type="application/ld+json"><%= raw @meta.json_ld.to_json %></script>
 <% end %>
 <% @meta.alternates.each do |code, url| %>
     <link rel="alternate" hreflang="<%= code %>" href="<%= url %>">

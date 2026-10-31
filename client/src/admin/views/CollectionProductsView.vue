@@ -18,6 +18,7 @@ const columns: GridColumn[] = [
   { field: 'cover_image', header: 'COVER', kind: 'image', width: '120px' },
   { field: 'name', header: 'NAME', sortable: true },
   { field: 'description', header: 'DESCRIPTION', sortable: true },
+  { field: 'price', header: 'PRICE', kind: 'price', sortable: true, width: '140px' },
   { field: 'updated_at', header: 'EDIT_DATE', kind: 'date', sortable: true, width: '200px' },
 ]
 
@@ -29,7 +30,7 @@ const { run } = useBusy()
 const collectionSlug = computed(() => String(route.params.collectionId))
 const state = useListState({
   basePath: () => `/collection/${encodeURIComponent(collectionSlug.value)}/products`,
-  sortFields: ['name', 'description', 'published', 'updated_at'],
+  sortFields: ['name', 'description', 'price', 'published', 'updated_at'],
 })
 const list = useEmbeddedList<Product>(
   async () => {

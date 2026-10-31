@@ -68,6 +68,16 @@ RSpec.describe 'Public catalog API', type: :request do
       expect(item['cover_image']['_id']).to match('$oid' => /\A\h{24}\z/)
     end
 
+    it 'returns the price and currency of a priced product only' do
+      create_product(collection, 'Lily', price: 1200, currency: 'EUR')
+
+      api_get '/api/collections/spring'
+
+      products = json['collection']['products'].to_h { |item| [item['name'], item] }
+      expect(products['Lily']).to include('price' => 1200, 'currency' => 'EUR')
+      expect(products['Rose']).to include('price' => nil, 'currency' => nil)
+    end
+
     it 'finds a collection by id' do
       api_get "/api/collections/#{collection.id}"
 

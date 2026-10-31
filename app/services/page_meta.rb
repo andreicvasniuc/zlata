@@ -1,5 +1,5 @@
 # Resolves a public URL path to the meta data of the HTML shell: title, description, Open Graph image, canonical URL,
-# hreflang alternates and the HTTP status (404 for an unknown or unpublished collection/product).
+# hreflang alternates, the price of a product (Open Graph and schema.org JSON-LD) and the HTTP status (404 for an unknown or unpublished collection/product).
 #
 # Paths: `/(:locale)`, `/collections`, `/accessories`, `/contacts`, `/:collection`, `/:collection/:product`.
 # One query per request, and only for collection and product pages.
@@ -9,7 +9,8 @@ class PageMeta
   SECTIONS = { "collections" => "all_collections", "accessories" => "all_accessories", "contacts" => "contacts" }.freeze
   DESCRIPTION_LENGTH = 200
 
-  Result = Struct.new(:status, :locale, :title, :description, :image, :canonical, :alternates, :robots, keyword_init: true)
+  Result = Struct.new(:status, :locale, :title, :description, :image, :canonical, :alternates, :robots,
+                      :price, :currency, :json_ld, keyword_init: true)
 
   # `path` is the request path without any preview prefix; `base_url` is e.g. "https://zlata-weddingfashion.com".
   def initialize(path, base_url:)
@@ -69,7 +70,22 @@ class PageMeta
 
       images = product.images.to_a
       cover = images.find(&:is_cover) || images.first
-      { title: "#{product.name} | #{site_name}", description: describe(product.description, product.name), image: cover&.url }
+      page = { title: "#{product.name} | #{site_name}", description: describe(product.description, product.name), image: cover&.url }
+      page.merge!(price: product.price, currency: product.currency, json_ld: product_json_ld(product, page)) if product.price
+      page
+    end
+
+    # schema.org Product with an AggregateOffer: the price is a "from" price
+    def product_json_ld(product, page)
+      {
+        "@context" => "https://schema.org",
+        "@type" => "Product",
+        "name" => product.name,
+        "description" => page[:description],
+        "image" => page[:image],
+        "url" => url_for_path(@locale),
+        "offers" => { "@type" => "AggregateOffer", "lowPrice" => product.price, "priceCurrency" => product.currency }
+      }.compact
     end
 
     def find_collection(slug)
@@ -84,7 +100,8 @@ class PageMeta
 
     def found(page)
       Result.new(status: :ok, locale: locale, title: page[:title], description: page[:description], image: page[:image],
-                 canonical: url_for_path(@locale), alternates: alternates, robots: nil)
+                 canonical: url_for_path(@locale), alternates: alternates, robots: nil,
+                 price: page[:price], currency: page[:currency], json_ld: page[:json_ld])
     end
 
     def not_found

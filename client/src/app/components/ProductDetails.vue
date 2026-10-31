@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import type { Color, ImageFile, Product, Size } from '@shared/types'
+import { usePriceLabel } from '../composables/usePriceLabel'
 import ExtraField from './ExtraField.vue'
 import ProductGallery from './ProductGallery.vue'
 
@@ -9,7 +11,10 @@ export interface ProductWithExtras extends Omit<Product, 'images'> {
   sizes: Size[]
 }
 
-defineProps<{ product: ProductWithExtras }>()
+const props = defineProps<{ product: ProductWithExtras }>()
+
+const label = usePriceLabel()
+const priceLabel = computed(() => label(props.product))
 </script>
 
 <template>
@@ -20,6 +25,7 @@ defineProps<{ product: ProductWithExtras }>()
       <slot />
 
       <h1>{{ product.name }}</h1>
+      <div v-if="priceLabel" class="price" data-testid="product-price">{{ priceLabel }}</div>
       <div class="extra-fields">
         <ExtraField label="COLORS" :items="product.colors" />
         <ExtraField label="SIZES" :items="product.sizes" />
@@ -85,6 +91,13 @@ defineProps<{ product: ProductWithExtras }>()
   line-height: 70px;
   border-bottom: 1px solid #ebebeb;
   padding-bottom: 30px;
+}
+.item-details .info .price {
+  margin-top: 30px;
+  text-align: center;
+  color: #99a098;
+  font-size: 26px;
+  line-height: 32px;
 }
 .item-details .info .extra-fields {
   margin-top: 40px;

@@ -8,6 +8,8 @@ export interface GridItem {
   // path without the locale prefix
   url: string
   image?: string
+  // e.g. "from 1 200 €"; shown under the name only when set
+  price?: string
 }
 
 defineProps<{ items: GridItem[] }>()
@@ -27,6 +29,7 @@ const localePath = useLocalePath()
                 <img :alt="item.name" :src="item.image" />
                 <figcaption>
                   <h3>{{ item.name }}</h3>
+                  <p v-if="item.price" class="price">{{ item.price }}</p>
                 </figcaption>
               </figure>
             </RouterLink>
@@ -114,6 +117,18 @@ const localePath = useLocalePath()
   font-weight: 400;
   text-transform: uppercase;
   line-height: 1em;
+  text-align: center;
+}
+/* a priced caption has a second line, so it grows instead of keeping the fixed height */
+.portfolio-group figcaption:has(.price) {
+  height: auto;
+  min-height: 17%;
+}
+.portfolio-group figcaption .price {
+  color: #fff;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.3;
   text-align: center;
 }
 

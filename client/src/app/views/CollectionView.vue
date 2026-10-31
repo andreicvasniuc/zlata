@@ -8,9 +8,11 @@ import NotFoundContent from '../components/NotFoundContent.vue'
 import PageLayout from '../components/PageLayout.vue'
 import { NotFoundError, useLoader } from '../composables/useLoader'
 import { usePageTitle } from '../composables/usePageTitle'
+import { usePriceLabel } from '../composables/usePriceLabel'
 
 const { t } = useI18n()
 const route = useRoute()
+const priceLabel = usePriceLabel()
 
 const { data, loading, notFound, failed } = useLoader(async () => {
   const { collection } = await collectionsApi.get(String(route.params.collection))
@@ -33,6 +35,7 @@ const items = computed<GridItem[]>(() =>
       name: product.name,
       url: `/${collection.value?.slug}/${product.slug}`,
       image: product.cover_image?.url,
+      price: priceLabel(product),
     })),
 )
 

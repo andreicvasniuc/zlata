@@ -33,5 +33,6 @@
   "MENU": "Meniu",
   "LANGUAGE": "Limbă",
   "SOCIAL_NETWORKS": "Rețele sociale",
-  "MESSAGE_FAILED": "Ne pare rău, mesajul nu a putut fi trimis. Încercați mai târziu."
+  "MESSAGE_FAILED": "Ne pare rău, mesajul nu a putut fi trimis. Încercați mai târziu.",
+  "PRICE_FROM": "de la"
 }

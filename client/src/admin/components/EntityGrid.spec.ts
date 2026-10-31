@@ -30,6 +30,29 @@ const rows: Row[] = [
   { id: '2', name: 'Love is', updated_at: '2022-07-25T10:00:00.000Z', products_count: 0, published: false },
 ]
 
+describe('EntityGrid price column', () => {
+  it('shows the formatted price of the row, or nothing without one', () => {
+    mountWithPlugins(EntityGrid, {
+      props: {
+        columns: [
+          { field: 'name', header: 'NAME' },
+          { field: 'price', header: 'PRICE', kind: 'price' },
+        ],
+        rows: [
+          { id: '1', name: 'Priced', price: 1200, currency: 'EUR' },
+          { id: '2', name: 'Free', price: null, currency: null },
+        ],
+        totalCount: 2,
+        sortBy: 'name',
+        sortDirection: 'asc',
+      },
+    })
+
+    const cells = [...document.body.querySelectorAll('tbody tr')].map((tr) => tr.querySelectorAll('td')[1]?.textContent)
+    expect(cells.map((text) => text?.trim())).toEqual(['€1,200', ''])
+  })
+})
+
 const mountGrid = (props: Record<string, unknown> = {}) =>
   mountWithPlugins(EntityGrid, {
     props: {
