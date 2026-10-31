@@ -43,16 +43,4 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
-
-  # Let the webpack dev server (client/, localhost:8080) call this API
-  config.middleware.insert_before 0, Rack::Cors do
-    allow do
-      origins "localhost:8080"
-
-      resource "*",
-        headers: :any,
-        methods: [:get, :post, :delete, :put, :patch, :options, :head],
-        max_age: 0
-    end
-  end
 end

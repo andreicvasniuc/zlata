@@ -1,0 +1,1 @@
+.toast-host{z-index:999999;pointer-events:none;position:fixed;top:12px;right:12px}.toast-message{pointer-events:auto;color:#fff;opacity:.9;cursor:pointer;border-radius:3px;width:300px;margin-bottom:6px;padding:15px;font-size:14px;line-height:20px;box-shadow:0 0 12px #999}.toast-message.success{background-color:#51a351}.toast-message.error{background-color:#bd362f}

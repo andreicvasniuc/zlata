@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'home#index'
   get 'admin', to: 'home#admin'
+  get 'sitemap.xml', to: 'sitemaps#show', defaults: { format: 'xml' }
 
   scope '(:locale)', locale: /en|ua|ru|ro/ do
 

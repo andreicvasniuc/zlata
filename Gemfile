@@ -34,8 +34,3 @@ group :development, :test do
 
   gem "rspec-rails", "~> 8.0"
 end
-
-group :development do
-  # Cross-Origin Resource Sharing for the webpack dev server (localhost:8080)
-  gem "rack-cors", "~> 3.0", require: "rack/cors"
-end
