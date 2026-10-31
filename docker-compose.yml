@@ -37,6 +37,25 @@ services:
     depends_on:
       - mongo
 
+  # Vite dev server for the new frontend: http://localhost:5173 (proxies the API to `web`).
+  # Build and commit the output with: docker compose --profile frontend run --rm frontend pnpm build
+  frontend:
+    profiles: ["frontend"]
+    image: node:24-slim
+    working_dir: /app/client
+    command: sh -c "corepack enable && pnpm install --frozen-lockfile && pnpm dev"
+    environment:
+      VITE_PROXY_TARGET: http://web:3000
+      VITE_USE_POLLING: "1" # file events don't cross the Windows bind mount
+    volumes:
+      - .:/app
+      - client-node-modules:/app/client/node_modules
+      - pnpm-store:/root/.local/share/pnpm/store
+    ports:
+      - "127.0.0.1:5173:5173"
+    depends_on:
+      - web
+
   # The upgraded app in production mode, with only the env vars Heroku provides (see DEPLOYMENT_RUNBOOK.md).
   # Used for the snapshot comparison against `baseline`: `docker compose --profile production-check up -d web_prod`.
   web_prod:
@@ -84,5 +103,7 @@ services:
 
 volumes:
   bundle:
+  client-node-modules:
+  pnpm-store:
   baseline-bundle:
     name: zlata-baseline-bundle
