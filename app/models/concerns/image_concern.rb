@@ -5,7 +5,7 @@ module ImageConcern
 
   included do
     field :extension, type: String
-    field :is_cover, type: Boolean
+    field :is_cover, type: Mongoid::Boolean
     field :url, type: String
 
     index is_cover: 1

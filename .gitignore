@@ -13,3 +13,7 @@
 /tmp
 /client/node_modules
 .DS_Store
+.mcp.json
+.env
+/mongo-data
+/mongo-data-prod

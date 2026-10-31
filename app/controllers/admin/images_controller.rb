@@ -46,6 +46,7 @@ class Admin::ImagesController < SecuredController
   def destroy
     image = @product.images.find(image_id)
     image.destroy
+    @product.reload # Mongoid 9 drops the (empty) images array from memory once the last image is destroyed
 
     render json: @product, status: :ok#, location: @collection
   end

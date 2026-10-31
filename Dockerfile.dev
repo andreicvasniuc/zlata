@@ -1,0 +1,8 @@
+# Local development image. Heroku does not use this: it builds with the classic Ruby buildpack.
+FROM ruby:4.0.9-slim
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends build-essential git libyaml-dev \
+ && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app

@@ -1,0 +1,53 @@
+# Production-like stack for local use: ./up.ps1 and ./down.ps1.
+# Separate compose project (own containers, network and database folder), so it never touches the
+# development stack in docker-compose.yml. Heroku does not use Docker; see Dockerfile.prod.
+name: zlata-prod
+
+services:
+  mongo:
+    image: mongo:8.0.34
+    volumes:
+      - ./mongo-data-prod:/data/db # bind mount, gitignored
+    ports:
+      - "127.0.0.1:27018:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Data viewer for the production-like database: http://localhost:3101
+  mongoku:
+    image: huggingface/mongoku:latest
+    environment:
+      MONGOKU_DEFAULT_HOST: mongodb://mongo:27017
+    ports:
+      - "127.0.0.1:3101:3100"
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  # The app, built from Dockerfile.prod and run with RAILS_ENV=production: http://localhost:8080
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    environment:
+      RAILS_ENV: production
+      FORCE_SSL: "false" # there is no TLS-terminating router (like Heroku's) in front of it locally
+      DB_URI: mongodb://mongo:27017/ishop
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:-development-only-secret-key-base-not-for-production}
+      to_email: ${to_email:-}
+      gmail_username: ${gmail_username:-}
+      gmail_password: ${gmail_password:-}
+    ports:
+      - "127.0.0.1:8080:3000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "ruby", "-rnet/http", "-e", "exit(Net::HTTP.get_response(URI('http://127.0.0.1:3000/api/sizes/list')).code == '200' ? 0 : 1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 15s

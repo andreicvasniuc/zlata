@@ -1,0 +1,13 @@
+# Keep LF in the working tree for files that run inside Linux containers / Heroku
+bin/* text eol=lf
+*.rb text eol=lf
+*.ru text eol=lf
+*.yml text eol=lf
+*.erb text eol=lf
+Gemfile text eol=lf
+Gemfile.lock text eol=lf
+Rakefile text eol=lf
+Procfile text eol=lf
+Dockerfile* text eol=lf
+docker-compose*.yml text eol=lf
+.env.example text eol=lf

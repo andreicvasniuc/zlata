@@ -1,5 +1,3 @@
-require Rails.root.join('lib', 'locale_looper').to_s
-
 class Admin::Color
   include Mongoid::Document
   include ColorConcern

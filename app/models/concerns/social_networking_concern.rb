@@ -9,7 +9,7 @@ module SocialNetworkingConcern
     field :name, type: String, localize: true
     field :url, type: String
     field :css_class, type: String
-    field :published, type: Boolean
+    field :published, type: Mongoid::Boolean
 
     index name: 1
     index published: 1

@@ -5,7 +5,7 @@ module ContactConcern
 
   included do
     field :name, type: String
-    field :published, type: Boolean
+    field :published, type: Mongoid::Boolean
 
     slug :name
 
