@@ -1,16 +1,16 @@
 # zlata
 
-Website of Zlata Wedding Fashion (zlata-weddingfashion.com): a Rails JSON API plus the AngularJS frontend, whose build output is committed to `public/`. Data is stored in MongoDB.
+Website of Zlata Wedding Fashion (zlata-weddingfashion.com): a Rails JSON API plus a Vue 3 frontend (public site and admin), whose build output is committed to `public/build/`. Data is stored in MongoDB.
 
 | | |
 |---|---|
-| Ruby / Rails | 4.0.9 / 8.1 (API mode; `HomeController` serves the AngularJS shell) |
+| Ruby / Rails | 4.0.9 / 8.1 (API mode; `HomeController` serves the HTML shells of the two Vue apps) |
 | Database | MongoDB 8.0 (Mongoid 9). Production: MongoDB Atlas |
 | Auth | JWT (`AuthToken`), `POST /user_token` |
 | Hosting | Heroku, classic Ruby buildpack (`Procfile`). Docker is for local use only |
-| Frontend | `client/` (AngularJS, webpack). Its build output is committed to `public/` and not rebuilt by the Rails app |
+| Frontend | `client/` (Vue 3, TypeScript, Vite, Tailwind, PrimeVue for the admin). Its build output is **committed** to `public/build/`; Heroku does not build it (see [Frontend](#frontend)) |
 
-Planning and deployment documents: [UPGRADE_PLAN.md](UPGRADE_PLAN.md), [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
+Planning and deployment documents: [UPGRADE_PLAN.md](UPGRADE_PLAN.md), [FRONTEND_UPGRADE_PLAN.md](FRONTEND_UPGRADE_PLAN.md), [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
 
 ## Local development (Docker)
 
@@ -23,7 +23,7 @@ docker compose up -d
 
 | Service | URL | |
 |---|---|---|
-| `web` | http://localhost:3000 | Rails in development; admin at `/admin` |
+| `web` | http://localhost:3000 | Rails in development; serves the committed build from `public/build/`; admin at `/admin` |
 | `mongoku` | http://localhost:3100 | data viewer, already connected to `mongo` |
 | `mongo` | `mongodb://localhost:27017` | database files in `./mongo-data` (gitignored), kept across `stop`/`start`/`down` |
 
@@ -64,6 +64,45 @@ Request specs (RSpec) cover the public API, every admin endpoint, auth, data exp
 docker compose run --rm -e RAILS_ENV=test web bundle exec rspec
 ```
 
+The specs also cover the HTML shells (meta tags, hreflang, 404 for unknown collections and products, `sitemap.xml`) and check that every file named in the committed build manifest exists. Frontend tests are described under [Frontend](#frontend).
+
+## Frontend
+
+`client/` is one Vite project with two entries: the public site (`src/app`) and the admin (`src/admin`), sharing `src/shared` (typed API client, `$oid` → `id` normalizer, session, i18n, locale files, theme). Requires Node 24 and pnpm (version pinned by `packageManager`; `corepack enable` installs it).
+
+How it reaches the browser: `pnpm build` writes `public/build/` (hashed files plus `.vite/manifest.json`). `HomeController` renders the HTML shell and the `vite_tags` helper reads the manifest to add the script, CSS and preload tags. Rails also puts the per-page title, description, Open Graph tags, canonical URL and hreflang links into the public shell, and answers 404 for unknown or unpublished collections and products.
+
+### Develop
+
+```powershell
+cd client
+pnpm install
+pnpm dev          # http://localhost:5173, proxies the API to Rails on http://localhost:3000
+```
+
+With Rails running (`docker compose up -d`), the public site is at http://localhost:5173/ and the admin at http://localhost:5173/admin. Set `VITE_PROXY_TARGET` to proxy somewhere else. The same dev server runs in Docker with `docker compose --profile frontend up`.
+
+### Checks
+
+```powershell
+pnpm check        # type check (vue-tsc), eslint, Vitest unit and component tests
+pnpm test:e2e     # Playwright, against the dev server and Rails with local data
+```
+
+The Playwright specs create and delete data in the local database (names start with `e2e-`) and need an admin token: `$env:E2E_ADMIN_TOKEN = docker compose exec -T web bin/rails runner 'puts AuthToken.issue(User.first)'` (valid one day; never commit it). The login test that expects a 201 runs only when `E2E_ADMIN_EMAIL` and `E2E_ADMIN_PASSWORD` are set. Install the browser once with `pnpm exec playwright install chromium`.
+
+### Build and commit
+
+Heroku uses the Ruby buildpack only, so the build output must be committed. Build in the same commit as the source change:
+
+```powershell
+cd client
+pnpm build        # type check, then writes ../public/build (the folder is emptied first)
+git add -A ../public/build
+```
+
+Without a matching build, production serves the previous version. If `public/build/.vite/manifest.json` is missing or names a file that isn't there, pages fail with a 500 (`ViteHelper::MissingEntry`); the Rails specs catch the second case.
+
 ## Production-like run (Docker)
 
 Runs the app the way Heroku does (`RAILS_ENV=production`, no development gems, code copied into the image) with its own database. Separate from the development stack.
@@ -96,7 +135,7 @@ Runs the app the way Heroku does (`RAILS_ENV=production`, no development gems, c
 
 ## Deployment
 
-Heroku (stack heroku-26), classic Ruby buildpack, manual `git push`. The upgraded app runs as `zlata-weddingfashion`; the old `zlata` app (heroku-16, 2020 slug) stays as the rollback until decommissioned. The full procedure, cutover and rollback are in [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
+Heroku (stack heroku-26), classic Ruby buildpack, manual `git push`. Commit a fresh `public/build/` before pushing (see [Build and commit](#build-and-commit)). The upgraded app runs as `zlata-weddingfashion`; the old `zlata` app (heroku-16, 2020 slug) stays as the rollback until decommissioned. The full procedure, cutover and rollback are in [DEPLOYMENT_RUNBOOK.md](DEPLOYMENT_RUNBOOK.md).
 
 ```powershell
 git remote add heroku-new https://git.heroku.com/zlata-weddingfashion.git   # one time
@@ -132,11 +171,13 @@ The same specs also run against the old app: `docker compose --profile baseline 
 ## Layout
 
 ```
-app/controllers/    public API (collections, products, ...), admin/ (secured), user_token, home (SPA shell)
+app/controllers/    public API (collections, products, ...), admin/ (secured), user_token, home (SPA shells), sitemaps
+app/helpers/        vite_helper.rb (`vite_tags`: reads the Vite manifest)
 app/models/         Mongoid models; admin/ models add locale handling for the admin API
-app/services/       AuthToken (JWT)
+app/services/       AuthToken (JWT), PageMeta (meta tags and status per public URL)
 lib/                DataProcessor (admin data export/import), LocaleLooper
-client/             AngularJS source; the committed build output is in public/
+client/             Vue 3 source: src/app (public site), src/admin, src/shared; e2e/ (Playwright)
+public/build/       committed Vite build output (do not edit by hand)
 public/data/        import files used by the admin data import
 spec/               request specs
 script/             api_snapshot.rb
