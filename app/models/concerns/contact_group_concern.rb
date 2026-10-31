@@ -8,7 +8,7 @@ module ContactGroupConcern
 
     field :name, type: String
     field :css_class, type: String
-    field :published, type: Boolean
+    field :published, type: Mongoid::Boolean
 
     index name: 1
     index published: 1
@@ -20,12 +20,14 @@ module ContactGroupConcern
     def as_json(options={})
       attrs = super(options)
 
-      attrs["contacts_count"] = self.contacts_count || (self.contacts || []).count
+      # a query projection (`only`) can leave out the embedded contacts, which Mongoid 9 refuses to read
+      contacts_loaded = has_attribute?("contacts")
+      attrs["contacts_count"] = self.contacts_count || (contacts_loaded ? self.contacts.count : 0)
       attrs["slug"] = self.slug;
 
         self.contacts.each_with_index do |contact, index|
           attrs["contacts"][index] = contact.as_json(attrs["contacts"][index])
-        end if self.contacts.present?
+        end if contacts_loaded && self.contacts.present?
       
       attrs
     end

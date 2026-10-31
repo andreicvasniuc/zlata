@@ -6,8 +6,8 @@ module ProductConcern
   included do
     field :name, type: String, localize: true
     field :description, type: String, localize: true
-    field :published, type: Boolean
-    field :is_top, type: Boolean
+    field :published, type: Mongoid::Boolean
+    field :is_top, type: Mongoid::Boolean
     field :size_ids, type: Array
     field :color_ids, type: Array
 

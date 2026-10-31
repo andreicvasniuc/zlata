@@ -1,5 +1,3 @@
-require Rails.root.join('lib', 'locale_looper').to_s
-
 class Admin::Size
   include Mongoid::Document
   include SizeConcern

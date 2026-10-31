@@ -5,7 +5,7 @@ class User
 
   field :email, type: String
   field :password_digest, type: String
-  field :is_admin, type: Boolean
+  field :is_admin, type: Mongoid::Boolean
 
   index email: 1
   index password_digest: 1

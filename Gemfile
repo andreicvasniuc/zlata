@@ -1,51 +1,41 @@
-ruby '2.7.1'
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.3'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.10.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 1.1.0', group: :doc
+ruby "4.0.9"
 
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem "rails", "~> 8.1.4"
+gem "puma", "~> 8.0"
 
-# Use Unicorn as the app server
-# gem 'unicorn'
-gem 'puma'
+# MongoDB
+gem "mongoid", "~> 9.1"
+gem "mongoid-slug", "~> 7.1"
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
+# Admin authentication (User has_secure_password; JWT issued by AuthToken)
+gem "bcrypt", "~> 3.1"
+gem "jwt", "~> 3.3"
 
-# Mongoid
-gem 'mongoid'
-gem 'bson_ext'
-gem 'mongoid-slug'
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-# logging
-gem 'logging'
-gem 'logging-rails', :require => 'logging/rails'
-
-# image resizing
-# gem 'mini_magick', '~> 4.5', '>= 4.5.1'
-
-# JWT auth
-gem 'knock'
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem "brakeman", require: false
+
+  # Audits gems for known security defects (use config/bundler-audit.yml to ignore advisories)
+  gem "bundler-audit", require: false
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  gem "rubocop-rails-omakase", require: false
+
+  gem "rspec-rails", "~> 8.0"
 end
 
 group :development do
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 4.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-
-  # Rack Middleware for handling Cross-Origin Resource Sharing (CORS), which makes cross-origin AJAX possible.
-  gem 'rack-cors', :require => 'rack/cors'
+  # Cross-Origin Resource Sharing for the webpack dev server (localhost:8080)
+  gem "rack-cors", "~> 3.0", require: "rack/cors"
 end
-

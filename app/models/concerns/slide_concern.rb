@@ -7,7 +7,7 @@ module SlideConcern
     field :title, type: String, localize: true
     field :link_text, type: String, localize: true
     field :link_url, type: String
-    field :published, type: Boolean
+    field :published, type: Mongoid::Boolean
 
     slug :title
 
