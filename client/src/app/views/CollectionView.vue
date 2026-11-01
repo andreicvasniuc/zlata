@@ -8,6 +8,7 @@ import NotFoundContent from '../components/NotFoundContent.vue'
 import PageLayout from '../components/PageLayout.vue'
 import { NotFoundError, useLoader } from '../composables/useLoader'
 import { usePageTitle } from '../composables/usePageTitle'
+import { useActiveSection } from '../composables/useActiveSection'
 import { usePriceLabel } from '../composables/usePriceLabel'
 
 const { t } = useI18n()
@@ -26,6 +27,9 @@ const missing = computed(() => notFound.value || failed.value || (!loading.value
 
 const title = computed(() => (missing.value ? t('NOT_FOUND') : collection.value?.name))
 usePageTitle(title)
+useActiveSection(() =>
+  collection.value ? (collection.value.has_accessories ? 'accessories' : 'collections') : undefined,
+)
 
 const items = computed<GridItem[]>(() =>
   (collection.value?.products ?? [])
@@ -53,7 +57,7 @@ const breadcrumb = computed(() => {
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading" centered>
+  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading">
     <NotFoundContent v-if="missing" />
     <ItemGrid v-else :items="items" />
   </PageLayout>

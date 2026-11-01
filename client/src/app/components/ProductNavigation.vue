@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import IconArrowLeft from '~icons/lucide/arrow-left'
+import IconArrowRight from '~icons/lucide/arrow-right'
 import type { Collection } from '@shared/types'
 import { useLocalePath } from '../locale'
 
@@ -11,51 +13,57 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const products = computed(() => props.collection.products ?? [])
-const hasPrevious = computed(() => props.index > 0)
-const hasNext = computed(() => props.index < products.value.length - 1)
+const previous = computed(() => (props.index > 0 ? products.value[props.index - 1] : undefined))
+const next = computed(() => (props.index < products.value.length - 1 ? products.value[props.index + 1] : undefined))
 
-const urlAt = (position: number) => localePath(`/${props.collection.slug}/${products.value[position]?.slug}`)
+const urlOf = (slug?: string) => localePath(`/${props.collection.slug}/${slug}`)
 </script>
 
 <template>
   <div class="navigation">
-    <RouterLink v-if="hasPrevious" :to="urlAt(index - 1)" :aria-label="t('PREVIOUS')" class="arrow arrow-left" />
-    <span v-else class="arrow invisible"></span>
+    <RouterLink v-if="previous" :to="urlOf(previous.slug)" :aria-label="t('PREVIOUS')" class="arrow arrow-left">
+      <IconArrowLeft class="size-4" aria-hidden="true" />
+      <span class="neighbour">{{ previous.name }}</span>
+    </RouterLink>
     <span class="position">{{ index + 1 }} / {{ products.length }}</span>
-    <RouterLink v-if="hasNext" :to="urlAt(index + 1)" :aria-label="t('NEXT')" class="arrow arrow-right" />
-    <span v-else class="arrow invisible"></span>
+    <RouterLink v-if="next" :to="urlOf(next.slug)" :aria-label="t('NEXT')" class="arrow arrow-right">
+      <span class="neighbour">{{ next.name }}</span>
+      <IconArrowRight class="size-4" aria-hidden="true" />
+    </RouterLink>
   </div>
 </template>
 
 <style>
 .navigation {
-  margin: 10px auto 0;
-  text-align: center;
-  color: #99a098;
-  font-size: 30px;
-}
-.navigation .position {
-  position: relative;
-  bottom: 2px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
 }
 .navigation .arrow {
-  display: inline-block;
-  width: 0.6em;
-  height: 0;
-  margin: 0 6px;
-  vertical-align: middle;
-  border-top: 0.45em solid transparent;
-  border-bottom: 0.45em solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--color-ink);
 }
-.navigation .arrow-left {
-  border-right: 0.6em solid var(--color-accent);
-  width: 0;
+.navigation .arrow:hover {
+  color: var(--color-accent-hover);
 }
-.navigation .arrow-right {
-  border-left: 0.6em solid var(--color-accent);
-  width: 0;
+/* the neighbours' names need room: on small screens only the arrows and the position remain */
+.navigation .neighbour {
+  display: none;
 }
-.navigation .arrow.invisible {
-  border-color: transparent;
+@media (min-width: 768px) {
+  .navigation .neighbour {
+    display: inline;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 </style>

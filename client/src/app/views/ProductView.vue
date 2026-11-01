@@ -8,6 +8,7 @@ import NotFoundContent from '../components/NotFoundContent.vue'
 import PageLayout from '../components/PageLayout.vue'
 import ProductDetails, { type ProductWithExtras } from '../components/ProductDetails.vue'
 import ProductNavigation from '../components/ProductNavigation.vue'
+import { useActiveSection } from '../composables/useActiveSection'
 import { NotFoundError, useLoader } from '../composables/useLoader'
 import { usePageTitle } from '../composables/usePageTitle'
 import { coverFirst } from '../product'
@@ -45,6 +46,9 @@ const { data, loading, notFound, failed } = useLoader<Loaded>(async () => {
 const missing = computed(() => notFound.value || failed.value)
 const title = computed(() => (missing.value ? t('NOT_FOUND') : data.value?.product.name))
 usePageTitle(title)
+useActiveSection(() =>
+  data.value ? (data.value.collection.has_accessories ? 'accessories' : 'collections') : undefined,
+)
 
 const breadcrumb = computed(() => {
   if (!data.value) return undefined
@@ -62,14 +66,16 @@ const breadcrumb = computed(() => {
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading">
-    <NotFoundContent v-if="missing" />
-    <ProductDetails v-else-if="data" :product="data.product">
+  <PageLayout :heading="missing ? title : undefined" :breadcrumb="breadcrumb" :loading="loading" :compact="!missing">
+    <template #aside>
       <ProductNavigation
-        v-if="data.collection.products!.length > 1"
+        v-if="data && data.collection.products!.length > 1"
         :collection="data.collection"
         :index="data.index"
       />
-    </ProductDetails>
+    </template>
+
+    <NotFoundContent v-if="missing" />
+    <ProductDetails v-else-if="data" :product="data.product" :collection-name="data.collection.name" />
   </PageLayout>
 </template>

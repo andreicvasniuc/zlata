@@ -83,10 +83,47 @@ describe('ContactForm', () => {
     expect((wrapper.get('#name').element as HTMLInputElement).value).toBe('Anna')
   })
 
-  it('Reset clears the fields', async () => {
+  it('has no Reset button, so a message cannot be wiped by accident', async () => {
     const { wrapper } = await mountWithApp(ContactForm)
+
+    expect(wrapper.find('button[type="reset"]').exists()).toBe(false)
+  })
+
+  it('shows a visible label for every field, linked to its input', async () => {
+    const { wrapper } = await mountWithApp(ContactForm)
+
+    const labels = wrapper.findAll('label')
+    expect(labels.map((label) => label.attributes('for'))).toEqual(['name', 'email', 'phone', 'message'])
+    expect(labels.every((label) => !label.classes().includes('sr-only'))).toBe(true)
+    expect(wrapper.get('#email').attributes('type')).toBe('email')
+    expect(wrapper.get('#phone').attributes('type')).toBe('tel')
+  })
+
+  it('prefills the message with the product named in the URL', async () => {
+    const { wrapper } = await mountWithApp(ContactForm, { path: '/contacts?product=Diana' })
+
+    expect((wrapper.get('#message').element as HTMLTextAreaElement).value).toBe(
+      'Hello! I would like to inquire about availability and pricing for "Diana".',
+    )
+  })
+
+  it('starts empty without a product, and the prefill is plain editable text of a limited length', async () => {
+    const plain = await mountWithApp(ContactForm, { path: '/contacts' })
+    expect((plain.wrapper.get('#message').element as HTMLTextAreaElement).value).toBe('')
+
+    const long = await mountWithApp(ContactForm, { path: `/contacts?product=${'x'.repeat(500)}` })
+    expect((long.wrapper.get('#message').element as HTMLTextAreaElement).value.length).toBeLessThan(250)
+  })
+
+  it('after a successful send the message is empty again, not prefilled', async () => {
+    send.mockResolvedValue({})
+    const { wrapper } = await mountWithApp(ContactForm, { path: '/contacts?product=Diana' })
     await wrapper.get('#name').setValue('Anna')
-    await wrapper.get('form').trigger('reset')
-    expect((wrapper.get('#name').element as HTMLInputElement).value).toBe('')
+    await wrapper.get('#email').setValue('anna@example.com')
+
+    await wrapper.get('form').trigger('submit')
+    await flushPromises()
+
+    expect((wrapper.get('#message').element as HTMLTextAreaElement).value).toBe('')
   })
 })

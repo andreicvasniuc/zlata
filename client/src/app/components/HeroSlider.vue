@@ -8,7 +8,7 @@ const { data: slider, loading } = useLoader(async () => (await slidersApi.home()
 </script>
 
 <template>
-  <section class="slider">
+  <section class="slider site-container">
     <LoadingIcon v-if="loading" />
     <SlideCarousel
       v-else-if="slider && slider.slides && slider.slides.length"
@@ -19,9 +19,7 @@ const { data: slider, loading } = useLoader(async () => (await slidersApi.home()
 </template>
 
 <style>
-@media screen and (max-width: 768px) {
-  .slider {
-    margin-top: 45px;
-  }
+.slider {
+  padding-top: 24px;
 }
 </style>

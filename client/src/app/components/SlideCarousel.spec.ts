@@ -67,7 +67,7 @@ describe('SlideCarousel', () => {
 
     const items = wrapper.findAll('.embla__slide')
     expect(items).toHaveLength(2)
-    expect(items[0]?.get('h1').text()).toBe('First')
+    expect(items[0]?.get('h2').text()).toBe('First')
     expect(items[0]?.get('img').attributes('src')).toBe('a.jpg')
     expect(items[0]?.get('a').attributes('href')).toBe('/ua/collection-a')
     expect(items[1]?.get('a').attributes('href')).toBe('https://example.com')

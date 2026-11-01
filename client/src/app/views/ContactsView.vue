@@ -16,13 +16,44 @@ const { data, loading } = useLoader(async () => (await contactGroupsApi.list()).
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="[{ name: title }]" :loading="loading" centered>
-    <div class="col-md-6">
-      <ContactForm />
-    </div>
+  <PageLayout :heading="title" :breadcrumb="[{ name: title }]" :loading="loading">
+    <div class="contacts-layout">
+      <div class="contacts-info">
+        <p class="eyebrow">{{ t('CONTACT_EYEBROW') }}</p>
+        <p class="contacts-intro">{{ t('CONTACT_INTRO') }}</p>
+        <ContactGroups :list="data ?? []" />
+      </div>
 
-    <div class="col-md-6">
-      <ContactGroups :list="data ?? []" />
+      <div class="contacts-form">
+        <ContactForm />
+      </div>
     </div>
   </PageLayout>
 </template>
+
+<style>
+.contacts-layout {
+  display: grid;
+  gap: 40px;
+}
+.contacts-intro {
+  margin-bottom: 28px;
+  font-size: 1.05rem;
+  color: var(--color-ink-soft);
+}
+.contacts-form {
+  padding: 28px 24px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+}
+@media (min-width: 992px) {
+  .contacts-layout {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 64px;
+    align-items: start;
+  }
+  .contacts-form {
+    padding: 40px 48px;
+  }
+}
+</style>

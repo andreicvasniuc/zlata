@@ -7,12 +7,24 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div v-if="items">
-    <span>{{ t(label) }}</span
-    >: &nbsp;
-    <span v-for="(item, index) in items" :key="item.id">
-      <span>{{ item.name }}</span>
-      <span v-if="index < items.length - 1">, </span>
-    </span>
+  <div v-if="items?.length" class="extra-field">
+    <span class="field-label">{{ t(label) }}</span>
+    <ul class="chips">
+      <li v-for="item in items" :key="item.id" class="chip">{{ item.name }}</li>
+    </ul>
   </div>
 </template>
+
+<style>
+.extra-field {
+  margin-bottom: 24px;
+}
+.extra-field .field-label {
+  margin-bottom: 10px;
+}
+.extra-field .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+</style>

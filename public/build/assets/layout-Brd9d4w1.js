@@ -1,0 +1,1 @@
+import{S as e}from"./vue-router-CkfviPMk.js";var t=e(`layout`,{state:()=>({isMobileMenuVisible:!1,activeSection:void 0}),actions:{toggleMobileMenu(){this.isMobileMenuVisible=!this.isMobileMenuVisible},hideMobileMenu(){this.isMobileMenuVisible=!1}}});export{t};

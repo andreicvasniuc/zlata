@@ -15,7 +15,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <nav :aria-label="t('HOME')">
+  <nav :aria-label="t('BREADCRUMB')">
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
         <RouterLink :to="localePath('/')" :title="t('HOME')">{{ t('HOME') }}</RouterLink>
@@ -27,3 +27,30 @@ const localePath = useLocalePath()
     </ol>
   </nav>
 </template>
+
+<style>
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+.page-band.compact .breadcrumb {
+  justify-content: flex-start;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+  margin: 0 10px;
+  color: var(--color-ink-soft);
+  content: '/';
+}
+.breadcrumb-item.active {
+  color: var(--color-ink);
+}
+.breadcrumb a:hover {
+  color: var(--color-ink);
+}
+</style>

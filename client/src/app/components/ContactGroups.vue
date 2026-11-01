@@ -1,87 +1,82 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import type { ContactGroup } from '@shared/types'
-import { iconForClass } from '../icons'
+import { contactHref } from '../contactLink'
 
 defineProps<{ list: ContactGroup[] }>()
+
+const { t } = useI18n()
+
+// what the link does, named for the visitor: "Send email", "Call", "Chat"
+function actionFor(href: string): string {
+  if (href.startsWith('mailto:')) return t('ACTION_EMAIL')
+  if (href.startsWith('tel:')) return t('ACTION_CALL')
+  return t('ACTION_CHAT')
+}
 </script>
 
 <template>
-  <div class="fh5co-feature-1">
-    <div class="fh5co-feature-blurb">
-      <ul>
-        <li v-for="contactGroup in list" :key="contactGroup.id">
-          <span class="fh5co-feature-blurb-icon">
-            <component :is="iconForClass(contactGroup.css_class)" class="size-[40px] text-accent" />
-          </span>
-
-          <div class="fh5co-feature-blurb-text">
-            <h2 class="fh5co-feature-blurb-title h4 uppercase">{{ contactGroup.name }}</h2>
-            <p v-for="contact in contactGroup.contacts" :key="contact.id" class="fh5co-feature-blurb-description">
-              {{ contact.name }}
-            </p>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+  <ul class="contact-cards">
+    <li v-for="contactGroup in list" :key="contactGroup.id" class="contact-card">
+      <h2 class="contact-card-title">{{ contactGroup.name }}</h2>
+      <template v-for="contact in contactGroup.contacts" :key="contact.id">
+        <a
+          v-if="contactHref(contactGroup.css_class, contact.name)"
+          :href="contactHref(contactGroup.css_class, contact.name)"
+          class="contact-card-row"
+        >
+          <span class="contact-card-value">{{ contact.name }}</span>
+          <span class="contact-card-action">{{ actionFor(contactHref(contactGroup.css_class, contact.name)!) }} ↗</span>
+        </a>
+        <p v-else class="contact-card-row">
+          <span class="contact-card-value">{{ contact.name }}</span>
+        </p>
+      </template>
+    </li>
+  </ul>
 </template>
 
 <style>
-.fh5co-feature-1 .fh5co-feature-blurb ul {
-  padding: 0;
+.contact-cards {
+  display: grid;
+  gap: 16px;
+}
+.contact-card {
+  padding: 20px 24px;
+  background: #fff;
+  border: 1px solid var(--color-border);
+}
+.contact-card-title {
+  margin: 0 0 6px;
+  font-family: var(--site-sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent-text);
+}
+.contact-card-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
   margin: 0;
+  padding: 4px 0;
 }
-.fh5co-feature-1 .fh5co-feature-blurb ul li {
-  float: left;
-  width: 100%;
-  padding: 0;
-  margin: 0 0 1em 0;
-  list-style: none;
+.contact-card-value {
+  font-size: 1.15rem;
+  overflow-wrap: anywhere;
 }
-.fh5co-feature-1 .fh5co-feature-blurb-text {
-  float: right;
-  width: 85%;
+.contact-card-action {
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
 }
-.fh5co-feature-1 .fh5co-feature-blurb-icon {
-  float: left;
-  width: 15%;
-  padding-top: 7px;
-  position: relative;
-}
-.fh5co-feature-1 .fh5co-feature-blurb-title {
-  letter-spacing: 2px;
-  margin-bottom: 0 !important;
-  font-size: 16px;
-  line-height: 28px;
-}
-.fh5co-feature-1 .fh5co-feature-blurb-description {
-  margin-bottom: 0;
-}
-@media screen and (max-width: 992px) {
-  .fh5co-feature-1 .fh5co-feature-blurb ul li {
-    width: 50%;
-  }
-  .fh5co-feature-1 .fh5co-feature-blurb-text {
-    width: 75%;
-  }
-  .fh5co-feature-1 .fh5co-feature-blurb-icon {
-    width: 20%;
-  }
-}
-@media screen and (max-width: 768px) {
-  .fh5co-feature-1 .fh5co-feature-blurb-icon {
-    width: 10%;
-  }
-}
-@media screen and (max-width: 500px) {
-  .fh5co-feature-1 .fh5co-feature-blurb ul li {
-    width: 51%;
-  }
-  .fh5co-feature-1 .fh5co-feature-blurb-text {
-    width: 65%;
-  }
-  .fh5co-feature-1 .fh5co-feature-blurb-icon {
-    width: 20%;
-  }
+a.contact-card-row:hover .contact-card-action {
+  border-color: var(--color-accent);
+  color: var(--color-ink);
 }
 </style>

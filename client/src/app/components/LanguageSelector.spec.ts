@@ -7,11 +7,21 @@ import LanguageSelector from './LanguageSelector.vue'
 describe('LanguageSelector', () => {
   afterEach(() => document.body.replaceChildren())
 
-  it('shows the flag of the current language and offers all four', async () => {
+  it('shows all four languages as text codes, no flags', async () => {
+    const { wrapper } = await mountWithApp(LanguageSelector)
+
+    expect(wrapper.findAll('a').map((link) => link.text())).toEqual(['EN', 'UA', 'RO', 'RU'])
+    expect(wrapper.findAll('a').map((link) => link.attributes('data-locale'))).toEqual(['en', 'ua', 'ro', 'ru'])
+    expect(wrapper.find('img').exists()).toBe(false)
+  })
+
+  it('names every language in full for screen readers and marks the current one', async () => {
     const { wrapper } = await mountWithApp(LanguageSelector, { locale: 'ua' })
 
-    expect(wrapper.get('a.fh5co-sub-ddown img').attributes('alt')).toBe('selected language')
-    expect(wrapper.findAll('ul a').map((link) => link.attributes('data-locale'))).toEqual(['ua', 'ru', 'ro', 'en'])
+    expect(wrapper.get('a[data-locale="ua"]').attributes('aria-label')).toBe('Українська')
+    expect(wrapper.get('a[data-locale="ua"]').attributes('aria-current')).toBe('true')
+    expect(wrapper.get('a[data-locale="ua"]').classes()).toContain('active')
+    expect(wrapper.get('a[data-locale="en"]').attributes('aria-current')).toBeUndefined()
   })
 
   it('switches the locale and moves to the same page with the new locale prefix', async () => {
@@ -25,20 +35,15 @@ describe('LanguageSelector', () => {
     expect(router.currentRoute.value.fullPath).toBe('/ro/collections?x=1')
   })
 
-  it('replaces an existing prefix, also on a product page', async () => {
-    const { wrapper, router } = await mountWithApp(LanguageSelector, { path: '/ua/collection-queen/diana' })
+  it('keeps the collection and product when the language changes', async () => {
+    const { wrapper, router } = await mountWithApp(LanguageSelector, {
+      path: '/ua/collection-queen/diana',
+      locale: 'ua',
+    })
 
     await wrapper.get('a[data-locale="en"]').trigger('click')
     await flushPromises()
 
     expect(router.currentRoute.value.fullPath).toBe('/en/collection-queen/diana')
-  })
-
-  it('toggles the list on click for touch screens', async () => {
-    const { wrapper } = await mountWithApp(LanguageSelector)
-    expect(wrapper.get('ul').classes()).not.toContain('open')
-
-    await wrapper.get('a.fh5co-sub-ddown').trigger('click')
-    expect(wrapper.get('ul').classes()).toContain('open')
   })
 })

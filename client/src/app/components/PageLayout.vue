@@ -8,28 +8,54 @@ defineProps<{
   heading?: string
   breadcrumb?: BreadcrumbItem[]
   loading?: boolean
-  // wraps the content in the centered 10-column block
-  centered?: boolean
-  isSliderVisible?: boolean
+  // breadcrumbs only, no heading band: the product page starts with the gown (previous / next goes in `aside`)
+  compact?: boolean
+  // no header band and no content width: the page lays itself out (the home page)
+  bare?: boolean
 }>()
 </script>
 
 <template>
-  <AppHeader :heading="heading" :is-slider-visible="isSliderVisible" />
+  <AppHeader />
 
-  <div id="fh5co-main" :class="{ 'no-margin-top': isSliderVisible }">
-    <BreadcrumbNav v-if="breadcrumb" :items="breadcrumb" />
+  <main id="main" tabindex="-1">
+    <div v-if="!bare" class="page-band" :class="{ compact }">
+      <div class="site-container">
+        <div class="page-band-row">
+          <BreadcrumbNav v-if="breadcrumb" :items="breadcrumb" />
+          <slot name="aside" />
+        </div>
+        <h1 v-if="heading && !compact">{{ heading }}</h1>
+      </div>
+    </div>
 
     <LoadingIcon v-show="loading" />
 
-    <div v-show="!loading" :class="{ 'col-md-10 col-md-offset-1 clearfix': centered }">
-      <slot />
+    <div v-show="!loading" :class="{ 'page-content': !bare && !compact }">
+      <div :class="{ 'site-container': !bare }">
+        <slot />
+      </div>
     </div>
+  </main>
 
-    <section id="fh5co-newsletter">
-      <div class="bs-container"></div>
-    </section>
-
-    <AppFooter />
-  </div>
+  <AppFooter />
 </template>
+
+<style>
+.page-band-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px 24px;
+}
+.page-band.compact .page-band-row {
+  justify-content: space-between;
+}
+.page-content {
+  padding-top: 48px;
+}
+#main {
+  outline: none;
+}
+</style>

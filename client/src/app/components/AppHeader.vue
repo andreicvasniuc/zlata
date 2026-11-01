@@ -1,78 +1,107 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import headerBackground from '../assets/1-blured.jpg'
-import logoBlack from '../assets/logo-black.png'
-import logoWhite from '../assets/logo-white.png'
+import logo from '../assets/logo-black.png'
 import { useLocalePath } from '../locale'
-import { useLayout } from '../stores/layout'
-import HeroSlider from './HeroSlider.vue'
+import LanguageSelector from './LanguageSelector.vue'
 import MainMenu from './MainMenu.vue'
 import MobileMenu from './MobileMenu.vue'
 
-defineProps<{ heading?: string; isSliderVisible?: boolean }>()
-
-// keeps the heading's height when a page has no title yet
-const NBSP = String.fromCharCode(160)
-
 const { t } = useI18n()
-const layout = useLayout()
 const localePath = useLocalePath()
 </script>
 
 <template>
-  <MobileMenu v-if="layout.isMobile" />
+  <a href="#main" class="skip-link">{{ t('SKIP_TO_CONTENT') }}</a>
 
-  <header v-else id="fh5co-header-section" :class="{ 'fh5co-scrolled': layout.isScrolled }" class="gray-menu-links">
-    <div class="bs-container">
-      <h1 id="fh5co-logo" class="float-left">
-        <RouterLink :to="localePath('/')">
-          <img v-show="!layout.isScrolled" :src="logoWhite" alt="logo" />
-          <img v-show="layout.isScrolled" :src="logoBlack" alt="logo" />
-        </RouterLink>
-      </h1>
-      <MainMenu />
-    </div>
-  </header>
+  <header class="site-header">
+    <div class="site-header-bar">
+      <div class="site-header-mobile">
+        <MobileMenu />
+      </div>
 
-  <aside v-if="!isSliderVisible" id="fh5co-hero" :style="{ backgroundImage: `url(${headerBackground})` }">
-    <div class="bs-container">
-      <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-          <div class="fh5co-hero-wrap">
-            <div class="fh5co-hero-intro" :style="{ opacity: layout.headingOpacity }">
-              <h2>{{ t('HEADER') }}<span></span></h2>
-              <h1>{{ heading || NBSP }}</h1>
-            </div>
-          </div>
-        </div>
+      <RouterLink :to="localePath('/')" class="site-logo">
+        <img :src="logo" :alt="t('LONG_SITE_NAME')" width="64" height="64" />
+      </RouterLink>
+
+      <div class="site-header-desktop site-header-nav">
+        <MainMenu />
+      </div>
+      <div class="site-header-desktop site-header-actions">
+        <LanguageSelector />
+        <RouterLink :to="localePath('/contacts')" class="btn btn-outline book-fitting">{{
+          t('BOOK_FITTING')
+        }}</RouterLink>
       </div>
     </div>
-  </aside>
-
-  <HeroSlider v-else />
+  </header>
 </template>
 
 <style>
-#fh5co-logo {
-  font-size: 20px;
-  margin: -40px 0 0 -20px;
-  padding: 0;
-  font-weight: bold;
+/* one sticky bar for every scroll position: no jump of the logo, readable on any page */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgb(250 248 245 / 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border);
 }
-#fh5co-logo a {
-  display: inline-block;
-  border-bottom: none !important;
-  color: #fff;
-  letter-spacing: 3px;
-  text-transform: uppercase;
+.site-header-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 64px;
+  max-width: var(--site-width);
+  margin: 0 auto;
+  padding: 0 var(--site-gutter);
+  box-sizing: border-box;
 }
-#fh5co-logo a img {
-  width: 150px;
-  max-width: none;
+.site-logo {
+  display: inline-flex;
+  align-items: center;
 }
-.fh5co-scrolled #fh5co-logo img {
-  position: relative;
-  top: 26px;
-  width: 100px;
+.site-logo img {
+  display: block;
+  width: auto;
+  height: 48px;
+  /* the emblem comes on a white background: multiply lets the header colour show through */
+  mix-blend-mode: multiply;
+}
+.site-header-desktop {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .site-header-bar {
+    grid-template-columns: auto 1fr auto;
+    gap: 32px;
+    height: var(--site-header-height);
+  }
+  .site-header-mobile {
+    display: none;
+  }
+  .site-header-desktop {
+    display: flex;
+  }
+  .site-header-nav {
+    justify-content: center;
+  }
+  .site-header-actions {
+    align-items: center;
+    gap: 28px;
+  }
+  .site-logo img {
+    height: 60px;
+  }
+  .book-fitting {
+    min-height: 46px;
+    padding: 0 24px;
+    border-color: var(--color-ink);
+    background: transparent;
+  }
+  .book-fitting:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
 }
 </style>
