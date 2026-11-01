@@ -3,14 +3,19 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { productsApi } from '@shared/api/resources/public'
 import { useLoader } from '../composables/useLoader'
+import { useLocalePath } from '../locale'
 import ItemGrid, { type GridItem } from './ItemGrid.vue'
 import LoadingIcon from './LoadingIcon.vue'
 
+// the home page shows a short selection, not the whole catalog
+const MAX_ITEMS = 8
+
 const { t } = useI18n()
+const localePath = useLocalePath()
 const { data, loading } = useLoader(async () => (await productsApi.topList()).products ?? [])
 
 const items = computed<GridItem[]>(() =>
-  (data.value ?? []).map((product) => ({
+  (data.value ?? []).slice(0, MAX_ITEMS).map((product) => ({
     id: product.id,
     name: product.name,
     url: `/${product.collection_slug}/${product.slug}`,
@@ -20,12 +25,31 @@ const items = computed<GridItem[]>(() =>
 </script>
 
 <template>
-  <LoadingIcon v-show="loading" />
+  <section v-if="items.length" class="featured site-container" aria-labelledby="featured-heading">
+    <div class="featured-head">
+      <h2 id="featured-heading">{{ t('TOP_DRESSES') }}</h2>
+      <RouterLink :to="localePath('/collections')" class="text-link">{{ t('VIEW_ALL_COLLECTIONS') }}</RouterLink>
+    </div>
 
-  <div v-show="!loading" class="col-md-10 col-md-offset-1 clearfix fh5co-header">
-    <h1 class="fh5co-heading mb-0!">{{ t('TOP_DRESSES') }}</h1>
-    <div class="fh5co-spacer fh5co-spacer-sm"></div>
-
-    <ItemGrid :items="items" />
-  </div>
+    <ItemGrid :items="items" wide />
+  </section>
+  <LoadingIcon v-else-if="loading" />
 </template>
+
+<style>
+.featured {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+.featured-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 28px;
+}
+.featured-head h2 {
+  margin: 0;
+}
+</style>

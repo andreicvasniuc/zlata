@@ -1,0 +1,1 @@
+import{b as e}from"./vue-router-CsHoFyW9.js";import{t}from"./price-CyGJsWco.js";function n(){let{t:n,locale:r}=e();return e=>{let i=t(e.price,e.currency,r.value);return i?`${n(`PRICE_FROM`)} ${i}`:void 0}}export{n as t};

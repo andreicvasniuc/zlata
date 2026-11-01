@@ -43,7 +43,7 @@ export function createAppI18n(namespace: Namespace, locale: Locale = DEFAULT_LOC
     i18n.global.locale.value = target
     currentLocale.value = target
     saveLocale(target)
-    document.documentElement.lang = target
+    document.documentElement.lang = target === 'ua' ? 'uk' : target
   }
 
   return { i18n, setLocale, ensureLoaded }

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, type RouteComponent, type RouteRecordRaw } from 'vue-router'
+import { whenLoaded } from './composables/useLoader'
 
 export const appBase = (): string => document.querySelector<HTMLMetaElement>('meta[name="app-base"]')?.content ?? '/'
 
@@ -9,6 +10,7 @@ export interface PageComponents {
   home: Loader
   collectionList: Loader
   contacts: Loader
+  about: Loader
   collection: Loader
   product: Loader
 }
@@ -18,6 +20,7 @@ const lazyComponents: PageComponents = {
   home: () => import('./views/HomeView.vue'),
   collectionList: () => import('./views/CollectionListView.vue'),
   contacts: () => import('./views/ContactsView.vue'),
+  about: () => import('./views/AboutView.vue'),
   collection: () => import('./views/CollectionView.vue'),
   product: () => import('./views/ProductView.vue'),
 }
@@ -41,6 +44,7 @@ export function buildRoutes(components: PageComponents = lazyComponents): RouteR
       component: components.collectionList,
     },
     { path: 'contacts', name: `contacts${suffix}`, meta: { page: 'contacts' }, component: components.contacts },
+    { path: 'about', name: `about${suffix}`, meta: { page: 'about' }, component: components.about },
     {
       path: ':collection',
       name: `collection${suffix}`,
@@ -65,7 +69,8 @@ export function buildRoutes(components: PageComponents = lazyComponents): RouteR
 export function createAppRouter(history = createWebHistory(appBase())) {
   return createRouter({
     history,
-    scrollBehavior: () => ({ top: 0 }),
+    // Back / Forward return to where the visitor was, once the page content has arrived from the API
+    scrollBehavior: (_to, _from, saved) => (saved ? whenLoaded().then(() => saved) : { top: 0 }),
     routes: buildRoutes(),
   })
 }

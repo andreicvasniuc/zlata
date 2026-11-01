@@ -1,0 +1,1 @@
+import{S as e}from"./vue-router-CsHoFyW9.js";var t=e(`layout`,{state:()=>({isMobileMenuVisible:!1}),actions:{toggleMobileMenu(){this.isMobileMenuVisible=!this.isMobileMenuVisible},hideMobileMenu(){this.isMobileMenuVisible=!1}}});export{t};

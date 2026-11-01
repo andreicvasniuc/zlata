@@ -23,6 +23,8 @@ const emit = defineEmits<{ closed: [] }>()
 const cssClasses = [
   { name: 'Mobile', id: 'ti-mobile' },
   { name: 'Viber', id: 'ti-viber' },
+  { name: 'WhatsApp', id: 'ti-whatsapp' },
+  { name: 'Telegram', id: 'ti-telegram' },
   { name: 'Email', id: 'ti-email' },
   { name: 'Skype', id: 'ti-skype' },
 ]

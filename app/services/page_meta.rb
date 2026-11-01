@@ -1,16 +1,18 @@
 # Resolves a public URL path to the meta data of the HTML shell: title, description, Open Graph image, canonical URL,
 # hreflang alternates, the price of a product (Open Graph and schema.org JSON-LD) and the HTTP status (404 for an unknown or unpublished collection/product).
 #
-# Paths: `/(:locale)`, `/collections`, `/accessories`, `/contacts`, `/:collection`, `/:collection/:product`.
+# Paths: `/(:locale)`, `/collections`, `/accessories`, `/contacts`, `/about`, `/:collection`, `/:collection/:product`.
 # One query per request, and only for collection and product pages.
 class PageMeta
   LOCALES = %w[en ua ru ro].freeze
   DEFAULT_LOCALE = "ua".freeze
-  SECTIONS = { "collections" => "all_collections", "accessories" => "all_accessories", "contacts" => "contacts" }.freeze
+  SECTIONS = { "collections" => "all_collections", "accessories" => "all_accessories", "contacts" => "contacts", "about" => "about" }.freeze
+  # URLs and I18n use `ua`, but the ISO 639-1 code of Ukrainian (for <html lang>) is `uk`.
+  HTML_LANGS = { "ua" => "uk" }.freeze
   DESCRIPTION_LENGTH = 200
 
   Result = Struct.new(:status, :locale, :title, :description, :image, :canonical, :alternates, :robots,
-                      :price, :currency, :json_ld, keyword_init: true)
+                      :price, :currency, :json_ld, :html_lang, keyword_init: true)
 
   # `path` is the request path without any preview prefix; `base_url` is e.g. "https://zlata-weddingfashion.com".
   def initialize(path, base_url:)
@@ -33,6 +35,10 @@ class PageMeta
 
     def locale
       (@locale || DEFAULT_LOCALE).to_sym
+    end
+
+    def html_lang
+      HTML_LANGS.fetch(locale.to_s, locale.to_s)
     end
 
     def site_name
@@ -101,12 +107,12 @@ class PageMeta
     def found(page)
       Result.new(status: :ok, locale: locale, title: page[:title], description: page[:description], image: page[:image],
                  canonical: url_for_path(@locale), alternates: alternates, robots: nil,
-                 price: page[:price], currency: page[:currency], json_ld: page[:json_ld])
+                 price: page[:price], currency: page[:currency], json_ld: page[:json_ld], html_lang: html_lang)
     end
 
     def not_found
       Result.new(status: :not_found, locale: locale, title: "#{I18n.t('seo.not_found')} | #{site_name}",
-                 description: nil, image: nil, canonical: nil, alternates: {}, robots: "noindex")
+                 description: nil, image: nil, canonical: nil, alternates: {}, robots: "noindex", html_lang: html_lang)
     end
 
     # The unprefixed URL is the default (x-default); every locale also has a prefixed URL.

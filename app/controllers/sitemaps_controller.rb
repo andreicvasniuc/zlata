@@ -1,6 +1,6 @@
 # GET /sitemap.xml: the home page, the static pages, every published collection and product, with hreflang alternates.
 class SitemapsController < ApplicationController
-  STATIC_PATHS = ["", "collections", "accessories", "contacts"].freeze
+  STATIC_PATHS = ["", "collections", "accessories", "contacts", "about"].freeze
 
   def show
     expires_in 1.hour, public: true

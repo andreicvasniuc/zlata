@@ -24,7 +24,7 @@ RSpec.describe 'Public SPA shell (meta tags, hreflang, 404)', type: :request do
       doc = shell('')
 
       expect(response).to have_http_status(:ok)
-      expect(doc.at_css('html')['lang']).to eq('ua')
+      expect(doc.at_css('html')['lang']).to eq('uk')
       expect(doc.at_css('title').text).to eq('Zlata весільна мода')
       expect(doc.at_css('link[rel=canonical]')['href']).to eq('http://www.example.com/')
       hreflangs = doc.css('link[rel=alternate]').to_h { |link| [link['hreflang'], link['href']] }
@@ -42,16 +42,55 @@ RSpec.describe 'Public SPA shell (meta tags, hreflang, 404)', type: :request do
       expect(doc.at_css('link[rel=canonical]')['href']).to eq('http://www.example.com/en/collections')
     end
 
-    it 'covers accessories and contacts in all four locales' do
+    it 'covers accessories, contacts and about in all four locales' do
       %w[en ua ru ro].each do |locale|
-        %w[accessories contacts].each do |page|
+        %w[accessories contacts about].each do |page|
           doc = shell("/#{locale}/#{page}")
 
           expect(response).to have_http_status(:ok)
-          expect(doc.at_css('html')['lang']).to eq(locale)
+          expect(doc.at_css('html')['lang']).to eq(locale == 'ua' ? 'uk' : locale)
           expect(doc.at_css('title').text).to end_with(' | ' + I18n.t('seo.site_name', locale: locale))
         end
       end
+    end
+
+    it 'renders the about page with title, canonical and alternates' do
+      doc = shell('/en/about')
+
+      expect(response).to have_http_status(:ok)
+      expect(doc.at_css('title').text).to eq('About | Zlata wedding fashion')
+      expect(doc.at_css('link[rel=canonical]')['href']).to eq('http://www.example.com/en/about')
+      hreflangs = doc.css('link[rel=alternate]').to_h { |link| [link['hreflang'], link['href']] }
+      expect(hreflangs).to eq(
+        'en' => 'http://www.example.com/en/about', 'ua' => 'http://www.example.com/ua/about', 'ru' => 'http://www.example.com/ru/about',
+        'ro' => 'http://www.example.com/ro/about', 'x-default' => 'http://www.example.com/about'
+      )
+    end
+
+    it 'renders the about page in the default and Ukrainian locales' do
+      doc = shell('/about')
+
+      expect(response).to have_http_status(:ok)
+      expect(doc.at_css('html')['lang']).to eq('uk')
+      expect(doc.at_css('title').text).to eq('Про нас | Zlata весільна мода')
+      expect(doc.at_css('link[rel=canonical]')['href']).to eq('http://www.example.com/about')
+
+      doc = shell('/ua/about')
+
+      expect(response).to have_http_status(:ok)
+      expect(doc.at_css('html')['lang']).to eq('uk')
+      expect(doc.at_css('title').text).to eq('Про нас | Zlata весільна мода')
+      expect(doc.at_css('link[rel=canonical]')['href']).to eq('http://www.example.com/ua/about')
+      expect(doc.at_css('link[hreflang=ua]')['href']).to eq('http://www.example.com/ua/about')
+    end
+
+    it 'sets the HTML language to uk for Ukrainian pages (also 404) and keeps the other locales' do
+      expect(shell('/ua/collections').at_css('html')['lang']).to eq('uk')
+      expect(shell('/ua/queen').at_css('html')['lang']).to eq('uk')
+      expect(shell('/ua/nope').at_css('html')['lang']).to eq('uk')
+      expect(response).to have_http_status(:not_found)
+      expect(shell('/en').at_css('html')['lang']).to eq('en')
+      expect(shell('/ru/queen/elayza').at_css('html')['lang']).to eq('ru')
     end
   end
 
@@ -177,7 +216,12 @@ RSpec.describe 'Public SPA shell (meta tags, hreflang, 404)', type: :request do
       locs = doc.css('url > loc').map(&:text)
       expect(locs).to contain_exactly(
         'http://www.example.com/', 'http://www.example.com/collections', 'http://www.example.com/accessories',
-        'http://www.example.com/contacts', 'http://www.example.com/queen', 'http://www.example.com/queen/elayza'
+        'http://www.example.com/contacts', 'http://www.example.com/about', 'http://www.example.com/queen',
+        'http://www.example.com/queen/elayza'
+      )
+      about = doc.css('url').find { |url| url.at_css('loc').text == 'http://www.example.com/about' }
+      expect(about.css('link').to_h { |link| [link['hreflang'], link['href']] }).to include(
+        'ua' => 'http://www.example.com/ua/about', 'en' => 'http://www.example.com/en/about', 'x-default' => 'http://www.example.com/about'
       )
       alternates = doc.css('url').find { |url| url.at_css('loc').text.end_with?('/queen/elayza') }.css('link')
       expect(alternates.map { |link| link['hreflang'] }).to eq(%w[en ua ru ro x-default])

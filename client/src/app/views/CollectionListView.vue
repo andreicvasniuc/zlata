@@ -39,8 +39,8 @@ const items = computed<GridItem[]>(() =>
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="[{ name: title }]" :loading="loading" centered>
-    <NotFoundContent v-if="failed" />
-    <ItemGrid v-else :items="items" />
+  <PageLayout :heading="title" :breadcrumb="[{ name: title }]" :loading="loading">
+    <NotFoundContent v-if="failed" temporary />
+    <ItemGrid v-else :items="items" fit="cover" />
   </PageLayout>
 </template>

@@ -20,6 +20,7 @@ export const testRoutes = buildRoutes({
   home: stub,
   collectionList: stub,
   contacts: stub,
+  about: stub,
   collection: stub,
   product: stub,
 })

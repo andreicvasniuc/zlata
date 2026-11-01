@@ -4,32 +4,33 @@ import AppHeader from './AppHeader.vue'
 import BreadcrumbNav, { type BreadcrumbItem } from './BreadcrumbNav.vue'
 import LoadingIcon from './LoadingIcon.vue'
 
+// Without a `heading` the page brings its own (the home page has a hero).
 defineProps<{
   heading?: string
+  lead?: string
   breadcrumb?: BreadcrumbItem[]
   loading?: boolean
-  // wraps the content in the centered 10-column block
-  centered?: boolean
-  isSliderVisible?: boolean
 }>()
 </script>
 
 <template>
-  <AppHeader :heading="heading" :is-slider-visible="isSliderVisible" />
+  <AppHeader />
 
-  <div id="fh5co-main" :class="{ 'no-margin-top': isSliderVisible }">
-    <BreadcrumbNav v-if="breadcrumb" :items="breadcrumb" />
-
-    <LoadingIcon v-show="loading" />
-
-    <div v-show="!loading" :class="{ 'col-md-10 col-md-offset-1 clearfix': centered }">
-      <slot />
+  <main id="main" tabindex="-1">
+    <div v-if="breadcrumb || heading" class="site-container">
+      <BreadcrumbNav v-if="breadcrumb" :items="breadcrumb" />
+      <div v-if="heading" class="page-header">
+        <h1>{{ heading }}</h1>
+        <p v-if="lead" class="lead">{{ lead }}</p>
+      </div>
     </div>
 
-    <section id="fh5co-newsletter">
-      <div class="bs-container"></div>
-    </section>
+    <LoadingIcon v-if="loading" />
 
-    <AppFooter />
-  </div>
+    <div v-show="!loading" :class="{ 'site-container page-body': heading }">
+      <slot />
+    </div>
+  </main>
+
+  <AppFooter />
 </template>

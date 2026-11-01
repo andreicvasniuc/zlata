@@ -21,7 +21,9 @@ describe.each(['app', 'admin'] as const)('%s locales', (namespace) => {
 
   it.each(LOCALES)('renders every key in %s without AngularJS interpolation left over', (locale) => {
     for (const [key, value] of Object.entries(messages[locale] ?? {})) {
-      const rendered = i18n.global.t(key, {}, { locale })
+      // named placeholders (`{name}`) are filled with themselves, so a message must come out as written
+      const params = Object.fromEntries([...value.matchAll(/\{(\w+)\}/g)].map(([token, name]) => [name, token]))
+      const rendered = i18n.global.t(key, params, { locale })
       expect(value, `${locale}:${key}`).not.toContain('{{')
       expect(rendered, `${locale}:${key}`).toBe(value)
     }

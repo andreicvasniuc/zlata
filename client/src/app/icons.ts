@@ -8,6 +8,8 @@ import IconPinterest from '~icons/simple-icons/pinterest'
 import IconFacebook from '~icons/simple-icons/facebook'
 import IconSkype from '~icons/simple-icons/skype'
 import IconViber from '~icons/simple-icons/viber'
+import IconWhatsapp from '~icons/simple-icons/whatsapp'
+import IconPhone from '~icons/lucide/phone'
 
 // Social networkings and contact groups store the Themify class of their icon (`ti-telegram`, ...) in the database.
 // The Themify font is gone; the known classes map to Iconify icons, anything else gets a generic link icon.
@@ -20,6 +22,8 @@ const byThemifyClass: Record<string, Component> = {
   'ti-facebook': IconFacebook,
   'ti-skype': IconSkype,
   'ti-viber': IconViber,
+  'ti-whatsapp': IconWhatsapp,
+  'ti-mobile': IconPhone,
   'ti-email': IconMail,
 }
 

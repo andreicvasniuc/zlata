@@ -62,9 +62,14 @@ const breadcrumb = computed(() => {
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading">
-    <NotFoundContent v-if="missing" />
-    <ProductDetails v-else-if="data" :product="data.product">
+  <PageLayout :breadcrumb="breadcrumb" :loading="loading">
+    <div v-if="missing" class="site-container">
+      <div class="page-header">
+        <h1>{{ title }}</h1>
+      </div>
+      <NotFoundContent :temporary="failed && !notFound" />
+    </div>
+    <ProductDetails v-else-if="data" :product="data.product" :collection="data.collection">
       <ProductNavigation
         v-if="data.collection.products!.length > 1"
         :collection="data.collection"

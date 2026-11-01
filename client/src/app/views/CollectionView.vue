@@ -53,8 +53,8 @@ const breadcrumb = computed(() => {
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading" centered>
-    <NotFoundContent v-if="missing" />
+  <PageLayout :heading="title" :breadcrumb="breadcrumb" :loading="loading">
+    <NotFoundContent v-if="missing" :temporary="failed && !notFound" />
     <ItemGrid v-else :items="items" />
   </PageLayout>
 </template>
