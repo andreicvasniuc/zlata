@@ -1,0 +1,117 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Zlata redesign mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ivory:#faf7f2;--ink:#2b2724;--muted:#7b736b;--gold:#b08d57;--line:#e8e1d6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#ddd;font-family:Inter,sans-serif;color:var(--ink);padding:24px;display:flex;flex-direction:column;gap:40px;align-items:center}
+.frame{background:var(--ivory);width:1280px;position:relative;overflow:hidden}
+.frame.m{width:390px}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:500}
+.hdr{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;justify-content:space-between;padding:22px 48px;color:#fff;background:linear-gradient(#0006,#0000)}
+.hdr.solid{position:relative;background:var(--ivory);color:var(--ink);border-bottom:1px solid var(--line)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:30px;letter-spacing:.35em;font-weight:600}
+.logo small{display:block;font:300 9px Inter;letter-spacing:.5em;margin-top:2px}
+nav{display:flex;gap:34px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;align-items:center}
+.btn{border:1px solid currentColor;padding:12px 22px;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+.btn.fill{background:var(--gold);border-color:var(--gold);color:#fff}
+.lang{font-size:11px;letter-spacing:.12em;opacity:.9}.lang b{font-weight:500;border-bottom:1px solid currentColor}
+.hero{height:720px;background-size:cover;background-position:center 20%;position:relative;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 90px}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0007,#0000 60%)}
+.hero>*{position:relative;z-index:2}
+.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-size:84px;line-height:1;max-width:640px;margin-bottom:28px}
+.dots{position:absolute;right:48px;bottom:48px;z-index:3;display:flex;gap:10px;align-items:center;color:#fff;font-size:12px;letter-spacing:.2em}
+.dots i{width:28px;height:2px;background:#fff6;display:block}.dots i.on{background:#fff}
+.sec{padding:80px 48px}.sec h2{font-size:46px;margin-bottom:8px}.sec .sub{color:var(--muted);font-size:14px;margin-bottom:36px}
+.row{display:flex;justify-content:space-between;align-items:flex-end}
+.grid{display:grid;gap:24px}.g4{grid-template-columns:repeat(4,1fr)}.g3{grid-template-columns:repeat(3,1fr)}
+.card .img{aspect-ratio:3/4;background-size:cover;background-position:center top;position:relative}
+.card .tag{position:absolute;top:12px;left:12px;background:var(--ivory);font-size:10px;letter-spacing:.15em;padding:5px 9px;text-transform:uppercase}
+.card h3{font-size:24px;margin-top:14px}.card p{font-size:12px;color:var(--muted);letter-spacing:.06em}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px}
+.chip{border:1px solid var(--line);padding:9px 16px;font-size:12px;border-radius:99px;background:#fff}.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.mega{position:absolute;top:76px;left:0;right:0;background:var(--ivory);color:var(--ink);padding:32px 48px;display:grid;grid-template-columns:repeat(5,1fr) 1.3fr;gap:20px;z-index:6;box-shadow:0 20px 40px #0002}
+.mega .t{aspect-ratio:3/4;background-size:cover;background-position:center top;margin-bottom:10px}
+.mega h4{font:500 22px 'Cormorant Garamond',serif}.mega span{font-size:11px;color:var(--muted);letter-spacing:.1em}
+.mega .side{border-left:1px solid var(--line);padding-left:24px;font-size:13px;line-height:2.2}
+.about{display:grid;grid-template-columns:1fr 1fr;background:#f1ebe1}
+.about .pic{background-size:cover;background-position:center;min-height:520px}
+.about .txt{padding:90px 70px}.about .txt h2{font-size:52px;margin:14px 0 20px}.about p{color:var(--muted);line-height:1.8;font-size:15px;margin-bottom:28px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;text-align:center}
+.steps .n{font:500 54px 'Cormorant Garamond',serif;color:var(--gold)}.steps p{font-size:14px;color:var(--muted);margin-top:8px;line-height:1.6}
+.cta{background:var(--ink);color:#fff;text-align:center;padding:80px 48px}.cta h2{font-size:52px;margin-bottom:24px}
+footer{background:#1f1c1a;color:#cfc8bf;padding:56px 48px;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;font-size:13px;line-height:2}
+footer h5{font:500 12px Inter;letter-spacing:.2em;text-transform:uppercase;color:#fff;margin-bottom:8px}
+.crumb{padding:24px 48px 0;font-size:12px;color:var(--muted);letter-spacing:.06em}
+.pdp{display:grid;grid-template-columns:90px 1fr 420px;gap:24px;padding:24px 48px 60px}
+.thumbs{display:flex;flex-direction:column;gap:12px}.thumbs div{aspect-ratio:3/4;background-size:cover;background-position:center top;opacity:.6}.thumbs div.on{opacity:1;outline:1px solid var(--ink)}
+.main{aspect-ratio:3/4;background-size:cover;background-position:center top}
+.panel{position:sticky;top:20px;align-self:start;padding-top:12px}
+.panel h1{font-size:64px;line-height:1}.panel .meta{color:var(--muted);font-size:13px;margin:10px 0 30px}
+.panel label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin:22px 0 10px}
+.sw{display:flex;gap:10px}.sw i{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:block}.sw i.on{outline:2px solid var(--ink);outline-offset:3px}
+.sz{display:flex;gap:8px}.sz b{border:1px solid var(--line);width:48px;height:42px;display:grid;place-items:center;font-weight:400;font-size:13px;background:#fff}
+.panel .btn{display:block;text-align:center;margin-top:12px;padding:16px}
+.panel .pn{display:flex;justify-content:space-between;font-size:13px;margin-top:34px;padding-top:18px;border-top:1px solid var(--line)}
+.m .hdr{padding:16px 18px}.m .logo{font-size:22px}
+.burger{width:24px;height:12px;border-top:1.5px solid currentColor;border-bottom:1.5px solid currentColor;position:relative}.burger:after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1.5px solid currentColor}
+.m .hero{height:560px;padding:0 20px 70px}.m .hero h1{font-size:50px}.m .dots{right:20px;bottom:26px}
+.m .sec{padding:40px 18px}.m .sec h2{font-size:34px}.m .g2{grid-template-columns:1fr 1fr;gap:14px}
+.m .card h3{font-size:20px}
+.bar{position:sticky;bottom:0;display:grid;grid-template-columns:1fr 1fr 1.4fr;background:#fff;border-top:1px solid var(--line);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+.bar div{padding:16px 0;text-align:center}.bar div:last-child{background:var(--gold);color:#fff}
+.drawer{background:var(--ivory);padding:22px 26px;height:844px;display:flex;flex-direction:column}
+.drawer .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:40px}
+.drawer a{display:block;font:500 34px 'Cormorant Garamond',serif;padding:12px 0;border-bottom:1px solid var(--line)}
+.drawer a span{float:right;font:300 14px Inter;color:var(--muted)}
+.drawer .langs{margin-top:auto;display:flex;gap:18px;font-size:13px;letter-spacing:.12em;margin-bottom:20px}
+.label{font:500 13px Inter;color:#555;letter-spacing:.08em;text-transform:uppercase;align-self:flex-start;margin-left:calc(50% - 640px)}
+</style></head><body>
+<!-- IMAGES -->
+<script>
+const I={shine:'https://i.ibb.co/KKdsmyk/6R6A0391.jpg',y21:'https://i.ibb.co/4dR4q1g/YUJOKL.jpg',y20:'https://i.ibb.co/s9J8kHg/G-B-1419.jpg',y19:'https://i.ibb.co/Cm3Mqs2/IMG-3277.jpg',eve:'https://i.ibb.co/6FR3V5q/IMG-3414.jpg',d1:'https://i.ibb.co/7CY26r5/6-R6-A0876-copy.jpg',d2:'https://i.ibb.co/p0QNs72/6-R6-A0507-copy.jpg',d3:'https://i.ibb.co/J7xDxhQ/6-R6-A0087-copy.jpg',d4:'https://i.ibb.co/PgnTSvb/6-R6-A9967-copy.jpg',allure:'https://i.ibb.co/pL5Ld0Y/6-R6-A7915-copy.jpg',a2:'https://i.ibb.co/BKG0xhS/6R6A7919.jpg',a3:'https://i.ibb.co/SBdQyFB/6R6A7903.jpg',a4:'https://i.ibb.co/CBsg50s/6R6A7904.jpg',d5:'https://i.ibb.co/Lxp6DK0/6-R6-A7780-copy.jpg',d6:'https://i.ibb.co/wpvNNTs/6-R6-A7445-copy.jpg',d7:'https://i.ibb.co/2gvjWgC/Image00054.jpg',d8:'https://i.ibb.co/ts0rFr4/Image00040.jpg'};
+const bg=k=>`style="background-image:url('${I[k]}')"`;
+const card=(k,n,s,t)=>`<div class="card"><div class="img" ${bg(k)}>${t?`<span class="tag">${t}</span>`:''}</div><h3>${n}</h3><p>${s}</p></div>`;
+const hdr=(cls='')=>`<div class="hdr ${cls}"><div class="logo">ZLATA<small>WEDDING FASHION</small></div><nav><span>Collections</span><span>Accessories</span><span>Evening</span><span>About</span><span>Contacts</span></nav><nav><span class="lang"><b>EN</b> &nbsp;UA &nbsp;RU &nbsp;RO</span><span class="btn ${cls?'fill':''}">Book a fitting</span></nav></div>`;
+const foot=`<footer><div><div class="logo" style="color:#fff">ZLATA</div>Wedding &amp; evening dresses.<br>Atelier address, City · Mon–Sat 10:00–19:00</div><div><h5>Collections</h5>Shine<br>Wedding 2021<br>Wedding 2020<br>Evening</div><div><h5>Atelier</h5>About<br>Fitting process<br>Contacts</div><div><h5>Follow</h5>Instagram<br>Telegram<br>Pinterest<br>WhatsApp</div></footer>`;
+document.write(`
+<div class="label">1 · Home — header with mega-menu open</div>
+<div class="frame" id="home">${hdr()}
+ <div class="mega"><div><div class="t" ${bg('shine')}></div><h4>Shine</h4><span>2022</span></div><div><div class="t" ${bg('y21')}></div><h4>Wedding 2021</h4><span>19 DRESSES</span></div><div><div class="t" ${bg('y20')}></div><h4>Wedding 2020</h4><span>14 DRESSES</span></div><div><div class="t" ${bg('y19')}></div><h4>Wedding 2019</h4><span>12 DRESSES</span></div><div><div class="t" ${bg('eve')}></div><h4>Evening</h4><span>9 DRESSES</span></div><div class="side">All collections →<br>Accessories<br>New arrivals<br>Archive 2017–2018</div></div>
+ <div class="hero" ${bg('shine')}><div class="eyebrow">New collection</div><h1>Shine</h1><span class="btn" style="align-self:flex-start;color:#fff">Explore collection</span><div class="dots">01 <i class="on"></i><i></i><i></i><i></i><i></i> 05</div></div>
+</div>
+<div class="label">2 · Home — content below the hero</div>
+<div class="frame" id="home2">
+ <div class="sec"><div class="row"><div><h2>New arrivals</h2><div class="sub">Fresh from the atelier</div></div><span class="btn">View all</span></div><div class="grid g4">${card('d1','Elayza','Shine','New')}${card('d2','Firuze','Shine','New')}${card('d3','Josephine','Shine','New')}${card('d4','Spenser','Shine','New')}</div></div>
+ <div class="about"><div class="pic" ${bg('y21')}></div><div class="txt"><div class="eyebrow" style="color:var(--gold)">The atelier</div><h2>Dresses made to be remembered</h2><p>A short story about the atelier: craftsmanship, fabrics, and the team that guides each bride from first fitting to the final alteration.</p><span class="btn">Our story</span></div></div>
+ <div class="sec"><h2 style="text-align:center">How a fitting works</h2><div class="sub" style="text-align:center">Three simple steps</div><div class="steps"><div><div class="n">01</div><h3>Book</h3><p>Choose a time online or message us on Telegram, Viber or WhatsApp.</p></div><div><div class="n">02</div><h3>Try on</h3><p>Private appointment with a consultant and your favourite silhouettes.</p></div><div><div class="n">03</div><h3>Tailor</h3><p>Adjustments to your measurements, ready for the big day.</p></div></div></div>
+ <div class="cta"><h2>Find the dress that feels like you</h2><span class="btn fill">Book a fitting</span></div>${foot}
+</div>
+<div class="label">3 · Catalog — compact title, filters, 4-column grid</div>
+<div class="frame" id="catalog">${hdr('solid')}<div class="crumb">Home / Collections / Wedding 2021</div>
+ <div class="sec" style="padding-top:28px"><div class="row"><div><h2>Wedding Dresses 2021</h2><div class="sub">19 dresses</div></div><div class="chip">Sort: Newest ▾</div></div>
+ <div class="chips"><span class="chip on">All</span><span class="chip">A-line</span><span class="chip">Mermaid</span><span class="chip">Ball gown</span><span class="chip">Minimalist</span><span class="chip">Long sleeves</span><span class="chip">Ivory</span><span class="chip">Size 44 ▾</span></div>
+ <div class="grid g4">${card('allure','Allure','Ivory, cappuccino','')}${card('d5','Arina','Ivory','')}${card('d6','Betty','Ivory','New')}${card('d7','Adelaide','Champagne','')}${card('d8','Bridget','Ivory','')}${card('d1','Moon','Ivory','')}${card('d2','Lira','Cappuccino','')}${card('d3','Elana','Ivory','')}</div></div>${foot}
+</div>
+<div class="label">4 · Product page — gallery + sticky enquiry panel</div>
+<div class="frame" id="pdp">${hdr('solid')}<div class="crumb">Home / Collections / Wedding 2021 / Allure</div>
+ <div class="pdp"><div class="thumbs"><div class="on" ${bg('allure')}></div><div ${bg('a2')}></div><div ${bg('a3')}></div><div ${bg('a4')}></div></div><div class="main" ${bg('allure')}></div>
+ <div class="panel"><div class="eyebrow" style="color:var(--gold)">Wedding Dresses 2021</div><h1>Allure</h1><div class="meta">Long-sleeve A-line with beaded bodice and tulle skirt.</div>
+ <label>Colour — Cappuccino</label><div class="sw"><i style="background:#cdb9a3" class="on"></i><i style="background:#f4eee2"></i></div>
+ <label>Available sizes</label><div class="sz"><b>42</b><b>44</b><b>46</b><b>48</b></div>
+ <span class="btn fill">Book a fitting with this dress</span><span class="btn">Ask about Allure</span>
+ <div class="pn"><span>← Arina</span><span>2 / 19</span><span>Betty →</span></div></div></div>
+ <div class="sec" style="padding-top:0"><h2>More from this collection</h2><div class="sub"></div><div class="grid g4">${card('d5','Arina','','')}${card('d6','Betty','','')}${card('d7','Adelaide','','')}${card('d8','Bridget','','')}</div></div>${foot}
+</div>
+<div class="label">5 · Mobile — hero, grid, drawer menu</div>
+<div style="display:flex;gap:30px;align-items:flex-start">
+ <div class="frame m" id="m1"><div class="hdr"><div class="logo">ZLATA</div><div class="burger"></div></div>
+  <div class="hero" ${bg('shine')}><div class="eyebrow">New collection</div><h1>Shine</h1><span class="btn" style="align-self:flex-start;color:#fff">Explore</span><div class="dots"><i class="on"></i><i></i><i></i></div></div>
+  <div class="sec"><h2>New arrivals</h2><div class="sub">Fresh from the atelier</div><div class="grid g2">${card('d1','Elayza','Shine','')}${card('d2','Firuze','Shine','')}${card('d3','Josephine','Shine','')}${card('d4','Spenser','Shine','')}</div></div>
+  <div class="bar"><div>Call</div><div>Message</div><div>Book a fitting</div></div></div>
+ <div class="frame m" id="m2"><div class="drawer"><div class="top"><div class="logo">ZLATA</div><span style="font-size:28px">×</span></div><a>Collections<span>→</span></a><a>Accessories<span>→</span></a><a>Evening<span>→</span></a><a>About</a><a>Contacts</a><span class="btn fill" style="margin-top:30px;text-align:center;padding:16px">Book a fitting</span><div class="langs"><b style="border-bottom:1px solid">EN</b><span>UA</span><span>RU</span><span>RO</span></div></div></div>
+ <div class="frame m" id="m3">${''}<div class="hdr solid"><div class="logo">ZLATA</div><div class="burger"></div></div><div class="main" ${bg('allure').replace('style="','style="aspect-ratio:3/4;')}></div><div style="padding:20px 18px"><div class="eyebrow" style="color:var(--gold);font-size:11px">Wedding Dresses 2021</div><h1 style="font-size:46px">Allure</h1><div class="sw" style="margin:16px 0"><i class="on" style="background:#cdb9a3"></i><i style="background:#f4eee2"></i></div><div class="sz"><b>42</b><b>44</b><b>46</b><b>48</b></div></div><div class="bar"><div>Ask</div><div style="grid-column:span 2;background:var(--gold);color:#fff">Book a fitting</div></div></div>
+</div>`);
+</script>
+</body></html>
