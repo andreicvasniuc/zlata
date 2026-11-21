@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import '@shared/styles/theme.css'
-import '@shared/styles/fonts'
+import './styles/fonts'
 import './styles/site.css'
 import { createAppI18n } from '@shared/i18n'
 import { resolveLocale } from '@shared/i18n/locale'

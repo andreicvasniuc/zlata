@@ -1,130 +1,246 @@
 <script setup lang="ts">
+import { computed, onBeforeUnmount, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import IconChevronDown from '~icons/lucide/chevron-down'
-import { useMenu } from '../composables/useMenu'
+import { collectionsApi } from '@shared/api/resources/public'
+import { useLoader } from '../composables/useLoader'
 import { useLocalePath } from '../locale'
-import LanguageSelector from './LanguageSelector.vue'
 
-const { menu, isActive } = useMenu()
+// Collections (with a panel of all dress collections), Accessories, Contacts. The logo links home.
+const open = defineModel<boolean>('open', { default: false })
+
+const LOCALE_PREFIX = /^\/(en|ua|ru|ro)(?=\/|$)/
+const FEATURED = 4
+
+const { t } = useI18n()
+const route = useRoute()
 const localePath = useLocalePath()
+
+const { data } = useLoader(async () => (await collectionsApi.dresses()).collections ?? [])
+const collections = computed(() => data.value ?? [])
+const featured = computed(() => collections.value.filter((collection) => collection.image?.url).slice(0, FEATURED))
+
+const currentPath = computed(() => route.path.replace(LOCALE_PREFIX, '') || '/')
+const isCollectionsActive = computed(
+  () =>
+    currentPath.value === '/collections' ||
+    collections.value.some(
+      (collection) =>
+        currentPath.value === `/${collection.slug}` || currentPath.value.startsWith(`/${collection.slug}/`),
+    ),
+)
+
+// the panel opens on hover with a short delay, so passing the mouse over the menu does not flash it
+let timer: ReturnType<typeof setTimeout> | undefined
+function show() {
+  clearTimeout(timer)
+  timer = setTimeout(() => (open.value = true), 80)
+}
+function hide(delay = 150) {
+  clearTimeout(timer)
+  timer = setTimeout(() => (open.value = false), delay)
+}
+function toggle() {
+  clearTimeout(timer)
+  open.value = !open.value
+}
+function onFocusOut(event: FocusEvent) {
+  if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node | null)) hide(0)
+}
+function close() {
+  clearTimeout(timer)
+  open.value = false
+}
+
+watch(() => route.fullPath, close)
+onBeforeUnmount(() => clearTimeout(timer))
 </script>
 
 <template>
-  <nav id="fh5co-menu-wrap" role="navigation">
-    <ul id="fh5co-primary-menu" class="sf-menu">
-      <li v-for="item in menu" :key="item.url + item.name" :class="{ active: isActive(item) }">
+  <nav class="main-menu" :aria-label="t('MENU')">
+    <ul class="main-menu__list">
+      <li
+        class="main-menu__item main-menu__item--panel"
+        @mouseenter="show"
+        @mouseleave="hide()"
+        @focusout="onFocusOut"
+        @keydown.esc="close"
+      >
         <RouterLink
-          :to="localePath(item.url)"
-          :class="{ 'fh5co-sub-ddown sf-with-ul': !!item.list }"
-          :title="item.name"
+          :to="localePath('/collections')"
+          class="main-menu__link"
+          :class="{ active: isCollectionsActive }"
+          :aria-current="currentPath === '/collections' ? 'page' : undefined"
         >
-          {{ item.name }}
-          <IconChevronDown v-if="item.list" class="sf-arrow" />
+          {{ t('COLLECTIONS') }}
         </RouterLink>
-        <ul v-if="item.list" class="fh5co-sub-menu">
-          <li v-for="subItem in item.list" :key="subItem.url">
-            <RouterLink :to="localePath(subItem.url)" :title="subItem.name">{{ subItem.name }}</RouterLink>
-          </li>
-        </ul>
+        <button
+          type="button"
+          class="main-menu__toggle"
+          :aria-expanded="open"
+          aria-controls="collections-panel"
+          :aria-label="t('SHOW_COLLECTIONS')"
+          @click="toggle"
+        >
+          <IconChevronDown />
+        </button>
+
+        <div v-show="open" id="collections-panel" class="collections-panel">
+          <div class="collections-panel__inner wrap">
+            <ul class="collections-panel__list">
+              <li v-for="collection in collections" :key="collection.id">
+                <RouterLink :to="localePath(`/${collection.slug}`)" @click="close">{{ collection.name }}</RouterLink>
+              </li>
+              <li class="collections-panel__all">
+                <RouterLink :to="localePath('/collections')" class="text-link" @click="close">
+                  {{ t('ALL_COLLECTIONS') }}
+                </RouterLink>
+              </li>
+            </ul>
+            <ul class="collections-panel__cards">
+              <li v-for="collection in featured" :key="collection.id">
+                <RouterLink :to="localePath(`/${collection.slug}`)" tabindex="-1" @click="close">
+                  <span class="collections-panel__image">
+                    <img :src="collection.image?.url" alt="" loading="lazy" decoding="async" />
+                  </span>
+                  <span class="collections-panel__name">{{ collection.name }}</span>
+                </RouterLink>
+              </li>
+            </ul>
+          </div>
+        </div>
       </li>
-      <li>
-        <LanguageSelector />
+      <li class="main-menu__item">
+        <RouterLink
+          :to="localePath('/accessories')"
+          class="main-menu__link"
+          :class="{ active: currentPath === '/accessories' }"
+        >
+          {{ t('ACCESSORIES') }}
+        </RouterLink>
+      </li>
+      <li class="main-menu__item">
+        <RouterLink
+          :to="localePath('/contacts')"
+          class="main-menu__link"
+          :class="{ active: currentPath === '/contacts' }"
+        >
+          {{ t('CONTACTS') }}
+        </RouterLink>
       </li>
     </ul>
   </nav>
 </template>
 
 <style>
-/* Superfish-style menu without the plugin: sub menus open on hover */
-#fh5co-menu-wrap .sf-menu,
-#fh5co-menu-wrap .sf-menu * {
+.main-menu__list {
+  display: flex;
+  align-items: center;
+  gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-#fh5co-menu-wrap .sf-menu {
-  float: right;
+.main-menu__item {
+  display: flex;
+  align-items: center;
 }
-#fh5co-menu-wrap .sf-menu li {
-  position: relative;
-  background: transparent;
-  white-space: nowrap;
-}
-#fh5co-menu-wrap .sf-menu > li {
-  float: left;
-}
-#fh5co-menu-wrap .sf-menu a {
-  display: block;
-  position: relative;
-  padding: 2em;
-  color: var(--color-ink);
+.main-menu__link {
+  padding: 6px 0;
+  border-bottom: 1px solid transparent;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 13px;
-  border-bottom: none !important;
+  white-space: nowrap;
+  transition: border-color 0.2s ease;
 }
-#fh5co-menu-wrap .sf-menu a:hover {
-  color: #000;
+.main-menu__link:hover,
+.main-menu__link.active {
+  border-bottom-color: currentColor;
 }
-#fh5co-menu-wrap .sf-menu .sf-with-ul {
-  padding-right: 2.5em;
+.main-menu__toggle {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 32px;
+  color: inherit;
 }
-#fh5co-menu-wrap .sf-menu .sf-arrow {
-  position: absolute;
-  right: 1.1em;
-  top: 50%;
-  margin-top: -7px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+.main-menu__toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+.main-menu__toggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
 }
 
-#fh5co-menu-wrap .sf-menu ul {
-  position: absolute;
-  display: none;
-  top: 100%;
+.collections-panel {
+  position: fixed;
+  top: var(--z-header-h);
+  left: 0;
   right: 0;
-  z-index: 99;
-  min-width: 8em;
-  padding: 7px 0 3px;
-  background: rgba(0, 0, 0, 0.8);
-  border-radius: 5px;
+  border-top: 1px solid var(--z-line);
+  border-bottom: 1px solid var(--z-line);
+  background: var(--z-bg);
+  color: var(--z-ink);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.25);
 }
-#fh5co-menu-wrap .sf-menu li:hover > ul,
-#fh5co-menu-wrap .language-selector a:hover ~ ul,
-#fh5co-menu-wrap .language-selector ul:hover,
-#fh5co-menu-wrap .language-selector ul.open {
-  display: block;
+.collections-panel__inner {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: 48px;
+  padding-top: 36px;
+  padding-bottom: 40px;
 }
-#fh5co-menu-wrap .language-selector ul {
-  min-width: 51px;
-}
-#fh5co-menu-wrap .sf-menu ul::after {
-  position: absolute;
-  top: -8px;
-  right: 21px;
-  width: 0;
-  height: 0;
-  border-right: 8px solid transparent;
-  border-bottom: 8px solid rgba(0, 0, 0, 0.8);
-  border-left: 8px solid transparent;
-  content: '';
-}
-#fh5co-menu-wrap .sf-menu ul a {
-  letter-spacing: 0;
-  padding: 0 15px;
+.collections-panel__list {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: 14px;
-  line-height: 26px;
-  color: #fff !important;
-  text-transform: none;
 }
-#fh5co-menu-wrap .sf-menu ul a:hover {
-  color: var(--color-accent) !important;
+.collections-panel__list a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
-
-/* once the header is white: the active item and hovered items turn blue */
-#fh5co-header-section.fh5co-scrolled #fh5co-menu-wrap .sf-menu > li > a:hover {
-  color: var(--color-accent) !important;
+.collections-panel__all {
+  margin-top: 10px;
 }
-#fh5co-header-section.fh5co-scrolled #fh5co-menu-wrap .sf-menu > li.active > a {
-  color: var(--color-accent) !important;
+.collections-panel__cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.collections-panel__image {
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  max-height: 340px;
+  background: var(--z-soft);
+}
+.collections-panel__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.6s ease;
+}
+.collections-panel__cards a:hover img {
+  transform: scale(1.04);
+}
+.collections-panel__name {
+  display: block;
+  margin-top: 10px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 </style>

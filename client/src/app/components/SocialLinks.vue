@@ -1,45 +1,90 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { socialNetworkingsApi } from '@shared/api/resources/public'
 import { iconForClass } from '../icons'
 import { useLoader } from '../composables/useLoader'
-import LoadingIcon from './LoadingIcon.vue'
 
-const { data, loading } = useLoader(async () => (await socialNetworkingsApi.list()).social_networkings ?? [])
+// `icons` (a row of icons) or `buttons` (outlined buttons with the network's name). `messengers` keeps only the
+// networks people write to (Telegram, Instagram, Facebook, Viber, WhatsApp).
+const props = withDefaults(defineProps<{ variant?: 'icons' | 'buttons'; messengers?: boolean }>(), {
+  variant: 'icons',
+})
+
+const MESSENGER = /telegram|instagram|facebook|viber|whatsapp/i
+
+const { data } = useLoader(async () => (await socialNetworkingsApi.list()).social_networkings ?? [])
+const networks = computed(() =>
+  (data.value ?? []).filter((network) => !props.messengers || MESSENGER.test(`${network.css_class} ${network.slug}`)),
+)
 </script>
 
 <template>
-  <LoadingIcon v-show="loading" />
-
-  <ul v-show="!loading" class="fh5co-social-icons">
-    <li v-for="socialNetworking in data" :key="socialNetworking.id">
-      <a :href="socialNetworking.url" :title="socialNetworking.name" :aria-label="socialNetworking.name">
-        <component :is="iconForClass(socialNetworking.css_class)" class="size-[30px]" />
+  <ul v-if="networks.length" class="social-links" :class="`social-links--${variant}`">
+    <li v-for="socialNetworking in networks" :key="socialNetworking.id">
+      <a
+        :href="socialNetworking.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        :title="socialNetworking.name"
+        :aria-label="variant === 'icons' ? socialNetworking.name : undefined"
+      >
+        <component :is="iconForClass(socialNetworking.css_class)" aria-hidden="true" />
+        <span v-if="variant === 'buttons'">{{ socialNetworking.name }}</span>
       </a>
     </li>
   </ul>
 </template>
 
 <style>
-.fh5co-social-icons {
-  text-align: center;
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
   padding: 0;
-  margin: 0 0 2em 0;
-}
-.fh5co-social-icons li {
   list-style: none;
-  display: inline-block;
-  vertical-align: top;
-  /* the Themify glyph boxes made the old row 57px tall with the icon centred 37px from the top */
-  box-sizing: border-box;
-  height: 57px;
-  padding-top: 22px;
 }
-.fh5co-social-icons li svg {
-  margin: 0 6px;
+.social-links--icons {
+  gap: 4px;
+  margin-left: -10px;
 }
-.fh5co-social-icons li a {
-  display: inline-block;
-  padding: 0 10px;
-  border-bottom: none !important;
+.social-links--icons a {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.2s ease;
+}
+.social-links--icons a:hover {
+  opacity: 0.6;
+}
+.social-links--icons svg {
+  width: 18px;
+  height: 18px;
+}
+.social-links--buttons {
+  gap: 10px;
+}
+.social-links--buttons a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--z-ink);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.social-links--buttons a:hover {
+  background: var(--z-ink);
+  color: var(--z-bg);
+}
+.social-links--buttons svg {
+  width: 16px;
+  height: 16px;
 }
 </style>

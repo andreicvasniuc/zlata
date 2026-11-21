@@ -5,8 +5,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="uil-ripple-css" style="transform: scale(0.51)" role="status" :aria-label="t('LOADING')">
-    <div></div>
-    <div></div>
+  <div class="loading" role="status" :aria-label="t('LOADING')">
+    <span class="loading__spinner"></span>
   </div>
 </template>

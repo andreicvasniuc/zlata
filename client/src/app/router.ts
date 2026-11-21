@@ -9,6 +9,7 @@ export interface PageComponents {
   home: Loader
   collectionList: Loader
   contacts: Loader
+  favourites: Loader
   collection: Loader
   product: Loader
 }
@@ -18,6 +19,7 @@ const lazyComponents: PageComponents = {
   home: () => import('./views/HomeView.vue'),
   collectionList: () => import('./views/CollectionListView.vue'),
   contacts: () => import('./views/ContactsView.vue'),
+  favourites: () => import('./views/FavouritesView.vue'),
   collection: () => import('./views/CollectionView.vue'),
   product: () => import('./views/ProductView.vue'),
 }
@@ -41,6 +43,12 @@ export function buildRoutes(components: PageComponents = lazyComponents): RouteR
       component: components.collectionList,
     },
     { path: 'contacts', name: `contacts${suffix}`, meta: { page: 'contacts' }, component: components.contacts },
+    {
+      path: 'favourites',
+      name: `favourites${suffix}`,
+      meta: { page: 'favourites' },
+      component: components.favourites,
+    },
     {
       path: ':collection',
       name: `collection${suffix}`,

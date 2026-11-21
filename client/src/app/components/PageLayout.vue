@@ -1,35 +1,35 @@
 <script setup lang="ts">
 import AppFooter from './AppFooter.vue'
 import AppHeader from './AppHeader.vue'
-import BreadcrumbNav, { type BreadcrumbItem } from './BreadcrumbNav.vue'
+import type { BreadcrumbItem } from './BreadcrumbNav.vue'
+import HeroSlider from './HeroSlider.vue'
 import LoadingIcon from './LoadingIcon.vue'
+import PageHeading from './PageHeading.vue'
 
 defineProps<{
   heading?: string
+  intro?: string
   breadcrumb?: BreadcrumbItem[]
   loading?: boolean
-  // wraps the content in the centered 10-column block
-  centered?: boolean
+  // the home page: the slider runs under a transparent header instead of the page heading
   isSliderVisible?: boolean
+  // only the breadcrumb above the content, which has its own heading
+  compactHeading?: boolean
 }>()
 </script>
 
 <template>
-  <AppHeader :heading="heading" :is-slider-visible="isSliderVisible" />
+  <AppHeader :overlay="isSliderVisible" />
 
-  <div id="fh5co-main" :class="{ 'no-margin-top': isSliderVisible }">
-    <BreadcrumbNav v-if="breadcrumb" :items="breadcrumb" />
+  <main id="main" class="page" :class="{ 'page--overlay': isSliderVisible }" tabindex="-1">
+    <HeroSlider v-if="isSliderVisible" />
+    <PageHeading v-else :title="heading" :intro="intro" :breadcrumb="breadcrumb" :compact="compactHeading" />
 
-    <LoadingIcon v-show="loading" />
-
-    <div v-show="!loading" :class="{ 'col-md-10 col-md-offset-1 clearfix': centered }">
+    <LoadingIcon v-if="loading" />
+    <div v-show="!loading" class="page__content">
       <slot />
     </div>
+  </main>
 
-    <section id="fh5co-newsletter">
-      <div class="bs-container"></div>
-    </section>
-
-    <AppFooter />
-  </div>
+  <AppFooter />
 </template>

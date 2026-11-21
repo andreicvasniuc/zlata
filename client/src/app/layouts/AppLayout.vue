@@ -20,11 +20,18 @@ watch(
   { immediate: true },
 )
 
+// a new page closes the mobile menu
+watch(
+  () => route.fullPath,
+  () => layout.hideMobileMenu(),
+)
+
 const onResize = () => layout.onResize(window.innerWidth)
 const onScroll = () => layout.onScroll(window.scrollY)
 
 onMounted(() => {
   onResize()
+  onScroll()
   window.addEventListener('resize', onResize)
   window.addEventListener('scroll', onScroll, { passive: true })
 })
@@ -33,11 +40,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('scroll', onScroll)
 })
 
-// state classes the page frame styles hang on
+// the page behind the open mobile menu does not scroll
 watchEffect(() => {
-  document.documentElement.classList.toggle('fh5co-overflow', layout.isMobile)
-  document.body.classList.toggle('fh5co-overflow', layout.isMobile)
-  document.body.classList.toggle('fh5co-mobile-menu-visible', layout.isMobileMenuVisible)
+  document.body.classList.toggle('menu-open', layout.isMobileMenuVisible)
 })
 </script>
 

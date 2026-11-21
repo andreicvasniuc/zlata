@@ -1,0 +1,1 @@
+import{bt as e}from"./useApi-CUWMwLLw-Bx-vdRHJ.js";import{f as t}from"./vue-router-BKtkqe62.js";import{t as n}from"./useNotify-C7VMG0N3.js";function r(){let r=e(!1),i=n();async function a(e){r.value=!0;try{return await e()}catch(e){e instanceof t&&e.status===401||i.error(`SOMETHING_WENT_WRONG`);return}finally{r.value=!1}}return{busy:r,run:a}}export{r as t};

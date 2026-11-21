@@ -16,7 +16,11 @@
                 <td style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 100%; line-height: 1.6em; margin: 0; padding: 0;">
                   
                     <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 0 0 10px; padding: 0;">
-                      <b><%= @contact['name'] %></b> хочет сотрудничать с нами.
+                      <% if @contact['request_type'] == 'fitting' %>
+                        <b><%= @contact['name'] %></b> хочет записаться на примерку.
+                      <% else %>
+                        <b><%= @contact['name'] %></b> хочет сотрудничать с нами.
+                      <% end %>
                     </p>
 
                     <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 0 0 10px; padding: 0;">
@@ -29,12 +33,26 @@
                         </p>
                     <% end %>
 
-                    <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 20px 0 10px; padding: 0;">
-                      Сообщение:
-                    </p>
-                    <h4 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 20px; line-height: 1.2em; color: #111111; font-weight: 200; margin: 0 0 10px; padding: 0;">
-                      <%= @contact['message'] %>
-                    </h4>
+                    <% if @contact['preferred_date'].present? %>
+                        <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 0 0 10px; padding: 0;">
+                          Желаемая дата примерки: <b><%= @contact['preferred_date'] %></b>
+                        </p>
+                    <% end %>
+
+                    <% if @contact['dresses'].present? %>
+                        <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 0 0 10px; padding: 0;">
+                          Платья: <b><%= @contact['dresses'] %></b>
+                        </p>
+                    <% end %>
+
+                    <% if @contact['message'].present? %>
+                        <p style="font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6em; font-weight: normal; margin: 20px 0 10px; padding: 0;">
+                          Сообщение:
+                        </p>
+                        <h4 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 20px; line-height: 1.2em; color: #111111; font-weight: 200; margin: 0 0 10px; padding: 0;">
+                          <%= @contact['message'] %>
+                        </h4>
+                    <% end %>
 
                 </td>
               </tr>

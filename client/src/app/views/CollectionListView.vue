@@ -18,6 +18,7 @@ const localePath = useLocalePath()
 
 const isAccessories = route.meta.page === 'accessories'
 const title = computed(() => t(isAccessories ? 'ALL_ACCESSORIES' : 'ALL_COLLECTIONS'))
+const intro = computed(() => t(isAccessories ? 'ACCESSORIES_INTRO' : 'COLLECTIONS_INTRO'))
 usePageTitle(title)
 
 const { data, loading, failed } = useLoader(async () => {
@@ -39,8 +40,10 @@ const items = computed<GridItem[]>(() =>
 </script>
 
 <template>
-  <PageLayout :heading="title" :breadcrumb="[{ name: title }]" :loading="loading" centered>
-    <NotFoundContent v-if="failed" />
-    <ItemGrid v-else :items="items" />
+  <PageLayout :heading="title" :intro="intro" :breadcrumb="[{ name: title }]" :loading="loading">
+    <div class="wrap listing">
+      <NotFoundContent v-if="failed" />
+      <ItemGrid v-else :items="items" variant="collection" />
+    </div>
   </PageLayout>
 </template>

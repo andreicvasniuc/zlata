@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLocalePath } from '../locale'
+import type { FavouriteItem } from '../stores/favourites'
+import FavouriteButton from './FavouriteButton.vue'
 
 export interface GridItem {
   id: string
@@ -8,138 +11,192 @@ export interface GridItem {
   // path without the locale prefix
   url: string
   image?: string
-  // e.g. "from 1 200 €"; shown under the name only when set
+  // a second picture, shown on hover
+  hoverImage?: string
+  // e.g. "from 1 200 €"; products without one show "Price on request"
   price?: string
+  // recent product: shows the "New" label
+  isNew?: boolean
+  // shows the heart button
+  favourite?: FavouriteItem
 }
 
-defineProps<{ items: GridItem[] }>()
+// `product`: 2 / 3 / 4 columns of 3:4 pictures; `collection`: 2 / 3 columns of 4:5 pictures.
+// With `pageSize` the grid shows that many items and a "Load more" button for the rest.
+const props = withDefaults(
+  defineProps<{ items: GridItem[]; variant?: 'product' | 'collection'; pageSize?: number }>(),
+  {
+    variant: 'product',
+    pageSize: undefined,
+  },
+)
 
 const { t } = useI18n()
 const localePath = useLocalePath()
+
+const limit = ref(props.pageSize ?? Infinity)
+const visible = computed(() => props.items.slice(0, limit.value))
+const hasMore = computed(() => props.items.length > visible.value.length)
+
+function loadMore() {
+  limit.value += props.pageSize ?? Infinity
+}
 </script>
 
 <template>
-  <div id="portfolio">
-    <div class="bs-container">
-      <div class="row">
-        <ul class="portfolio-group">
-          <li v-for="item in items" :key="item.id" class="portfolio-item">
-            <RouterLink :to="localePath(item.url)">
-              <figure>
-                <img :alt="item.name" :src="item.image" />
-                <figcaption>
-                  <h3>{{ item.name }}</h3>
-                  <p v-if="item.price" class="price">{{ item.price }}</p>
-                </figcaption>
-              </figure>
-            </RouterLink>
-          </li>
+  <div class="item-grid" :class="`item-grid--${variant}`">
+    <ul v-if="items.length" class="item-grid__list">
+      <li v-for="(item, index) in visible" :key="item.id" class="item-card">
+        <RouterLink :to="localePath(item.url)" class="item-card__link">
+          <span class="item-card__media">
+            <img
+              v-if="item.image"
+              class="item-card__image"
+              :src="item.image"
+              :alt="item.name"
+              :loading="index < 4 ? 'eager' : 'lazy'"
+              decoding="async"
+            />
+            <img
+              v-if="item.hoverImage"
+              class="item-card__image item-card__image--hover"
+              :src="item.hoverImage"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+            <span v-if="item.isNew" class="item-card__badge">{{ t('NEW') }}</span>
+          </span>
+          <h3 class="item-card__name">{{ item.name }}</h3>
+          <p
+            v-if="variant === 'product'"
+            class="item-card__price"
+            :class="{ 'item-card__price--request': !item.price }"
+          >
+            {{ item.price || t('PRICE_ON_REQUEST') }}
+          </p>
+        </RouterLink>
+        <FavouriteButton v-if="item.favourite" :item="item.favourite" class="item-card__favourite" />
+      </li>
+    </ul>
+    <p v-else class="item-grid__empty">{{ t('NO_RECORDS_FOUND') }}</p>
 
-          <li v-if="items.length === 0" class="portfolio-item">{{ t('NO_RECORDS_FOUND') }}</li>
-        </ul>
-      </div>
+    <div v-if="hasMore" class="item-grid__more">
+      <p class="eyebrow">{{ t('SHOWING_OF', { shown: visible.length, total: items.length }) }}</p>
+      <button type="button" class="btn btn--ghost" @click="loadMore">{{ t('LOAD_MORE') }}</button>
     </div>
   </div>
 </template>
 
 <style>
-.portfolio-group {
-  text-align: center;
-  padding: 0;
+.item-grid__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 12px;
   margin: 0;
-  width: 100%;
-  line-height: 26px;
-}
-.portfolio-group .portfolio-item {
-  position: relative;
-  float: left;
-  width: 100%;
-  min-height: 1px;
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-bottom: 30px;
-  text-align: center;
-  vertical-align: text-top;
+  padding: 0;
   list-style: none;
 }
 @media (min-width: 768px) {
-  .portfolio-group .portfolio-item {
-    width: 50%;
+  .item-grid__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 44px 24px;
   }
 }
-@media (min-width: 992px) {
-  .portfolio-group .portfolio-item {
-    width: 33.33%;
+@media (min-width: 1200px) {
+  .item-grid--product .item-grid__list {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
-.portfolio-group .portfolio-item > a {
-  display: block;
-  padding: 0;
-  margin: 0;
-  border-bottom: none;
-}
-.portfolio-group figure {
-  border: 0 solid var(--color-border);
-  margin: 1px;
-  padding: 0;
+.item-card {
   position: relative;
+}
+.item-card__link {
+  display: block;
+}
+.item-card__media {
+  position: relative;
+  display: block;
   overflow: hidden;
-  box-shadow: var(--shadow-figure);
+  aspect-ratio: 3 / 4;
+  background: var(--z-soft);
 }
-.portfolio-group figure img {
-  max-width: 100%;
-  display: block;
-  position: relative;
-  z-index: 0;
-  transition: transform 0.4s ease-out;
+.item-grid--collection .item-card__media {
+  aspect-ratio: 4 / 5;
 }
-.portfolio-group figcaption {
-  color: #fff;
-  bottom: 0;
-  left: 0;
-  padding: 30px 40px;
-  background-color: var(--color-caption);
-  text-align: left;
-  text-transform: none;
+.item-card__image {
   position: absolute;
-  z-index: 1;
-  height: 17%;
+  inset: 0;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 18%;
+  transition:
+    opacity 0.5s ease,
+    transform 0.8s ease;
+}
+.item-card__image--hover {
   opacity: 0;
-  transition: opacity 0.5s 0.2s;
 }
-.portfolio-group h3 {
-  color: #fff;
-  margin: 0;
-  padding: 0 0 5px;
-  font-size: 20px;
-  font-weight: 400;
+@media (hover: hover) {
+  .item-card__link:hover .item-card__image {
+    transform: scale(1.03);
+  }
+  .item-card__link:hover .item-card__image--hover {
+    opacity: 1;
+  }
+}
+.item-card__name {
+  margin-top: 14px;
+  font-family: var(--z-sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  line-height: 1.45;
   text-transform: uppercase;
-  line-height: 1em;
+  overflow-wrap: anywhere;
+}
+.item-grid--collection .item-card__name {
+  margin-top: 16px;
+  font-family: var(--z-serif);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+.item-card__price {
+  margin-top: 4px;
+  font-size: 13.5px;
+  color: var(--z-muted);
+}
+.item-card__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+  padding: 4px 9px;
+  background: var(--z-bg);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--z-ink);
+}
+.item-card__favourite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.item-grid__empty {
+  padding: 40px 0;
+  color: var(--z-muted);
   text-align: center;
 }
-/* a priced caption has a second line, so it grows instead of keeping the fixed height */
-.portfolio-group figcaption:has(.price) {
-  height: auto;
-  min-height: 17%;
-}
-.portfolio-group figcaption .price {
-  color: #fff;
-  margin: 0;
-  font-size: 16px;
-  line-height: 1.3;
-  text-align: center;
-}
-
-/* hover: the picture zooms and the caption fades in; on small screens the caption is always visible */
-.portfolio-item figure:hover img {
-  bottom: 0;
-  transform: scale(1.2) translateY(7.5%);
-}
-.portfolio-item figure:hover figcaption,
-.fh5co-overflow .portfolio-item figure figcaption {
-  opacity: 0.7;
-  transition: opacity 0.5s;
+.item-grid__more {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  margin-top: 56px;
 }
 </style>

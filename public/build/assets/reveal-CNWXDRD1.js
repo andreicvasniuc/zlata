@@ -1,0 +1,1 @@
+var e={mounted(e){if(typeof IntersectionObserver>`u`||window.matchMedia?.(`(prefers-reduced-motion: reduce)`)?.matches)return;e.classList.add(`reveal`);let t=new IntersectionObserver(([n])=>{n?.isIntersecting&&(e.classList.add(`reveal--visible`),t.disconnect())},{rootMargin:`0px 0px -8% 0px`});t.observe(e)}};export{e as t};

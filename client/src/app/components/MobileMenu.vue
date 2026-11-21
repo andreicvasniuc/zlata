@@ -1,171 +1,195 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import IconMenu from '~icons/lucide/menu'
-import logoBlackText from '../assets/logo-black-text.png'
-import { useMenu, type MenuItem } from '../composables/useMenu'
-import { useOutsideClick } from '../composables/useOutsideClick'
+import IconChevronDown from '~icons/lucide/chevron-down'
+import { collectionsApi } from '@shared/api/resources/public'
+import { contactsQuery } from '../contacts'
+import { useLoader } from '../composables/useLoader'
 import { useLocalePath } from '../locale'
+import { useFavourites } from '../stores/favourites'
 import { useLayout } from '../stores/layout'
 import LanguageSelector from './LanguageSelector.vue'
+import SocialLinks from './SocialLinks.vue'
 
+// The full-screen menu of phones and tablets, opened by the header's menu button.
 const { t } = useI18n()
 const layout = useLayout()
-const { menu, isActive } = useMenu()
+const favourites = useFavourites()
 const localePath = useLocalePath()
 
-const menuElement = ref<HTMLElement | null>(null)
-useOutsideClick(menuElement, () => layout.hideMobileMenu(), '#fh5co-mobile-menu-btn')
+const { data } = useLoader(async () => (await collectionsApi.dresses()).collections ?? [])
+const collections = computed(() => data.value ?? [])
 
-// items with a sub menu expand instead of navigating
-const expanded = reactive<Record<string, boolean>>({})
-function onItemClick(event: Event, item: MenuItem) {
-  if (!item.list) return
-  event.preventDefault()
-  expanded[item.name] = !expanded[item.name]
+const panel = ref<HTMLElement | null>(null)
+const isCollectionsOpen = ref(false)
+
+watch(
+  () => layout.isMobileMenuVisible,
+  async (visible) => {
+    if (!visible) {
+      isCollectionsOpen.value = false
+      return
+    }
+    await nextTick()
+    panel.value?.querySelector<HTMLElement>('a, button')?.focus()
+  },
+)
+
+function close() {
+  layout.hideMobileMenu()
+  document.getElementById('mobile-menu-button')?.focus()
 }
 </script>
 
 <template>
-  <div id="fh5co-logo-mobile-wrap">
-    <h1 id="fh5co-logo-mobile">
-      <RouterLink :to="localePath('/')">
-        <img :src="logoBlackText" alt="logo" />
-      </RouterLink>
-    </h1>
-    <button
-      id="fh5co-mobile-menu-btn"
-      type="button"
-      :aria-label="t('MENU')"
-      :aria-expanded="layout.isMobileMenuVisible"
-      @click="layout.toggleMobileMenu()"
-    >
-      <IconMenu />
-    </button>
-  </div>
-
-  <div id="fh5co-mobile-menu" ref="menuElement">
-    <ul id="fh5co-mobile-menu-ul">
-      <li v-for="item in menu" :key="item.url + item.name" :class="{ active: isActive(item) }">
-        <RouterLink
-          :to="localePath(item.url)"
-          :class="{ 'fh5co-sub-ddown sf-with-ul': !!item.list }"
-          @click.capture="onItemClick($event, item)"
-        >
-          {{ item.name }}
-        </RouterLink>
-        <ul v-if="item.list" class="fh5co-sub-menu" :class="{ open: expanded[item.name] }">
-          <li v-for="subItem in item.list" :key="subItem.url">
-            <RouterLink :to="localePath(subItem.url)">{{ subItem.name }}</RouterLink>
+  <Transition name="mobile-menu">
+    <div v-if="layout.isMobileMenuVisible" id="mobile-menu" ref="panel" class="mobile-menu" @keydown.esc="close">
+      <nav class="mobile-menu__nav" :aria-label="t('MENU')">
+        <ul class="mobile-menu__list">
+          <li>
+            <button
+              type="button"
+              class="mobile-menu__link"
+              :aria-expanded="isCollectionsOpen"
+              aria-controls="mobile-menu-collections"
+              @click="isCollectionsOpen = !isCollectionsOpen"
+            >
+              {{ t('COLLECTIONS') }}
+              <IconChevronDown class="mobile-menu__chevron" />
+            </button>
+            <ul v-show="isCollectionsOpen" id="mobile-menu-collections" class="mobile-menu__sub">
+              <li v-for="collection in collections" :key="collection.id">
+                <RouterLink :to="localePath(`/${collection.slug}`)" @click="layout.hideMobileMenu()">
+                  {{ collection.name }}
+                </RouterLink>
+              </li>
+              <li>
+                <RouterLink :to="localePath('/collections')" class="text-link" @click="layout.hideMobileMenu()">
+                  {{ t('ALL_COLLECTIONS') }}
+                </RouterLink>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <RouterLink :to="localePath('/accessories')" class="mobile-menu__link" @click="layout.hideMobileMenu()">
+              {{ t('ACCESSORIES') }}
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="localePath('/contacts')" class="mobile-menu__link" @click="layout.hideMobileMenu()">
+              {{ t('CONTACTS') }}
+            </RouterLink>
+          </li>
+          <li>
+            <RouterLink :to="localePath('/favourites')" class="mobile-menu__link" @click="layout.hideMobileMenu()">
+              {{ t('FAVOURITES') }}
+              <span v-if="favourites.count" class="mobile-menu__count">{{ favourites.count }}</span>
+            </RouterLink>
           </li>
         </ul>
-      </li>
-      <li>
-        <LanguageSelector />
-      </li>
-    </ul>
-  </div>
+      </nav>
+
+      <div class="mobile-menu__footer">
+        <LanguageSelector variant="inline" />
+        <RouterLink
+          class="btn btn--block"
+          :to="{ path: localePath('/contacts'), query: contactsQuery('fitting') }"
+          @click="layout.hideMobileMenu()"
+        >
+          {{ t('BOOK_FITTING') }}
+        </RouterLink>
+        <SocialLinks />
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <style>
-#fh5co-mobile-menu-btn {
-  padding: 0 10px;
-  z-index: 1001;
-  position: absolute;
-  top: 0;
+.mobile-menu {
+  position: fixed;
+  top: var(--z-header-h);
   left: 0;
-  background: var(--color-accent);
-  height: 44px;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
   display: flex;
-  align-items: center;
-  color: #fff;
-  font-size: 22px;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--z-bg);
+}
+@media (min-width: 1024px) {
+  .mobile-menu {
+    display: none;
+  }
+}
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
-#fh5co-mobile-menu {
-  transform: translateX(-275px);
-  transition: all 0.3s ease;
-  display: block;
-  height: 100%;
-  left: 0;
-  overflow-y: auto;
-  position: fixed;
-  top: 0;
-  width: 275px;
-  z-index: 10002;
-  background: #181920;
-  padding: 0.75em 1.25em;
+.mobile-menu__nav {
+  flex: 1;
+  padding: 8px var(--z-gutter) 24px;
 }
-body.fh5co-mobile-menu-visible #fh5co-mobile-menu {
-  transform: translateX(0);
-}
-#fh5co-mobile-menu #fh5co-mobile-menu-ul,
-#fh5co-mobile-menu #fh5co-mobile-menu-ul ul {
-  padding: 0;
+.mobile-menu__list,
+.mobile-menu__sub {
   margin: 0;
-}
-#fh5co-mobile-menu #fh5co-mobile-menu-ul li {
+  padding: 0;
   list-style: none;
 }
-#fh5co-mobile-menu #fh5co-mobile-menu-ul li.active > a {
-  color: #fff;
+.mobile-menu__list > li {
+  border-bottom: 1px solid var(--z-line);
 }
-#fh5co-mobile-menu #fh5co-mobile-menu-ul a {
-  border-bottom: none !important;
-  padding: 7px 0;
-  display: block;
-  color: rgba(255, 255, 255, 0.5);
+.mobile-menu__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  font-family: var(--z-serif);
+  font-size: 32px;
+  line-height: 1.1;
+  text-align: left;
+  color: inherit;
 }
-#fh5co-mobile-menu #fh5co-mobile-menu-ul a:hover {
-  color: #fff;
-}
-#fh5co-mobile-menu #fh5co-mobile-menu-ul .fh5co-sub-ddown {
-  position: relative;
-}
-#fh5co-mobile-menu #fh5co-mobile-menu-ul .fh5co-sub-ddown::after {
-  position: absolute;
-  right: 0;
-  top: 50%;
+.mobile-menu__chevron {
   width: 20px;
   height: 20px;
-  margin-top: -10px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-opacity='.5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")
-    center / contain no-repeat;
-  content: '';
+  transition: transform 0.2s ease;
 }
-#fh5co-mobile-menu #fh5co-mobile-menu-ul .fh5co-sub-menu {
-  display: none;
-  padding-left: 20px;
+[aria-expanded='true'] > .mobile-menu__chevron {
+  transform: rotate(180deg);
 }
-#fh5co-mobile-menu #fh5co-mobile-menu-ul .fh5co-sub-menu.open {
-  display: block;
+.mobile-menu__sub {
+  display: grid;
+  gap: 14px;
+  padding: 0 0 22px 2px;
+  font-size: 15px;
 }
-
-#fh5co-logo-mobile-wrap {
-  transition: all 0.3s ease;
-  display: block;
-  height: 44px;
-  left: 0;
-  position: fixed;
-  text-align: center;
-  top: 0;
-  width: 100%;
-  z-index: 10001;
-  background: #fff;
-  color: var(--color-ink);
-  box-shadow: 0 0.125em 0.125em 0 rgba(0, 0, 0, 0.125);
+.mobile-menu__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 7px;
+  border-radius: 13px;
+  background: var(--z-ink);
+  color: var(--z-bg);
+  font-family: var(--z-sans);
+  font-size: 12px;
 }
-#fh5co-logo-mobile-wrap h1 {
-  padding: 0;
-  margin: 0;
-  font-size: 20px;
-  font-weight: bold;
-}
-#fh5co-logo-mobile-wrap h1 a {
-  display: inline-block;
-  border-bottom: none !important;
-}
-#fh5co-logo-mobile img {
-  width: 100px;
+.mobile-menu__footer {
+  display: grid;
+  gap: 18px;
+  padding: 20px var(--z-gutter) 32px;
+  border-top: 1px solid var(--z-line);
 }
 </style>

@@ -1,0 +1,1 @@
+function e(e){if(e)return(new DOMParser().parseFromString(e,`text/html`).body.textContent??``).replace(/\s+/g,` `).trim()||void 0}export{e as t};

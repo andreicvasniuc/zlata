@@ -23,6 +23,10 @@ export interface ContactMessage {
   email: string
   phone?: string
   message: string
+  // 'fitting' or 'question'; the date and the dresses belong to a fitting request
+  request_type?: string
+  preferred_date?: string
+  dresses?: string
 }
 
 export const collectionsApi = {
@@ -44,6 +48,6 @@ export const socialNetworkingsApi = {
 export const contactGroupsApi = { list: () => cached<{ contact_groups: ContactGroup[] }>('/contact_groups/list') }
 
 export const contactsApi = {
-  // body is `{ contact: { name, email, phone, message } }` like the old form
+  // body is `{ contact: { name, email, phone, message, request_type, preferred_date, dresses } }`
   send: (contact: ContactMessage) => publicApi.post<{ contact: ContactMessage }>('/contacts/send_form', { contact }),
 }

@@ -22,28 +22,30 @@ const notifier = useNotifier()
 <style>
 .toast-host {
   position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 999999;
+  left: 50%;
+  bottom: 24px;
+  z-index: 1000;
+  display: grid;
+  gap: 8px;
+  width: min(420px, calc(100vw - 32px));
+  transform: translateX(-50%);
   pointer-events: none;
 }
 .toast-message {
-  pointer-events: auto;
-  width: 300px;
-  margin-bottom: 6px;
-  padding: 15px;
-  border-radius: 3px;
-  color: #fff;
+  padding: 16px 20px;
+  border-left: 3px solid var(--z-success);
+  background: var(--z-ink);
+  color: var(--z-bg);
   font-size: 14px;
-  line-height: 20px;
-  opacity: 0.9;
-  box-shadow: 0 0 12px #999;
+  line-height: 1.5;
+  box-shadow: 0 20px 40px -20px rgb(0 0 0 / 0.5);
   cursor: pointer;
-}
-.toast-message.success {
-  background-color: #51a351;
+  pointer-events: auto;
 }
 .toast-message.error {
-  background-color: #bd362f;
+  border-left-color: #e06c5f;
+}
+body.has-product-bar .toast-host {
+  bottom: 96px;
 }
 </style>
