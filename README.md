@@ -4,7 +4,7 @@ Website of Zlata Wedding Fashion (zlata-weddingfashion.com): a Rails JSON API pl
 
 | | |
 |---|---|
-| Ruby / Rails | 4.0.9 / 8.1 (API mode; `HomeController` serves the HTML shells of the two Vue apps) |
+| Ruby / Rails | 4.0.10 / 8.1 (API mode; `HomeController` serves the HTML shells of the two Vue apps) |
 | Database | MongoDB 8.0 (Mongoid 9). Production: MongoDB Atlas |
 | Auth | JWT (`AuthToken`), `POST /user_token` |
 | Hosting | Heroku, classic Ruby buildpack (`Procfile`). Docker is for local use only |
