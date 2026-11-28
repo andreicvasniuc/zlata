@@ -25,29 +25,29 @@ for (const locale of LOCALES) {
       await expect(page).toHaveTitle(siteName(locale))
       await expect(page.locator('html')).toHaveAttribute('lang', locale)
       await expect(page.locator('.slide-carousel .embla__slide').first()).toBeVisible()
-      await expect(page.getByRole('heading', { level: 1, name: text.TOP_DRESSES })).toBeVisible()
+      await expect(page.getByRole('heading', { level: 2, name: text.TOP_DRESSES })).toBeVisible()
       await expect(page.locator('.top-products .portfolio-item figure').first()).toBeVisible()
-      await expect(page.locator('#fh5co-primary-menu > li > a').nth(1)).toHaveText(text.CATALOG as string)
+      await expect(page.locator('.main-menu a').nth(1)).toHaveText(text.COLLECTIONS as string)
       await expect(page.locator('.fh5co-social-icons li').first()).toBeVisible()
     })
 
     test('collections and accessories list their collections', async ({ page }) => {
       await page.goto(`/${locale}/collections`)
       await expect(page).toHaveTitle(pageTitle(locale, 'ALL_COLLECTIONS'))
-      await expect(page.locator('#fh5co-hero h1')).toHaveText(text.ALL_COLLECTIONS as string)
+      await expect(page.locator('.page-band h1')).toHaveText(text.ALL_COLLECTIONS as string)
       await expect(page.locator('.breadcrumb li')).toHaveCount(2)
       await expect(page.locator('.portfolio-item figure').first()).toBeVisible()
 
       await page.goto(`/${locale}/accessories`)
       await expect(page).toHaveTitle(pageTitle(locale, 'ALL_ACCESSORIES'))
-      await expect(page.locator('#fh5co-hero h1')).toHaveText(text.ALL_ACCESSORIES as string)
+      await expect(page.locator('.page-band h1')).toHaveText(text.ALL_ACCESSORIES as string)
     })
 
     test('a collection lists its products', async ({ page }) => {
       await page.goto(`/${locale}/${catalog.collection}`)
 
       await expect(page).toHaveTitle(`${catalog.collectionName} | ${siteName(locale)}`)
-      await expect(page.locator('#fh5co-hero h1')).toHaveText(catalog.collectionName)
+      await expect(page.locator('.page-band h1')).toHaveText(catalog.collectionName)
       await expect(page.locator('.portfolio-item')).toHaveCount(catalog.productCount)
       await expect(page.locator('.breadcrumb li').last()).toHaveText(catalog.collectionName)
     })
@@ -67,7 +67,7 @@ for (const locale of LOCALES) {
       await expect(page).toHaveTitle(pageTitle(locale, 'CONTACTS'))
       await expect(page.getByPlaceholder(text.NAME as string)).toBeVisible()
       await expect(page.getByRole('button', { name: text.SEND as string })).toBeDisabled()
-      await expect(page.locator('.fh5co-feature-blurb li').first()).toBeVisible()
+      await expect(page.locator('.contact-card').first()).toBeVisible()
     })
 
     test('an unknown collection shows the not-found state', async ({ page }) => {
@@ -108,7 +108,7 @@ test.describe('language', () => {
     page,
   }) => {
     await page.goto(`/ua/${catalog.collection}`)
-    await page.locator('.language-selector a[data-locale="en"]').dispatchEvent('click')
+    await page.locator('.site-header-desktop .language-selector a[data-locale="en"]').click()
 
     await expect(page).toHaveURL(new RegExp(`/en/${catalog.collection}$`))
     await expect(page.locator('.breadcrumb a').nth(1)).toHaveText(messages.en.ALL_COLLECTIONS as string)
@@ -140,65 +140,73 @@ test.describe('navigation', () => {
     await expect(page).not.toHaveURL(new RegExp(`/${catalog.product}$`))
   })
 
-  test('the Catalog menu opens its sub menu on hover', async ({ page }) => {
+  test('the desktop menu is flat and marks the current page', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
     await page.goto('/ua/contacts')
-    const subMenu = page.locator('#fh5co-primary-menu > li:nth-child(2) .fh5co-sub-menu')
-    await expect(subMenu).toBeHidden()
 
-    await page.locator('#fh5co-primary-menu > li:nth-child(2)').hover()
-    await expect(subMenu).toBeVisible()
+    await expect(page.locator('.main-menu a')).toHaveCount(4)
+    await expect(page.locator('.main-menu li.active a')).toHaveText(messages.ua.CONTACTS as string)
+    await expect(page.locator('.site-header-desktop .language-selector a')).toHaveText(['EN', 'UA', 'RO', 'RU'])
   })
 
-  test('the language list opens on hover', async ({ page }) => {
+  test('Collections stays highlighted on a dress page', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 })
-    await page.goto('/ua/contacts')
-    const list = page.locator('.language-selector ul')
-    await expect(list).toBeHidden()
+    await page.goto(`/${catalog.collection}/${catalog.product}`)
 
-    await page.locator('.language-selector a.fh5co-sub-ddown').hover()
-    await expect(list).toBeVisible()
-    await expect(list.locator('a')).toHaveCount(4)
+    await expect(page.locator('.main-menu li.active')).toHaveCount(1)
   })
 
-  test('the header turns white after scrolling', async ({ page }) => {
+  test('the header stays on screen after scrolling', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 700 })
     await page.goto(`/${catalog.collection}`)
-    await expect(page.locator('#fh5co-header-section')).not.toHaveClass(/fh5co-scrolled/)
 
-    await page.evaluate(() => window.scrollTo(0, 200))
-    await expect(page.locator('#fh5co-header-section')).toHaveClass(/fh5co-scrolled/)
+    await page.evaluate(() => window.scrollTo(0, 400))
+    await expect(page.locator('.site-header')).toBeInViewport()
+  })
+
+  test('the product page has no heading banner: the gown starts right below the header', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto(`/${catalog.collection}/${catalog.product}`)
+
+    await expect(page.locator('.page-band.compact')).toBeVisible()
+    await expect(page.locator('.gallery a').first()).toBeInViewport()
+  })
+
+  test('the product page has an inquiry action that prefills the contact form', async ({ page }) => {
+    await page.goto(`/en/${catalog.collection}/${catalog.product}`)
+    await page.locator('.info .inquire').click()
+
+    await expect(page).toHaveURL(/\/en\/contacts\?product=/)
+    await expect(page.locator('#message')).toHaveValue(new RegExp(catalog.productName))
   })
 })
 
 test.describe('mobile', () => {
   test.use({ viewport: { width: 375, height: 812 } })
 
-  test('the menu slides in from the left and closes on an outside click', async ({ page }) => {
+  test('the menu is a slide-over drawer that closes with Escape and on the backdrop', async ({ page }) => {
     await page.goto('/ua/contacts')
-    await expect(page.locator('#fh5co-header-section')).toHaveCount(0)
+    await expect(page.locator('.main-menu')).toBeHidden()
 
-    await page.locator('#fh5co-mobile-menu-btn').click()
-    await expect(page.locator('body')).toHaveClass(/fh5co-mobile-menu-visible/)
-    await expect(page.locator('#fh5co-mobile-menu')).toBeInViewport({ ratio: 0.9 }) // slid in, not just flagged open
-    await expect(page.locator('#fh5co-mobile-menu a', { hasText: messages.ua.HOME as string })).toBeVisible()
+    await page.locator('.menu-button').click()
+    await expect(page.locator('#mobile-menu')).toBeVisible()
+    await expect(page.locator('#mobile-menu a', { hasText: messages.ua.HOME as string })).toBeVisible()
 
-    await page.locator('#fh5co-main').click({ position: { x: 300, y: 300 }, force: true })
-    await expect(page.locator('body')).not.toHaveClass(/fh5co-mobile-menu-visible/)
+    await page.keyboard.press('Escape')
+    await expect(page.locator('#mobile-menu')).toBeHidden()
+
+    await page.locator('.menu-button').click()
+    await page.locator('.drawer-backdrop').click({ position: { x: 360, y: 400 } })
+    await expect(page.locator('#mobile-menu')).toBeHidden()
   })
 
-  test('Catalog expands its sub menu in the mobile menu', async ({ page }) => {
+  test('choosing a destination closes the drawer', async ({ page }) => {
     await page.goto('/ua/contacts')
-    await page.locator('#fh5co-mobile-menu-btn').click()
-    // (a plain click would scroll the page, which closes the menu, as on the old site)
-    await page
-      .locator('#fh5co-mobile-menu-ul > li > a', { hasText: messages.ua.CATALOG as string })
-      .dispatchEvent('click')
+    await page.locator('.menu-button').click()
+    await page.locator('#mobile-menu a', { hasText: messages.ua.ACCESSORIES as string }).click()
 
-    await expect(
-      page.locator('#fh5co-mobile-menu .fh5co-sub-menu a', { hasText: messages.ua.ACCESSORIES as string }),
-    ).toBeVisible()
-    await expect(page).toHaveURL(/\/ua\/contacts$/)
+    await expect(page).toHaveURL(/\/ua\/accessories$/)
+    await expect(page.locator('#mobile-menu')).toBeHidden()
   })
 })
 

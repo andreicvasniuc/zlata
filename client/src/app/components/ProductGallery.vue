@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import PhotoSwipeLightbox from 'photoswipe/lightbox'
 import 'photoswipe/style.css'
 import type { ImageFile } from '@shared/types'
 
 defineProps<{ images: ImageFile[]; alt?: string }>()
+
+const { t } = useI18n()
 
 const gallery = ref<HTMLElement | null>(null)
 let lightbox: PhotoSwipeLightbox | undefined
@@ -50,5 +53,48 @@ onBeforeUnmount(() => {
     >
       <img :src="image.url" :alt="alt" @load="onLoad($event, image.id)" />
     </a>
+    <span v-if="images.length" class="zoom-hint" aria-hidden="true">{{ t('ZOOM_HINT') }}</span>
   </div>
 </template>
+
+<style>
+/* the pictures sit in normal document flow, so a long gallery pushes the footer down instead of covering it */
+.gallery {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  align-content: start;
+}
+.gallery a {
+  display: block;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #efece6;
+  cursor: zoom-in;
+}
+.gallery img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+.gallery .zoom-hint {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 8px 12px;
+  background: #fff;
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+@media (max-width: 991px) {
+  /* the first picture is shown large, the others in pairs below */
+  .gallery a:first-of-type {
+    grid-column: 1 / -1;
+  }
+}
+</style>

@@ -34,5 +34,22 @@
   "LANGUAGE": "Limbă",
   "SOCIAL_NETWORKS": "Rețele sociale",
   "MESSAGE_FAILED": "Ne pare rău, mesajul nu a putut fi trimis. Încercați mai târziu.",
-  "PRICE_FROM": "de la"
+  "PRICE_FROM": "de la",
+  "MAIN_MENU": "Meniu principal",
+  "CLOSE": "Închide",
+  "SKIP_TO_CONTENT": "Sari la conținut",
+  "BREADCRUMB": "Cale de navigare",
+  "BOOK_FITTING": "Programează o probă",
+  "CURATED_SELECTION": "Selecție",
+  "VIEW_ALL_COLLECTIONS": "Toate colecțiile",
+  "PRICE_ON_REQUEST": "Preț la cerere",
+  "INQUIRE_ABOUT": "Întreabă despre „{name}”",
+  "ASK_ON": "Întreabă pe {network}",
+  "ZOOM_HINT": "Apăsați pentru a mări",
+  "ACTION_EMAIL": "Trimite e-mail",
+  "ACTION_CALL": "Sună",
+  "ACTION_CHAT": "Scrie pe chat",
+  "CONTACT_EYEBROW": "Salon de mirese și angro",
+  "CONTACT_INTRO": "Fie că sunteți o mireasă în căutarea unei rochii, fie un butic interesat de parteneriate angro, echipa noastră vă va răspunde în 24 de ore.",
+  "INQUIRY_PREFILL": "Bună ziua! Aș dori să aflu disponibilitatea și prețul pentru „{product}”."
 }

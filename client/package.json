@@ -18,6 +18,7 @@
     "check": "pnpm typecheck && pnpm lint && pnpm test"
   },
   "dependencies": {
+    "@fontsource/cormorant-garamond": "^5.3.0",
     "@fontsource/crimson-text": "^5.3.0",
     "@fontsource/lato": "^5.3.0",
     "@iconify-json/simple-icons": "^1.2.101",

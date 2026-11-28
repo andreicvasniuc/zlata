@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import type { Color, ImageFile, Product, Size } from '@shared/types'
 import { usePriceLabel } from '../composables/usePriceLabel'
+import { useLocalePath } from '../locale'
 import ExtraField from './ExtraField.vue'
+import ProductAskButtons from './ProductAskButtons.vue'
 import ProductGallery from './ProductGallery.vue'
 
 export interface ProductWithExtras extends Omit<Product, 'images'> {
@@ -11,10 +14,15 @@ export interface ProductWithExtras extends Omit<Product, 'images'> {
   sizes: Size[]
 }
 
-const props = defineProps<{ product: ProductWithExtras }>()
+const props = defineProps<{ product: ProductWithExtras; collectionName?: string }>()
 
+const { t } = useI18n()
+const localePath = useLocalePath()
 const label = usePriceLabel()
 const priceLabel = computed(() => label(props.product))
+
+// the contact page prefills its message with the name of the product
+const inquiryTo = computed(() => ({ path: localePath('/contacts'), query: { product: props.product.name } }))
 </script>
 
 <template>
@@ -22,159 +30,76 @@ const priceLabel = computed(() => label(props.product))
     <ProductGallery :images="product.images" :alt="product.name" />
 
     <div class="info">
-      <slot />
-
+      <p v-if="collectionName" class="eyebrow">{{ collectionName }}</p>
       <h1>{{ product.name }}</h1>
-      <div v-if="priceLabel" class="price" data-testid="product-price">{{ priceLabel }}</div>
+      <p v-if="priceLabel" class="price" data-testid="product-price">{{ priceLabel }}</p>
+      <p v-else class="price price-request">{{ t('PRICE_ON_REQUEST') }}</p>
+
       <div class="extra-fields">
         <ExtraField label="COLORS" :items="product.colors" />
         <ExtraField label="SIZES" :items="product.sizes" />
       </div>
-      <div class="description">{{ product.description }}</div>
+      <p v-if="product.description" class="description">{{ product.description }}</p>
+
+      <RouterLink :to="inquiryTo" class="btn btn-primary btn-block inquire">
+        {{ t('INQUIRE_ABOUT', { name: product.name }) }}
+      </RouterLink>
+      <ProductAskButtons />
     </div>
   </article>
 </template>
 
 <style>
+/* two columns in normal flow: the gallery may grow as long as it needs to */
 .item-details {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
   box-sizing: border-box;
+  max-width: var(--site-width);
   margin: 0 auto;
-  max-width: 1260px;
-  padding: 0 20px;
-  position: relative;
-  width: 100%;
-  min-height: 900px;
-}
-.item-details .gallery {
-  max-width: 809px;
-  position: absolute;
-  top: 15px;
-  width: 100%;
-}
-.item-details .gallery::after {
-  clear: both;
-  content: '';
-  display: block;
-}
-.item-details .gallery a {
-  display: block;
-  float: left;
-  border-bottom: none;
-}
-.item-details .gallery a.no-cover {
-  margin: 0 0 15px 15px;
-  cursor: pointer;
-}
-.item-details .gallery img {
-  display: block;
-  box-shadow: var(--shadow-figure);
-  max-width: none;
-  width: auto;
-}
-.item-details .gallery .cover img {
-  height: 900px;
-}
-.item-details .gallery .no-cover img {
-  height: 290px;
+  padding: 32px 0 64px;
 }
 .item-details .info {
-  margin-left: 824px;
-  overflow: hidden;
+  box-sizing: border-box;
+  padding: 28px 24px;
+  background: #fff;
+  border: 1px solid var(--color-border);
 }
 .item-details .info h1 {
-  width: 90%;
-  display: block;
-  margin: 75px auto 0;
-  text-align: center;
-  color: #99a098;
-  font-size: 60px;
-  line-height: 70px;
-  border-bottom: 1px solid #ebebeb;
-  padding-bottom: 30px;
+  margin-bottom: 12px;
+  font-size: 2.6rem;
+  line-height: 1.1;
 }
 .item-details .info .price {
-  margin-top: 30px;
-  text-align: center;
-  color: #99a098;
-  font-size: 26px;
-  line-height: 32px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 1.1rem;
+  color: var(--color-ink-soft);
 }
 .item-details .info .extra-fields {
-  margin-top: 40px;
-  text-align: center;
-}
-.item-details .info .extra-fields div {
-  margin: 10px 0;
-}
-.item-details .info .extra-fields div span {
-  font-size: 16px;
-  font-style: normal;
-  text-transform: uppercase;
-}
-.item-details .info .extra-fields div > span:first-child {
-  color: #99a098;
+  margin-bottom: 8px;
 }
 .item-details .info .description {
-  text-align: center;
-  font-size: 14px;
-  width: 90%;
-  margin: 0 auto;
+  margin-bottom: 28px;
+  color: var(--color-ink-soft);
+  white-space: pre-line;
 }
 
-@media screen and (max-width: 850px) {
+@media (min-width: 992px) {
   .item-details {
-    padding: 0;
-    min-height: auto;
-  }
-  .item-details .gallery {
-    position: static;
-  }
-  .item-details .gallery a {
-    width: 47%;
-  }
-  .item-details .gallery a.cover {
-    margin: 0 0 15px 15px;
-    cursor: pointer;
-  }
-  .item-details .gallery img {
-    width: 100%;
-    height: auto !important;
+    grid-template-columns: minmax(0, 7fr) minmax(340px, 5fr);
+    gap: 48px;
+    align-items: start;
   }
   .item-details .info {
-    margin-left: 0;
+    position: sticky;
+    top: 104px;
+    padding: 36px;
   }
   .item-details .info h1 {
-    margin-top: 0;
-  }
-}
-@media screen and (max-width: 620px) {
-  .item-details .gallery a.cover {
-    width: 94%;
-  }
-}
-@media screen and (max-width: 560px) {
-  .item-details .gallery a.cover {
-    width: 93%;
-  }
-}
-@media screen and (max-width: 520px) {
-  .item-details .gallery a.no-cover {
-    width: 94%;
-  }
-}
-@media screen and (max-width: 480px) {
-  .item-details .gallery a.cover {
-    width: 92%;
-  }
-}
-@media screen and (max-width: 400px) {
-  .item-details .gallery a.cover {
-    width: 91%;
-  }
-}
-@media screen and (max-width: 320px) {
-  .item-details .gallery a.cover {
-    width: 90%;
+    font-size: 42px;
   }
 }
 </style>

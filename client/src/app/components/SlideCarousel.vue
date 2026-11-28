@@ -38,6 +38,9 @@ watchEffect((onCleanup) => {
 
 onBeforeUnmount(() => emblaApi.value?.destroy())
 
+// "1" -> "01" for the position counter
+const pad = (value: number) => String(value).padStart(2, '0')
+
 // slide links are paths of the site, e.g. /collection-shine
 const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
 </script>
@@ -48,15 +51,15 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
       <div class="embla__container">
         <div v-for="(slide, index) in slides" :key="slide.id" class="embla__slide item">
           <div class="text-overlay">
-            <h1>{{ slide.title }}</h1>
-            <div v-if="slide.link_url">
+            <h2>{{ slide.title }}</h2>
+            <div v-if="slide.link_url" class="slide-link">
               <RouterLink v-if="slide.link_url.startsWith('/')" :to="hrefFor(slide.link_url)!" :title="slide.link_text">
                 {{ slide.link_text }}
               </RouterLink>
               <a v-else :href="slide.link_url" :title="slide.link_text">{{ slide.link_text }}</a>
             </div>
           </div>
-          <img :src="slide.image?.url" :alt="slide.title" :loading="index === 0 ? 'eager' : 'lazy'" />
+          <img :src="slide.image?.url" alt="" :loading="index === 0 ? 'eager' : 'lazy'" />
         </div>
       </div>
     </div>
@@ -75,6 +78,7 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
       </button>
 
       <div class="slide-dots">
+        <span class="slide-counter" aria-hidden="true">{{ pad(selected + 1) }}</span>
         <button
           v-for="(_, index) in snaps"
           :key="index"
@@ -87,6 +91,7 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
         >
           <span></span>
         </button>
+        <span class="slide-counter" aria-hidden="true">{{ pad(snaps.length) }}</span>
       </div>
     </template>
   </div>
@@ -95,6 +100,8 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
 <style>
 .slide-carousel {
   position: relative;
+  overflow: hidden;
+  border-radius: 2px;
 }
 .slide-carousel .embla {
   overflow: hidden;
@@ -106,93 +113,78 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
   position: relative;
   flex: 0 0 100%;
   min-width: 0;
+  height: clamp(420px, 72vh, 760px);
+  background: var(--color-surface-alt);
 }
 .slide-carousel .embla__slide img {
   display: block;
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+}
+/* the gradient keeps the title readable over pale dresses */
+.slide-carousel .embla__slide::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgb(20 17 15 / 0.68) 0%, rgb(20 17 15 / 0.25) 55%, transparent 100%);
+  content: '';
 }
 
 .slide-carousel .text-overlay {
   position: absolute;
-  top: 45%;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  text-align: center;
+  bottom: 12%;
+  left: clamp(24px, 6vw, 100px);
+  right: 24px;
+  z-index: 2;
+  max-width: 720px;
 }
-.slide-carousel .text-overlay h1 {
-  font-size: 46px;
-  text-transform: uppercase;
-  color: #fff;
-  text-shadow:
-    1px 1px 2px #000,
-    0 0 25px #d7d9d8,
-    0 0 5px #d7d9d8;
-  letter-spacing: 7px;
-}
-.slide-carousel .text-overlay a {
-  display: block;
-  width: 300px;
-  max-width: 220px;
-  margin: 30px auto 35px;
-  padding: 5px 20px;
-  font-family: Montserrat, Helvetica, Arial, Verdana, sans-serif;
-  font-size: 14px;
+.slide-carousel .text-overlay h2 {
+  margin: 0;
+  font-size: clamp(32px, 4.5vw, 60px);
   font-weight: 400;
-  transition: 0.5s;
-  text-transform: uppercase;
-  color: #e7eaec;
-  border: 1.4px solid #e7eaec;
-  border-radius: 4px;
-  background: rgba(0, 0, 0, 0.2);
-}
-.slide-carousel .text-overlay a:hover {
+  line-height: 1.1;
   color: #fff;
-  border-color: #fff;
-  background: rgba(0, 0, 0, 0.1);
 }
-@media screen and (max-width: 992px) {
-  .slide-carousel .text-overlay {
-    top: 30%;
-  }
+.slide-carousel .slide-link {
+  margin-top: 28px;
 }
-@media screen and (max-width: 768px) {
-  .slide-carousel .text-overlay {
-    top: 20%;
-  }
-  .slide-carousel .text-overlay h1 {
-    font-size: 30px;
-  }
-  .slide-carousel .text-overlay a {
-    font-size: 11px;
-  }
+.slide-carousel .slide-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 32px;
+  background: #fff;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-ink);
 }
-@media screen and (max-width: 480px) {
-  .slide-carousel .text-overlay {
-    top: 10%;
-  }
+.slide-carousel .slide-link a:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-ink);
 }
 
 .slide-carousel .slide-nav {
   position: absolute;
   top: 50%;
-  margin-top: -29px;
-  z-index: 9999;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin-top: -24px;
   color: #fff;
-  font-size: 30px;
-  transition: all 0.2s ease;
+  font-size: 26px;
 }
 .slide-carousel .slide-nav-prev {
-  left: 20px;
-}
-.slide-carousel .slide-nav-prev:hover {
-  margin-left: -10px;
+  left: 12px;
 }
 .slide-carousel .slide-nav-next {
-  right: 20px;
-}
-.slide-carousel .slide-nav-next:hover {
-  margin-right: -10px;
+  right: 12px;
 }
 @media screen and (max-width: 768px) {
   .slide-carousel .slide-nav {
@@ -200,29 +192,36 @@ const hrefFor = (url?: string) => (url?.startsWith('/') ? localePath(url) : url)
   }
 }
 
-/* the dots overlay the bottom of the slides, as with Owl */
+/* "01 —— — 05": the position as a counter and thin progress bars */
 .slide-carousel .slide-dots {
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
+  right: clamp(16px, 4vw, 56px);
+  bottom: 28px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
 }
 .slide-carousel .slide-dot {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  height: 24px;
 }
 .slide-carousel .slide-dot span {
   display: block;
-  width: 15px;
-  height: 15px;
-  margin: 5px 7px;
-  border-radius: 30px;
-  background: var(--color-accent);
-  border: 2px solid transparent;
-  transition: all 0.2s ease;
+  width: 32px;
+  height: 2px;
+  background: rgb(255 255 255 / 0.45);
+  transition: all 0.3s ease;
 }
-.slide-carousel .slide-dot:hover span,
+.slide-carousel .slide-dot:hover span {
+  background: rgb(255 255 255 / 0.8);
+}
 .slide-carousel .slide-dot.active span {
-  background: none;
-  border-color: var(--color-accent);
+  width: 52px;
+  background: #fff;
 }
 </style>

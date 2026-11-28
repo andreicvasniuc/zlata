@@ -202,10 +202,12 @@ describe('product page', () => {
     const { wrapper } = await mountWithApp(ProductView, { path: '/queen/anna' })
 
     expect(wrapper.get('.info h1').text()).toBe('ANNA')
-    expect(wrapper.findAll('.extra-fields > div').map((field) => field.text().replace(/\s+/g, ' '))).toEqual([
-      'Colors: ivory',
-      'Sizes: 42',
+    expect(wrapper.get('.info .eyebrow').text()).toBe('Queen')
+    expect(wrapper.findAll('.extra-field').map((field) => field.text().replace(/\s+/g, ' '))).toEqual([
+      'Colorsivory',
+      'Sizes42',
     ])
+    expect(wrapper.findAll('.extra-field .chip').map((chip) => chip.text())).toEqual(['ivory', '42'])
     expect(wrapper.findAll('.gallery a').map((link) => link.attributes('href'))).toEqual([
       'anna-cover.jpg',
       'anna-1.jpg',
@@ -228,6 +230,58 @@ describe('product page', () => {
 
     const plain = await mountWithApp(ProductView, { path: '/queen/clara' })
     expect(plain.wrapper.find('[data-testid=product-price]').exists()).toBe(false)
+    expect(plain.wrapper.get('.price-request').text()).toBe('Price upon inquiry')
+  })
+
+  it('has an inquiry action that carries the product name to the contact page', async () => {
+    const { wrapper } = await mountWithApp(ProductView, { path: '/ua/queen/anna' })
+
+    const inquire = wrapper.get('.inquire')
+    expect(inquire.text()).toBe('Inquire about “ANNA”')
+    expect(inquire.attributes('href')).toBe('/ua/contacts?product=ANNA')
+  })
+
+  it('shows the compact breadcrumb header instead of a heading band', async () => {
+    const { wrapper } = await mountWithApp(ProductView, { path: '/queen/anna' })
+
+    expect(wrapper.get('.page-band').classes()).toContain('compact')
+    expect(wrapper.findAll('h1')).toHaveLength(1)
+    expect(wrapper.get('.page-band .navigation .position').text()).toBe('1 / 2')
+  })
+
+  it('offers asking on Instagram and Telegram when they are set up', async () => {
+    api.socialNetworkingsApi.list.mockResolvedValue({
+      social_networkings: [
+        {
+          id: '1',
+          name: 'Instagram',
+          url: 'https://instagram.com/zlata',
+          css_class: 'ti-instagram',
+          published: true,
+          slug: 'i',
+        },
+        {
+          id: '2',
+          name: 'Facebook',
+          url: 'https://facebook.com/zlata',
+          css_class: 'ti-facebook',
+          published: true,
+          slug: 'f',
+        },
+        { id: '3', name: 'Telegram', url: 'https://t.me/zlata', css_class: 'ti-telegram', published: true, slug: 't' },
+      ],
+    })
+    const { wrapper } = await mountWithApp(ProductView, { path: '/queen/anna' })
+
+    const links = wrapper.findAll('.ask-buttons a')
+    expect(links.map((link) => link.text())).toEqual(['Ask on Instagram', 'Ask on Telegram'])
+    expect(links.map((link) => link.attributes('href'))).toEqual(['https://instagram.com/zlata', 'https://t.me/zlata'])
+  })
+
+  it('has no ask buttons without those networks', async () => {
+    const { wrapper } = await mountWithApp(ProductView, { path: '/queen/anna' })
+
+    expect(wrapper.find('.ask-buttons').exists()).toBe(false)
   })
 
   it('links to the previous and next published product', async () => {
@@ -235,6 +289,7 @@ describe('product page', () => {
 
     expect(wrapper.get('.navigation .position').text()).toBe('2 / 2')
     expect(wrapper.get('.navigation a.arrow-left').attributes('href')).toBe('/ua/queen/anna')
+    expect(wrapper.get('.navigation a.arrow-left .neighbour').text()).toBe('ANNA')
     expect(wrapper.find('.navigation a.arrow-right').exists()).toBe(false)
   })
 
@@ -249,24 +304,79 @@ describe('product page', () => {
 })
 
 describe('contacts page', () => {
-  it('lists the contact groups next to the form', async () => {
+  const group = (cssClass: string, name: string, value: string) => ({
+    id: cssClass,
+    name,
+    css_class: cssClass,
+    published: true,
+    slug: cssClass,
+    contacts_count: 1,
+    contacts: [{ id: `${cssClass}-c`, name: value, published: true, slug: cssClass }],
+  })
+
+  it('shows the form next to contact cards whose email, phone and messenger entries are links', async () => {
     api.contactGroupsApi.list.mockResolvedValue({
       contact_groups: [
-        {
-          id: 'g',
-          name: 'email',
-          css_class: 'ti-email',
-          published: true,
-          slug: 'email',
-          contacts_count: 1,
-          contacts: [{ id: 'c', name: 'zlata@example.com', published: true, slug: 'z' }],
-        },
+        group('ti-email', 'Email', 'zlata@example.com'),
+        group('ti-mobile', 'Phone', '+380 50 123 45 67'),
+        group('ti-viber', 'Viber', '+380501234567'),
+        group('ti-skype', 'Skype', 'zlata.skype'),
       ],
     })
     const { wrapper } = await mountWithApp(ContactsView, { path: '/contacts' })
 
     expect(wrapper.find('form.contact-form').exists()).toBe(true)
-    expect(wrapper.get('.fh5co-feature-blurb-title').text()).toBe('email')
-    expect(wrapper.get('.fh5co-feature-blurb-description').text()).toBe('zlata@example.com')
+    expect(wrapper.findAll('.contact-card-title').map((title) => title.text())).toEqual([
+      'Email',
+      'Phone',
+      'Viber',
+      'Skype',
+    ])
+    expect(wrapper.findAll('a.contact-card-row').map((link) => link.attributes('href'))).toEqual([
+      'mailto:zlata@example.com',
+      'tel:+380501234567',
+      'viber://chat?number=%2B380501234567',
+    ])
+    expect(wrapper.findAll('.contact-card-action').map((action) => action.text())).toEqual([
+      'Send email ↗',
+      'Call ↗',
+      'Chat ↗',
+    ])
+    // a value without a sensible link stays plain text
+    expect(wrapper.findAll('p.contact-card-row').map((row) => row.text())).toEqual(['zlata.skype'])
+  })
+
+  it('has the intro under a showroom eyebrow', async () => {
+    api.contactGroupsApi.list.mockResolvedValue({ contact_groups: [] })
+    const { wrapper } = await mountWithApp(ContactsView, { path: '/contacts' })
+
+    expect(wrapper.get('.contacts-info .eyebrow').text()).toBe('Bridal showroom & wholesale')
+    expect(wrapper.get('.contacts-intro').text()).toContain('24 hours')
+  })
+
+  it('prefills the message when the page is opened for a product', async () => {
+    api.contactGroupsApi.list.mockResolvedValue({ contact_groups: [] })
+    const { wrapper } = await mountWithApp(ContactsView, { path: '/contacts?product=Diana' })
+
+    expect((wrapper.get('#message').element as HTMLTextAreaElement).value).toContain('"Diana"')
+  })
+})
+
+describe('menu highlight', () => {
+  it('a dress collection page highlights Collections, an accessory one Accessories', async () => {
+    api.collectionsApi.get.mockResolvedValue({ collection: collection() })
+    const dress = await mountWithApp(CollectionView, { path: '/queen' })
+    expect(dress.wrapper.findAll('.main-menu li.active a').map((link) => link.text())).toEqual(['Collections'])
+
+    api.collectionsApi.get.mockResolvedValue({ collection: collection({ has_accessories: true }) })
+    const accessories = await mountWithApp(CollectionView, { path: '/queen' })
+    expect(accessories.wrapper.findAll('.main-menu li.active a').map((link) => link.text())).toEqual(['Accessories'])
+  })
+
+  it('a product page highlights the section of its collection', async () => {
+    api.collectionsApi.get.mockResolvedValue({ collection: collection({ has_accessories: true }) })
+    const { wrapper } = await mountWithApp(ProductView, { path: '/queen/anna' })
+
+    expect(wrapper.findAll('.main-menu li.active a').map((link) => link.text())).toEqual(['Accessories'])
   })
 })

@@ -34,5 +34,22 @@
   "LANGUAGE": "Language",
   "SOCIAL_NETWORKS": "Social networks",
   "MESSAGE_FAILED": "Sorry, the message could not be sent. Please try again later.",
-  "PRICE_FROM": "from"
+  "PRICE_FROM": "from",
+  "MAIN_MENU": "Main menu",
+  "CLOSE": "Close",
+  "SKIP_TO_CONTENT": "Skip to content",
+  "BREADCRUMB": "Breadcrumb",
+  "BOOK_FITTING": "Book a fitting",
+  "CURATED_SELECTION": "Curated selection",
+  "VIEW_ALL_COLLECTIONS": "View all collections",
+  "PRICE_ON_REQUEST": "Price upon inquiry",
+  "INQUIRE_ABOUT": "Inquire about “{name}”",
+  "ASK_ON": "Ask on {network}",
+  "ZOOM_HINT": "Click to zoom",
+  "ACTION_EMAIL": "Send email",
+  "ACTION_CALL": "Call",
+  "ACTION_CHAT": "Chat",
+  "CONTACT_EYEBROW": "Bridal showroom & wholesale",
+  "CONTACT_INTRO": "Whether you are a bride looking for a gown or a boutique asking about wholesale partnerships, our team will reply within 24 hours.",
+  "INQUIRY_PREFILL": "Hello! I would like to inquire about availability and pricing for \"{product}\"."
 }
