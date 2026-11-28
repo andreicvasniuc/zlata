@@ -1,0 +1,1 @@
+var e={en:`en-GB`,ua:`uk-UA`,ru:`ru-RU`,ro:`ro-RO`};function t(t,n,r){return!t||!n?null:new Intl.NumberFormat(e[r],{style:`currency`,currency:n,currencyDisplay:`narrowSymbol`,minimumFractionDigits:0,maximumFractionDigits:0}).format(t)}export{t};

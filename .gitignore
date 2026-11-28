@@ -17,3 +17,7 @@
 .env
 /mongo-data
 /mongo-data-prod
+/client/playwright-report
+/client/test-results
+/client/e2e/baseline-screenshots
+/client/e2e/visual-screenshots

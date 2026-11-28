@@ -132,6 +132,66 @@ RSpec.describe 'Admin collections, products and images', type: :request do
       expect(translations(record, :name)).to include('en' => 'Rose', 'ro' => 'Trandafir')
     end
 
+    describe 'price' do
+      it 'POST and PATCH set, change and clear the price with its currency' do
+        api_post '/admin/collections/spring/products', { product: { name: 'Rose', price: 1200, currency: 'EUR' } }, headers: headers
+        expect(response).to have_http_status(:created)
+        expect(json).to include('price' => 1200, 'currency' => 'EUR')
+
+        api_patch '/admin/collections/spring/products/rose', { product: { price: 900, currency: 'UAH' } }, headers: headers
+        expect(json).to include('price' => 900, 'currency' => 'UAH')
+
+        api_patch '/admin/collections/spring/products/rose', { product: { price: nil, currency: nil } }, headers: headers
+        expect(response).to have_http_status(:ok)
+        expect(json['price']).to be_nil
+        expect(json['currency']).to be_nil
+        expect(Admin::Collection.find(collection.id).products.first.price).to be_nil
+      end
+
+      it 'keeps the price the same in every locale' do
+        create_product(collection, 'Rose', price: 1200, currency: 'USD')
+
+        api_get '/ro/admin/collections/spring/products/rose', headers: headers
+
+        expect(json).to include('price' => 1200, 'currency' => 'USD')
+      end
+
+      it 'returns null for products without a price' do
+        create_product(collection, 'Rose')
+
+        api_get '/admin/collections/spring/products/rose', headers: headers
+
+        expect(json).to include('price' => nil, 'currency' => nil)
+      end
+
+      it 'rejects a price without a currency' do
+        api_post '/admin/collections/spring/products', { product: { name: 'Rose', price: 1200 } }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json).to have_key('currency')
+        expect(Admin::Collection.find(collection.id).products.count).to eq(0)
+      end
+
+      it 'rejects a currency outside the list' do
+        api_post '/admin/collections/spring/products', { product: { name: 'Rose', price: 1200, currency: 'GBP' } }, headers: headers
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json).to have_key('currency')
+      end
+
+      [0, -5, 12.5, 'abc'].each do |price|
+        it "rejects the price #{price.inspect}" do
+          create_product(collection, 'Rose')
+
+          api_patch '/admin/collections/spring/products/rose', { product: { price: price, currency: 'EUR' } }, headers: headers
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json).to have_key('price')
+          expect(Admin::Collection.find(collection.id).products.first.price).to be_nil
+        end
+      end
+    end
+
     it 'DELETE removes the product' do
       create_product(collection, 'Rose')
 
