@@ -320,7 +320,8 @@ describe('contacts page', () => {
         group('ti-email', 'Email', 'zlata@example.com'),
         group('ti-mobile', 'Phone', '+380 50 123 45 67'),
         group('ti-viber', 'Viber', '+380501234567'),
-        group('ti-skype', 'Skype', 'zlata.skype'),
+        group('ti-whatsapp', 'WhatsApp', '+380501234567'),
+        group('ti-telegram', 'Telegram', 'n/a'),
       ],
     })
     const { wrapper } = await mountWithApp(ContactsView, { path: '/contacts' })
@@ -330,20 +331,23 @@ describe('contacts page', () => {
       'Email',
       'Phone',
       'Viber',
-      'Skype',
+      'WhatsApp',
+      'Telegram',
     ])
     expect(wrapper.findAll('a.contact-card-row').map((link) => link.attributes('href'))).toEqual([
       'mailto:zlata@example.com',
       'tel:+380501234567',
       'viber://chat?number=%2B380501234567',
+      'https://wa.me/380501234567',
     ])
     expect(wrapper.findAll('.contact-card-action').map((action) => action.text())).toEqual([
       'Send email ↗',
       'Call ↗',
       'Chat ↗',
+      'Chat ↗',
     ])
     // a value without a sensible link stays plain text
-    expect(wrapper.findAll('p.contact-card-row').map((row) => row.text())).toEqual(['zlata.skype'])
+    expect(wrapper.findAll('p.contact-card-row').map((row) => row.text())).toEqual(['n/a'])
   })
 
   it('has the intro under a showroom eyebrow', async () => {

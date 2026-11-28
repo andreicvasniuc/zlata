@@ -6,7 +6,7 @@ import IconInstagram from '~icons/simple-icons/instagram'
 import IconVk from '~icons/simple-icons/vk'
 import IconPinterest from '~icons/simple-icons/pinterest'
 import IconFacebook from '~icons/simple-icons/facebook'
-import IconSkype from '~icons/simple-icons/skype'
+import IconWhatsapp from '~icons/simple-icons/whatsapp'
 import IconViber from '~icons/simple-icons/viber'
 
 // Social networkings and contact groups store the Themify class of their icon (`ti-telegram`, ...) in the database.
@@ -18,7 +18,7 @@ const byThemifyClass: Record<string, Component> = {
   'ti-pinterest-alt': IconPinterest,
   'ti-pinterest': IconPinterest,
   'ti-facebook': IconFacebook,
-  'ti-skype': IconSkype,
+  'ti-whatsapp': IconWhatsapp,
   'ti-viber': IconViber,
   'ti-email': IconMail,
 }

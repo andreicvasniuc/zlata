@@ -24,7 +24,7 @@ const cssClasses = [
   { name: 'Mobile', id: 'ti-mobile' },
   { name: 'Viber', id: 'ti-viber' },
   { name: 'Email', id: 'ti-email' },
-  { name: 'Skype', id: 'ti-skype' },
+  { name: 'WhatsApp', id: 'ti-whatsapp' },
 ]
 
 const { t } = useI18n()

@@ -3,7 +3,7 @@ import { iconForClass } from './icons'
 
 describe('iconForClass', () => {
   it('maps every Themify class used by the data to its own icon', () => {
-    const classes = ['ti-telegram', 'ti-instagram', 'ti-vk', 'ti-facebook', 'ti-skype', 'ti-viber', 'ti-email']
+    const classes = ['ti-telegram', 'ti-instagram', 'ti-vk', 'ti-facebook', 'ti-whatsapp', 'ti-viber', 'ti-email']
     const icons = classes.map((cssClass) => iconForClass(cssClass))
 
     expect(new Set(icons).size).toBe(classes.length)
