@@ -1,7 +1,7 @@
 # Production-like image for running the app locally the way Heroku runs it (RAILS_ENV=production,
 # no development/test gems, no source bind mount). Heroku itself builds with the classic Ruby
 # buildpack and does not use this file.
-FROM ruby:4.0.9-slim AS build
+FROM ruby:4.0.10-slim AS build
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential git libyaml-dev \
@@ -16,7 +16,7 @@ RUN bundle install \
  && rm -rf /usr/local/bundle/cache /usr/local/bundle/ruby/*/cache
 
 
-FROM ruby:4.0.9-slim
+FROM ruby:4.0.10-slim
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends libyaml-0-2 \
